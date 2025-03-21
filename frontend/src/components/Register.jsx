@@ -19,7 +19,7 @@ import { Link } from "react-router-dom"
 
 export default function Register() {
   const [formData, setFormData] = useState({
-    name: "",
+    username: "",
     password: "",
     confirmPassword: "",
   })
@@ -31,18 +31,18 @@ export default function Register() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
   const handleChange = (e) => {
-    const { name, value } = e.target
+    const { username, value } = e.target
     setFormData({
       ...formData,
-      [name]: value,
+      [username]: value,
     })
   }
 
   const validate = () => {
     const newErrors = {}
 
-    if (!formData.name.trim()) {
-      newErrors.name = "Name is required"
+    if (!formData.username.trim()) {
+      newErrors.username = "Name is required"
     }
 
 
@@ -131,10 +131,10 @@ export default function Register() {
               margin="normal"
               required
               fullWidth
-              id="name"
-              label="Full Name"
-              name="name"
-              autoComplete="name"
+              id="username"
+              label="username"
+              name="username"
+              autoComplete="username"
               autoFocus
               value={formData.name}
               onChange={handleChange}

@@ -45,7 +45,7 @@ export default function SignIn() {
     const password = document.getElementById("password").value;
     let isValid = true;
 
-   
+
 
     if (!password || password.length < 6) {
       setPasswordError(true);
@@ -77,7 +77,25 @@ export default function SignIn() {
           Sign in
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ display: "flex", flexDirection: "column", width: "100%", gap: 2 }}>
-         
+           
+          {/* <FormControl>
+          <FormLabel htmlFor="username">username</FormLabel>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              label="username"
+              name="username"
+              autoComplete="username"
+              autoFocus
+              value={formData.name}
+              onChange={handleChange}
+              error={!!errors.name}
+              helperText={errors.name}
+            />
+           </FormControl> */}
+
           <FormControl>
             <FormLabel htmlFor="password">Password</FormLabel>
             <TextField
