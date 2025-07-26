@@ -31,12 +31,12 @@ export default function Register() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
   const handleChange = (e) => {
-    const { username, value } = e.target
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [username]: value,
-    })
-  }
+      [name]: value,
+    });
+  };
 
   const validate = () => {
     const newErrors = {}

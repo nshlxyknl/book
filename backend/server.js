@@ -14,8 +14,6 @@ app.use(cors())
 app.use(`/logtype`,require(`./routes/auth`))
 app.use(`/tasktype`,require(`./routes/books`))
 
-
-
 app.listen(PORT,() => {
     console.log(`Server running on port ${PORT}`);
   });

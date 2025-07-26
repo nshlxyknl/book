@@ -38,34 +38,47 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
 }));
 
 export default function SignIn() {
-  const [passwordError, setPasswordError] = useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
+
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
+
+    setErrors({
+      ...errors,
+      [event.target.name]: "",
+    });
+  };
 
   const validateInputs = () => {
-    const password = document.getElementById("password").value;
     let isValid = true;
+    let newErrors = {};
 
-
-
-    if (!password || password.length < 6) {
-      setPasswordError(true);
-      setPasswordErrorMessage("Password must be at least 6 characters long.");
+    if (!formData.username.trim()) {
+      newErrors.username = "Username is required.";
       isValid = false;
-    } else {
-      setPasswordError(false);
-      setPasswordErrorMessage("");
     }
 
+    if (!formData.password || formData.password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters long.";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
     return isValid;
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     if (validateInputs()) {
-      const data = new FormData(event.currentTarget);
-      console.log({
-        password: data.get("password"),
-      });
+      console.log("Submitting:", formData);
     }
   };
 
@@ -77,30 +90,29 @@ export default function SignIn() {
           Sign in
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ display: "flex", flexDirection: "column", width: "100%", gap: 2 }}>
-           
-          {/* <FormControl>
-          <FormLabel htmlFor="username">username</FormLabel>
+          <FormControl>
+            <FormLabel htmlFor="username">Username</FormLabel>
             <TextField
               margin="normal"
               required
               fullWidth
               id="username"
-              label="username"
+              label="Username"
               name="username"
               autoComplete="username"
               autoFocus
-              value={formData.name}
+              value={formData.username}
               onChange={handleChange}
-              error={!!errors.name}
-              helperText={errors.name}
+              error={!!errors.username}
+              helperText={errors.username}
             />
-           </FormControl> */}
+          </FormControl>
 
           <FormControl>
             <FormLabel htmlFor="password">Password</FormLabel>
             <TextField
-              error={passwordError}
-              helperText={passwordErrorMessage}
+              error={!!errors.password}
+              helperText={errors.password}
               name="password"
               placeholder="••••••"
               type="password"
@@ -109,7 +121,9 @@ export default function SignIn() {
               required
               fullWidth
               variant="outlined"
-              color={passwordError ? "error" : "primary"}
+              color={errors.password ? "error" : "primary"}
+              value={formData.password}
+              onChange={handleChange}
             />
           </FormControl>
           <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Remember me" />
