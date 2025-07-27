@@ -15,6 +15,7 @@ exports.uploadpdf = async (req, res) => {
   try {
     // Extract task details from request body
     const { title, description, price, pdfUrl } = req.body;
+    const sellerId =req.user.userId;
 
     // Create and save new task, assignedBy comes from authenticated user
     const task = await Task.create({
@@ -22,6 +23,7 @@ exports.uploadpdf = async (req, res) => {
       description,
       price,
       pdfUrl,
+      seller : sellerId
     });
 
     // Populate user details for the response
