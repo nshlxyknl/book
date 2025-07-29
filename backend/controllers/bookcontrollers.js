@@ -14,7 +14,7 @@ const Task = require("../models/Book");
 exports.uploadpdf = async (req, res) => {
   try {
     // Extract task details from request body
-    const { title, description, price, pdfUrl } = req.body;
+    const { title, description, price, pdfUrl,seller } = req.body;
     const sellerId =req.user.userId;
 
     // Create and save new task, assignedBy comes from authenticated user
@@ -27,7 +27,8 @@ exports.uploadpdf = async (req, res) => {
     });
 
     // Populate user details for the response
-    await task.populate("assignedTo assignedBy", "username");
+    await task.populate("seller", "username"); // if 'seller' is a ref to User
+
 
     res.status(201).json({
       task,
