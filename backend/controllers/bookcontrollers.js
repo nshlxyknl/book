@@ -14,7 +14,7 @@ const Task = require("../models/Book");
 exports.uploadpdf = async (req, res) => {
   try {
     // Extract task details from request body
-    const { title, description, price, pdfUrl,seller } = req.body;
+    const { title, description, price, pdfUrl, seller } = req.body;
     const sellerId =req.user.userId;
 
     // Create and save new task, assignedBy comes from authenticated user
@@ -50,7 +50,7 @@ exports.getallpdf = async (req, res) => {
   try {
     // Find all tasks and include user details for assignedTo and assignedBy
     const tasks = await Task.find()
-      .populate("assignedTo assignedBy", "username")
+      .populate("seller", "username")
       .sort({ createdAt: -1 }); // Show newest tasks first
 
     res.json({
@@ -74,7 +74,7 @@ exports.getuserpdf = async (req, res) => {
   try {
     // Find tasks where assignedTo matches the logged-in user's ID
     const tasks = await Task.find({ assignedTo: req.user.userId })
-      .populate("assignedTo assignedBy", "username")
+      .populate("seller", "username")
       .sort({ createdAt: -1 });
 
     res.json({
@@ -86,7 +86,7 @@ exports.getuserpdf = async (req, res) => {
     res.status(500).json({
       message: "Could not fetch your tasks",
       details: error.message,
-    });
+    }); 
   }
 };
 
