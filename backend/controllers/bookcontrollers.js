@@ -20,7 +20,7 @@ exports.uploadpdf = async (req, res) => {
     // Create and save new task, assignedBy comes from authenticated user
     const task = await Task.create({
       title,
-      description, 
+      description,  
       price,
       pdfUrl,
       seller : sellerId
