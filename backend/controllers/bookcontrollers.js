@@ -47,7 +47,7 @@ exports.uploadpdf = async (req, res) => {
  * Only admins can use this function (protected by middleware)
  */
 exports.getallpdf = async (req, res) => {
-  try {
+  try { 
     // Find all tasks and include user details for assignedTo and assignedBy
     const tasks = await Task.find()
       .populate("seller", "username")
