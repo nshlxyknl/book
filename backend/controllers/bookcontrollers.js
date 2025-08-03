@@ -83,7 +83,7 @@ exports.getuserpdf = async (req, res) => {
       message: "Your tasks retrieved successfully",
     });
   } catch (error) {
-    res.status(500).json({
+    res.status(500).json({ 
       message: "Could not fetch your tasks",
       details: error.message,
     }); 
