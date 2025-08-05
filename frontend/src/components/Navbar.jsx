@@ -59,6 +59,7 @@ function Navbar() {
       </Drawer>
     </div>
   );
+  
 }
 
 export default Navbar;
