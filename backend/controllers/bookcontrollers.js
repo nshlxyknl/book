@@ -29,7 +29,6 @@ exports.uploadpdf = async (req, res) => {
     // Populate user details for the response
     await task.populate("seller", "username"); // if 'seller' is a ref to User
 
-
     res.status(201).json({
       task,
       message: "Task created successfully",
