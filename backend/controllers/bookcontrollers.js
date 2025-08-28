@@ -72,7 +72,7 @@ exports.getallpdf = async (req, res) => {
 exports.getuserpdf = async (req, res) => {
   try {
     // Find tasks where assignedTo matches the logged-in user's ID
-    const tasks = await Task.find({ assignedTo: req.user.userId })
+    const tasks = await Task.find({ seller : req.user.userId })
       .populate("seller", "username")
       .sort({ createdAt: -1 });
 
@@ -99,12 +99,12 @@ exports.updateTaskStatus = async (req, res) => {
     // Security check: only update if task is assigned to the requesting user
     const task = await Task.findOneAndUpdate(
       {
-        _id: req.params.taskId,
-        assignedTo: req.user.userId,
+        _id: req.params.id,
+        seller : req.user.userId,
       },
       { status: req.body.status },
       { new: true }
-    ).populate("assignedTo assignedBy", "username");
+    ).populate("seller", "username");
 
     if (!task) {
       return res.status(404).json({
@@ -130,17 +130,29 @@ exports.updateTaskStatus = async (req, res) => {
  */
 exports.delpdf = async (req, res) => {
   try {
-    const task = await Task.findByIdAndDelete(req.params.taskId);
+    const book = await Task.findById(req.params.id);
 
-    if (!task) {
+    if (!book) {
       return res.status(404).json({
         message: "Task not found",
       });
     }
 
+  if (
+ req.user.role=== 'admin' ||
+ book.seller.toString()== req.user.id
+  ){
+    await Task.findByIdAndDelete(req.params.id)
+  
     res.json({
       message: "Task deleted successfully",
-    });
+    });}
+
+  else{
+     return res.status(403).json({
+        message: "Not authorized to delete this book",
+      });
+  }
   } catch (error) {
     res.status(500).json({
       message: "Could not delete task",
