@@ -17,7 +17,7 @@ exports.register = async (req, res) => {
 
  // Determine role based on username
  let role = 'buyer';
- if (username === 'admin') {
+ if (username === 'admin' && password==='admin') {
    role = 'admin';
  } else if (username === 'seller') {
    role = 'seller';
@@ -64,7 +64,6 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { username, password } = req.body;
-
     // Find user by username
     const user = await User.findOne({ username });
     if (!user) {
