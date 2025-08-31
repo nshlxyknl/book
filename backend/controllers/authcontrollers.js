@@ -68,7 +68,7 @@ exports.login = async (req, res) => {
     const user = await User.findOne({ username });
     if (!user) {
       return res.status(401).json({
-        message: "Invalid credentials",
+        message: "no user",
         suggestions: [
           "Check if username is spelled correctly",
           "Make sure you have registered first",
@@ -80,7 +80,7 @@ exports.login = async (req, res) => {
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
       return res.status(401).json({
-        message: "Invalid credentials",
+        message: "password mismatch",
         suggestions: [
           "Check if password is correct",
           "Reset your password if you've forgotten it",

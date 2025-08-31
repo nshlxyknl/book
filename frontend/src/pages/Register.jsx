@@ -1,20 +1,52 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Card, CardContent } from '../components/ui/card'
 import { Input } from '../components/ui/input'
 import { Button } from '../components/ui/button'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate} from 'react-router-dom'
 
 export const Register = () => {
+
+    const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handlereg= async (e) => {
+  e.preventDefault();
+
+try{
+const res= await fetch("http://localhost:3000/logtype/register",{
+  method: "POST",
+  headers: { "Content-Type":"application/json"},
+  body: JSON.stringify({ username, password }),
+ })
+
+ const data= await res.json();
+
+ if(res.ok){
+  localStorage.setItem("token",data.token || "");
+  alert("reg successful");
+  navigate(`/`);
+ }else {
+        alert(data.message || "Login failed");
+      }
+    } catch (err) {
+      console.error("Error logging in:", err);
+      alert("Something went wrong");
+    }
+
+  }
+
+
   return (<>
         <div className='flex justify-center items-center min-h-screen px-4'>
                    <Card className={'w-full max-w-md p-6'}>
                        <CardContent >
                            <h2 className='text-center text-2xl font-semibold mb-4'> Register</h2>
-                           <form className="space-y-4">
+                           <form  onSubmit={handlereg} className="space-y-4">
                                <Input type='text' placeholder= 'username' className={'p-4'}/>
                                <Input type='password' placeholder= 'password' className={'p-4'}/>
                               <div className="flex justify-center">
-                               <Button className="w-full sm:w-auto"> Register </Button>
+                               <Button type='submit' className="w-full sm:w-auto"> Register </Button>
                                </div>
                   <h3 className='text-center'> Already have an account? {""}
                     <Link to ="/Login" className="text-blue-600 hover:underline">

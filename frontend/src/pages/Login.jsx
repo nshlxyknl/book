@@ -1,23 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Card, CardContent } from '../components/ui/card'
 import { Input } from '../components/ui/input'
 import { Button } from '../components/ui/button'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export const Login = () => {
+    const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const res = await fetch("http://localhost:3000/logtype/login", {
         method: "POST",
-        headers: { "Content-Type": "application/json",
-            Authorization:`Bearer ${token}`
-         },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
 
       const data = await res.json();
+      console.log("Response from backend:", data);
 
       if (res.ok) {
         localStorage.setItem("token", data.token || "");
@@ -37,11 +39,11 @@ const handleSubmit = async (e) => {
             <Card className={'w-full max-w-md p-6'}>
                 <CardContent >
                     <h2 className='text-center text-2xl font-semibold mb-4'> login</h2>
-                    <form className="space-y-4">
+                    <form  onSubmit={handleSubmit} className="space-y-4">
                         <Input type='text' placeholder='username' className={'p-4'} />
                         <Input type='password' placeholder='password' className={'p-4'} />
                         <div className="flex justify-center">
-                            <Button className="w-full sm:w-auto"> Login </Button>
+                            <Button type='submit' className="w-full sm:w-auto"> Login </Button>
                         </div>
                         <h3 className='text-center'> Don't have an account? {""}
                             <Link to="/register" className="text-blue-600 hover:underline">
