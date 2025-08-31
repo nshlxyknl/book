@@ -8,6 +8,7 @@ export const Login = () => {
     const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
 const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -24,7 +25,7 @@ const handleSubmit = async (e) => {
       if (res.ok) {
         localStorage.setItem("token", data.token || "");
         alert("Login successful!");
-        navigate("/register"); 
+        navigate("/"); 
       } else {
         alert(data.message || "Login failed");
       }
@@ -40,8 +41,8 @@ const handleSubmit = async (e) => {
                 <CardContent >
                     <h2 className='text-center text-2xl font-semibold mb-4'> login</h2>
                     <form  onSubmit={handleSubmit} className="space-y-4">
-                        <Input type='text' placeholder='username' className={'p-4'} />
-                        <Input type='password' placeholder='password' className={'p-4'} />
+                        <Input type='text' placeholder='username' value={username} onChange={(e) => setUsername(e.target.value)} className={'p-4'} />
+                        <Input type='password' placeholder='password' value={password} onChange={(e) => setPassword(e.target.value)} className={'p-4'} />
                         <div className="flex justify-center">
                             <Button type='submit' className="w-full sm:w-auto"> Login </Button>
                         </div>

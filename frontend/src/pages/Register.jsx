@@ -43,8 +43,8 @@ const res= await fetch("http://localhost:3000/logtype/register",{
                        <CardContent >
                            <h2 className='text-center text-2xl font-semibold mb-4'> Register</h2>
                            <form  onSubmit={handlereg} className="space-y-4">
-                               <Input type='text' placeholder= 'username' className={'p-4'}/>
-                               <Input type='password' placeholder= 'password' className={'p-4'}/>
+                               <Input type='text' placeholder= 'username' value={username} onChange={(e) => setUsername(e.target.value)} className={'p-4'}/>
+                               <Input type='password' placeholder= 'password' value={password} onChange={(e) => setPassword(e.target.value)} className={'p-4'}/>
                               <div className="flex justify-center">
                                <Button type='submit' className="w-full sm:w-auto"> Register </Button>
                                </div>
