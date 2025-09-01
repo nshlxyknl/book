@@ -24,8 +24,10 @@ const handleSubmit = async (e) => {
 
       if (res.ok) {
         localStorage.setItem("token", data.token || "");
+        localStorage.setItem("role", data.user.role);
+
         alert("Login successful!");
-        navigate("/"); 
+        navigate("/dashboard"); 
       } else {
         alert(data.message || "Login failed");
       }
