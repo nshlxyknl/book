@@ -6,7 +6,7 @@ export default function SellerDashboard() {
   return (
     <div className="min-h-screen my-10 bg-background p-6">
       <header className="mb-8">
-        <h1 className="text-3xl font-bold">Dashboard</h1>
+        <h1 className="text-3xl font-bold"> Seller Dashboard</h1>
         <p className="text-muted-foreground">Welcome back to your store</p>
       </header>
 
@@ -46,7 +46,7 @@ export default function SellerDashboard() {
       </div>
 
       <div className="flex gap-4">
-        <Button>Add Pdf</Button>
+        <Button>Add PDF</Button>
       </div>
     </div>
   )

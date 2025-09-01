@@ -6,8 +6,8 @@ export default function BuyerDashboard() {
   return (
     <div className="min-h-screen my-10 bg-background p-6">
       <header className="mb-8">
-        <h1 className="text-3xl font-bold">Dashboard</h1>
-        <p className="text-muted-foreground">Welcome back to your store</p>
+        <h1 className="text-3xl font-bold"> Buyer Dashboard</h1>
+        <p className="text-muted-foreground">Want some books?</p>
       </header>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
