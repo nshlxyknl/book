@@ -34,9 +34,6 @@ export default function AdminDashboard() {
       </div>
 
       <div className="flex gap-4">
-        <Button>Add Product</Button>
-        <Button variant="outline">View Orders</Button>
-        <Button variant="outline">Manage Store</Button>
       </div>
     </div>
   )
