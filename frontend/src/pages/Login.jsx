@@ -3,17 +3,19 @@ import { Card, CardContent } from '../components/ui/card'
 import { Input } from '../components/ui/input'
 import { Button } from '../components/ui/button'
 import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '@/context/AuthContext'
 
 export const Login = () => {
     const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { login } = useAuth();
 
 const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:3000/logtype/login", {
+      const res = await fetch("http://localhost:4000/logtype/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
@@ -23,9 +25,7 @@ const handleSubmit = async (e) => {
       console.log("Response from backend:", data);
 
       if (res.ok) {
-        localStorage.setItem("token", data.token || "");
-        localStorage.setItem("role", data.user.role);
-
+        login(data.token, data.user.role);
         alert("Login successful!");
         navigate("/dashboard"); 
       } else {

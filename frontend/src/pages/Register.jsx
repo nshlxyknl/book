@@ -3,18 +3,20 @@ import { Card, CardContent } from '../components/ui/card'
 import { Input } from '../components/ui/input'
 import { Button } from '../components/ui/button'
 import { Link, useNavigate} from 'react-router-dom'
+import { useAuth } from '@/context/AuthContext'
 
 export const Register = () => {
 
     const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+    const {login} = useAuth();
 
   const handlereg= async (e) => {
   e.preventDefault();
 
 try{
-const res= await fetch("http://localhost:3000/logtype/register",{
+const res= await fetch("http://localhost:4000/logtype/register",{
   method: "POST",
   headers: { "Content-Type":"application/json"},
   body: JSON.stringify({ username, password }),
@@ -23,11 +25,11 @@ const res= await fetch("http://localhost:3000/logtype/register",{
  const data= await res.json();
 
  if(res.ok){
-  localStorage.setItem("token",data.token || "");
+  login(data.token,data.user.token)
   alert("reg successful");
-  navigate(`/`);
+  navigate(`/login`);
  }else {
-        alert(data.message || "Login failed");
+        alert(data.message || "Reg failed");
       }
     } catch (err) {
       console.error("Error logging in:", err);

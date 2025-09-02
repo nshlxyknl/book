@@ -1,13 +1,11 @@
+import { useAuth } from '@/context/AuthContext';
 import React from 'react'
 import { Link } from 'react-router-dom'
 
 export default function Navbar() {
-const token =localStorage.getItem("token")
+ const { token, logout } = useAuth();
 
- const handlelogout= () => {
-localStorage.removeItem("token")
-localStorage.removeItem("role")
- }
+
 
   return (
     <header className="w-full shadow-md bg-white dark:bg-gray-900">
@@ -25,7 +23,7 @@ localStorage.removeItem("role")
 )
         :(
          <nav className="hidden md:flex space-x-6">
-          <Link to="/login" onClick={handlelogout} className="hover:text-blue-600">Logout</Link>
+          <Link to="/login" onClick={logout} className="hover:text-blue-600">Logout</Link>
           <Link to="/profile" className="hover:text-blue-600">Profile</Link>
         </nav>
         )}
