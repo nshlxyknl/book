@@ -1,9 +1,9 @@
-// src/context/AuthContext.jsx
-import { createContext, useContext, useState, useEffect } from "react";
 
-const AuthContext = createContext();
+import { createContext, useContext, useState } from "react";
 
-export const AuthProvider = ({ children }) => {
+const Nis = createContext();
+
+export const Auth = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token") || "");
   const [role, setRole] = useState(localStorage.getItem("role") || "");
 
@@ -22,10 +22,10 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ token, role, login, logout }}>
+    <Nis.Provider value={{ token, role, login, logout }}>
       {children}
-    </AuthContext.Provider>
+    </Nis.Provider>
   );
 };
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => useContext(Nis);
