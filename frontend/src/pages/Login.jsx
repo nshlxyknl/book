@@ -41,7 +41,7 @@ const handleSubmit = async (e) => {
         <div className='flex justify-center items-center min-h-screen px-4'>
             <Card className={'w-full max-w-md p-6'}>
                 <CardContent >
-                    <h2 className='text-center text-2xl font-semibold mb-4'> login</h2>
+                    <h2 className='text-center text-2xl font-semibold mb-4'> Login</h2>
                     <form  onSubmit={handleSubmit} className="space-y-4">
                         <Input type='text' placeholder='username' value={username} onChange={(e) => setUsername(e.target.value)} className={'p-4'} />
                         <Input type='password' placeholder='password' value={password} onChange={(e) => setPassword(e.target.value)} className={'p-4'} />
