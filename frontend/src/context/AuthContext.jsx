@@ -1,8 +1,8 @@
 
 import { createContext, useContext } from "react";
 
-const Nis = createContext();
+const AuthContext = createContext();
 
-export const useAuth = () => useContext(Nis);
+export const useAuth = () => useContext(AuthContext);
 
-export default Nis
+export default AuthContext

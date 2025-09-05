@@ -1,7 +1,7 @@
-import { useState } from "react";
-import Nis from "./AuthContext";
+import {  useState } from "react";
+import AuthContext from "./AuthContext";
 
-export const Auth = ({ children }) => {
+export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token") || "");
   const [role, setRole] = useState(localStorage.getItem("role") || "");
 
@@ -19,9 +19,11 @@ export const Auth = ({ children }) => {
     setRole("");
   };
 
+  
+
   return (
-    <Nis.Provider value={{ token, role, login, logout }}>
+    <AuthContext.Provider value={{ token, role, login, logout }}>
       {children}
-    </Nis.Provider>
+    </AuthContext.Provider>
   );
 };
