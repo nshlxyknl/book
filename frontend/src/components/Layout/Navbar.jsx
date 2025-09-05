@@ -1,6 +1,6 @@
 import { useAuth } from '@/context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom'
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 
 export default function Navbar() {
  const { token, logout } = useAuth();

@@ -1,8 +1,8 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import AdminDashboard from "./AdminDashboard";
-import BuyerDashboard from "./BuyerDashboard";
-import SellerDashboard from "./SellerDashboard";
+import AdminDashboard from "./page/AdminDashboard";
+import BuyerDashboard from "./page/BuyerDashboard";
+import SellerDashboard from "./page/SellerDashboard";
 
 const Dashboard = () => {
   const role = localStorage.getItem("role");

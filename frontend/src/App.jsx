@@ -2,9 +2,9 @@ import {BrowserRouter as Router, Routes ,Route, Navigate} from "react-router-dom
 import { HomePage } from "./pages/HomePage"
 import { Register } from "./pages/Register"
 import { Login } from "./pages/Login"
-import Navbar from "./components/Navbar"
-import { Footer } from "./components/Footer"
-import Dashboard from "./components/dashboard/Dashboard"
+import Navbar from "./components/Layout/Navbar"
+import { Footer } from "./components/Layout/Footer"
+import Dashboard from "./components/Dashboard/Dashboard"
 import { ProtectedRoutes } from "./components/Routes/ProtectedRoutes"
 import { PublicRoutes } from "./components/Routes/PublicRoutes"
 
