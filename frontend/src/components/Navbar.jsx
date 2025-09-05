@@ -1,6 +1,6 @@
 import { useAuth } from '@/context/AuthContext';
-import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Button } from './ui/button';
 
 export default function Navbar() {
@@ -9,8 +9,9 @@ export default function Navbar() {
 
 const handlelogout= () =>{
   logout();
-  navigate("/login" ,{replace: true})
+  navigate("/login", {replace: true})
 }
+
 
   return (
     <header className="w-full shadow-md bg-white dark:bg-gray-900">

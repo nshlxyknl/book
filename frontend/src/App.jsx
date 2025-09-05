@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar"
 import { Footer } from "./components/Footer"
 import Dashboard from "./components/dashboard/Dashboard"
 import { ProtectedRoutes } from "./components/Routes/ProtectedRoutes"
+import { PublicRoutes } from "./components/Routes/PublicRoutes"
 
 
 function App() {
@@ -14,12 +15,10 @@ function App() {
     <Navbar/>
 <Routes>
   <Route path='/' element={<Navigate to ='/home' replace/>} ></Route>
-  <Route path='/home' element={<HomePage/>} ></Route>
-  <Route path='/register' element={<Register/>} ></Route>
-  <Route path='/login' element={<Login/>} ></Route>
-  <Route path='/dashboard' element={<ProtectedRoutes>
-     <Dashboard/>
-  </ProtectedRoutes>} ></Route>
+  <Route path='/home' element={<PublicRoutes> <HomePage/> </PublicRoutes>} ></Route>
+  <Route path='/register' element={<PublicRoutes> <Register/> </PublicRoutes> } ></Route>
+  <Route path='/login' element={<PublicRoutes> <Login/> </PublicRoutes> } ></Route>
+  <Route path='/dashboard' element={<ProtectedRoutes> <Dashboard/> </ProtectedRoutes>}> </Route>
 </Routes>
  <Footer/>
 </Router>
