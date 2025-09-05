@@ -1,11 +1,16 @@
 import { useAuth } from '@/context/AuthContext';
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { Button } from './ui/button';
 
 export default function Navbar() {
  const { token, logout } = useAuth();
+ const navigate=useNavigate()
 
-
+const handlelogout= () =>{
+  logout();
+  navigate("/login" ,{replace: true})
+}
 
   return (
     <header className="w-full shadow-md bg-white dark:bg-gray-900">
@@ -23,7 +28,8 @@ export default function Navbar() {
 )
         :(
          <nav className="hidden md:flex space-x-6">
-          <Link to="/login" onClick={logout} className="hover:text-blue-600">Logout</Link>
+        <Button onClick={handlelogout} > Logout
+        </Button> 
           <Link to="/profile" className="hover:text-blue-600">Profile</Link>
         </nav>
         )}

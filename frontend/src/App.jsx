@@ -5,6 +5,7 @@ import { Login } from "./pages/Login"
 import Navbar from "./components/Navbar"
 import { Footer } from "./components/Footer"
 import Dashboard from "./components/dashboard/Dashboard"
+import { ProtectedRoutes } from "./components/Routes/ProtectedRoutes"
 
 
 function App() {
@@ -16,7 +17,9 @@ function App() {
   <Route path='/home' element={<HomePage/>} ></Route>
   <Route path='/register' element={<Register/>} ></Route>
   <Route path='/login' element={<Login/>} ></Route>
-  <Route path='/dashboard' element={<Dashboard/>} ></Route>
+  <Route path='/dashboard' element={<ProtectedRoutes>
+     <Dashboard/>
+  </ProtectedRoutes>} ></Route>
 </Routes>
  <Footer/>
 </Router>
