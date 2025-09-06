@@ -13,15 +13,15 @@ const jwt = require("jsonwebtoken");
  */
 exports.register = async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { username, password, role } = req.body;
 
  // Determine role based on username
- let role = 'buyer';
- if (username === 'admin' && password==='admin') {
-   role = 'admin';
- } else if (username === 'seller') {
-   role = 'seller';
- }
+//  let role = 'buyer';
+//  if (username === 'admin' && password==='admin') {
+//    role = 'admin';
+//  } else if (username === 'seller') {
+//    role = 'seller';
+//  }
 
     // Security: Check for duplicate usernames
     const userExists = await User.findOne({ username });

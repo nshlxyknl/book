@@ -3,6 +3,7 @@ import { Card, CardContent } from '../components/ui/card'
 import { Input } from '../components/ui/input'
 import { Button } from '../components/ui/button'
 import { Link, useNavigate} from 'react-router-dom'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
 export const Register = () => {
 
@@ -44,6 +45,16 @@ const res= await fetch("http://localhost:4000/logtype/register",{
                            <form  onSubmit={handlereg} className="space-y-4">
                                <Input type='text' placeholder= 'username' value={username} onChange={(e) => setUsername(e.target.value)} className={'p-4'}/>
                                <Input type='password' placeholder= 'password' value={password} onChange={(e) => setPassword(e.target.value)} className={'p-4'}/>
+                              <Select value={role} onValueChange={(value)=> setRole(value)} >
+                                                         <SelectTrigger>
+                                                           <SelectValue placeholder="Role" />
+                                                         </SelectTrigger>
+                                                    <SelectContent>
+                                                     <SelectItem value="buyer">Buyer</SelectItem>
+                                                     <SelectItem value="seller">Seller</SelectItem>
+                                                     <SelectItem value="admin">Admin</SelectItem>
+                                                     </SelectContent>
+                                                       </Select>
                               <div className="flex justify-center">
                                <Button type='submit' className="w-full sm:w-auto"> Register </Button>
                                </div>

@@ -4,7 +4,6 @@ import { Input } from '../components/ui/input'
 import { Button } from '../components/ui/button'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/context/AuthContext'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
 export const Login = () => {
     const [username, setUsername] = useState("");
@@ -47,16 +46,6 @@ const handleSubmit = async (e) => {
                     <form  onSubmit={handleSubmit} className="space-y-4">
                         <Input type='text' placeholder='username' value={username} onChange={(e) => setUsername(e.target.value)} className={'p-4'} />
                         <Input type='password' placeholder='password' value={password} onChange={(e) => setPassword(e.target.value)} className={'p-4'} />
-                          <Select value={role} onChange={(e)=> setRole(e.target.value)} >
-                            <SelectTrigger>
-                              <SelectValue placeholder="Role" />
-                            </SelectTrigger>
-                       <SelectContent>
-                        <SelectItem value="buyer">Buyer</SelectItem>
-                        <SelectItem value="seller">Seller</SelectItem>
-                        <SelectItem value="admin">Admin</SelectItem>
-                        </SelectContent>
-                          </Select>
                         <div className="flex justify-center">
                             <Button type='submit' className="w-full sm:w-auto"> Login </Button>
                         </div>
