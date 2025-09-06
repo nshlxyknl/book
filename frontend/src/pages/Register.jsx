@@ -48,7 +48,7 @@ const res= await fetch("http://localhost:4000/logtype/register",{
                                <Button type='submit' className="w-full sm:w-auto"> Register </Button>
                                </div>
                   <h3 className='text-center'> Already have an account? {""}
-                    <Link to ="/Login" className="text-blue-600 hover:underline">
+                    <Link to ="/login" className="text-blue-600 hover:underline">
                     Login
                     </Link>
                   </h3>
