@@ -9,6 +9,7 @@ export const Register = () => {
 
     const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
   const navigate = useNavigate();
 
   const handlereg= async (e) => {
@@ -18,10 +19,11 @@ try{
 const res= await fetch("http://localhost:4000/logtype/register",{
   method: "POST",
   headers: { "Content-Type":"application/json"},
-  body: JSON.stringify({ username, password }),
+  body: JSON.stringify({ username, password , role }),
  })
 
  const data= await res.json();
+ console.log(data);
 
  if(res.ok){
   alert("reg successful");
@@ -52,7 +54,6 @@ const res= await fetch("http://localhost:4000/logtype/register",{
                                                     <SelectContent>
                                                      <SelectItem value="buyer">Buyer</SelectItem>
                                                      <SelectItem value="seller">Seller</SelectItem>
-                                                     <SelectItem value="admin">Admin</SelectItem>
                                                      </SelectContent>
                                                        </Select>
                               <div className="flex justify-center">

@@ -21,7 +21,8 @@ const userSchema = new mongoose.Schema(
     role: {
       type: String,
       enum: ["admin", "buyer","seller"],
-      default: "buyer",
+      required: true,
+      // default: "buyer",
     },
   },
   // This option automatically adds createdAt and updatedAt timestamps

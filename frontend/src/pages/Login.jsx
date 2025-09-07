@@ -8,7 +8,6 @@ import { useAuth } from '@/context/AuthContext'
 export const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [role, setRole] = useState("");
     const navigate = useNavigate();
   const { login } = useAuth();
 
@@ -19,7 +18,7 @@ const handleSubmit = async (e) => {
       const res = await fetch("http://localhost:4000/logtype/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, password , role }),
       });
 
       const data = await res.json();
