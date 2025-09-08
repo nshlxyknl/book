@@ -1,8 +1,14 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { ShoppingCart, Users, DollarSign, Package } from "lucide-react"
+import { useState } from "react"
 
 export default function SellerDashboard() {
+  const [open,setOpen]=useState(false)
+
+
   return (
     <div className="min-h-screen my-10 bg-background p-6">
       <header className="mb-8">
@@ -46,7 +52,13 @@ export default function SellerDashboard() {
       </div>
 
       <div className="flex gap-4">
-        <Button>Add PDF</Button>
+        <Button onClick={()=>{setOpen(!open)}}>Add PDF</Button>
+       <Popover open={open} onOpenChange={setOpen}>
+        <PopoverContent>
+          <Input type="text" placeholder="xyz.pdf" />
+          <Input type="number" placeholder="$$" />
+        </PopoverContent>
+      </Popover>
       </div>
     </div>
   )
