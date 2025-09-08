@@ -18,7 +18,7 @@ const handleSubmit = async (e) => {
       const res = await fetch("http://localhost:4000/logtype/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password , role }),
+        body: JSON.stringify({ username, password  }),
       });
 
       const data = await res.json();

@@ -4,9 +4,9 @@ import { Register } from "./pages/Register"
 import { Login } from "./pages/Login"
 import Navbar from "./components/Layout/Navbar"
 import { Footer } from "./components/Layout/Footer"
-import Dashboard from "./components/Dashboard/Dashboard"
-import { ProtectedRoutes } from "./components/Routes/ProtectedRoutes"
-import { PublicRoutes } from "./components/Routes/PublicRoutes"
+import Dashboard from "./pages/Dashboard/Dashboard"
+import { ProtectedRoutes } from "./Routes/ProtectedRoutes"
+import { PublicRoutes } from "./Routes/PublicRoutes"
 
 
 function App() {
