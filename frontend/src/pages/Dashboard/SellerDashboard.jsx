@@ -19,7 +19,7 @@ export default function SellerDashboard() {
        const res= await fetch("http://localhost:4000/tasktype/upload",{
         method:"POST",
         headers: {"Content-Type" : "application/json"},
-        body: JSON.stringify({ title , price, pdfUrl})
+        body: JSON.stringify({ title , price, pdfUrl })
        })
 
       const data= await res.json();
@@ -34,6 +34,7 @@ export default function SellerDashboard() {
 
     } catch (error) {
       console.log('not submitted')
+      alert("error in submission")
     }
   }
 
