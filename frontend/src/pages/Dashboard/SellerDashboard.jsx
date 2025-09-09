@@ -16,10 +16,10 @@ export default function SellerDashboard() {
     e.preventDefault();
 
     const formdata = new FormData();
-    formdata.append("title",title)
-    formdata.append("price",price)
-    formdata.append("pdfUrl",pdfUrl)
-    
+    formdata.append("title", title)
+    formdata.append("price", price)
+    formdata.append("pdfUrl", pdfFile)
+
     try {
       const res = await fetch("http://localhost:4000/tasktype/upload", {
         method: "POST",

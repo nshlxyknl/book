@@ -17,14 +17,18 @@ const Task = require("../models/Book");
 exports.uploadpdf = async (req, res) => {
   try {
     // Extract task details from request body
-    const { title, price, pdfUrl } = req.body;
+    const { title, price } = req.body;
     const sellerId =req.user.userId;
+
+   if (!req.file || !req.file.path) {
+      return res.status(400).json({ message: "PDF file is required" });
+    }
 
     // Create and save new task, assignedBy comes from authenticated user
     const task = await Task.create({
       title,
       price,
-      pdfUrl,
+      pdfUrl:req.file.path,
       seller : sellerId
     });
     
