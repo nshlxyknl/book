@@ -39,7 +39,7 @@ export default function SellerDashboard() {
 
   useEffect(() => {
     if (!open) {
-      setOpen(true); 
+      setOpen(false); 
     }
   }, []);
 
@@ -91,9 +91,9 @@ export default function SellerDashboard() {
         </PopoverTrigger>
         <form onSubmit={handleadd}>
         <PopoverContent  className="flex flex-col gap-3 p-4 w-64 ml-10 ">
-          <Input type="text" placeholder="xyz" value={title} onChange={(e) => setTitle(e.target.value)} className="p-2 rounded-md "/>
+          <Input type="text" placeholder="xyz" value={title} onChange={(e) => setTitle(e.target.value)} className="p-2 rounded-md " />
           <Input type="number" placeholder="$$" value={price} onChange={(e) => setPrice(e.target.value)} className="p-2 rounded-md "/>
-          <Input type="file" placeholder=".pdf" value={pdfUrl} onChange={(e) => setUrl(e.target.value)} className="p-2 rounded-md "/>
+          <Input type="file" accept=".pdf" placeholder=".pdf"  onChange={(e) => setUrl(e.target.files[0])} className="p-2 rounded-md "/>
          
           <div className="flex justify-end gap-2 mt-2">
           <Button onClick={()=> setOpen(false)}>Cancel</Button>
