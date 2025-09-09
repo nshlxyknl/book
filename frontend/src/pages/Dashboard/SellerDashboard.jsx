@@ -18,13 +18,14 @@ export default function SellerDashboard() {
     const formdata = new FormData();
     formdata.append("title", title)
     formdata.append("price", price)
-    formdata.append("pdfUrl", pdfFile)
+    formdata.append("pdfUrl", pdfUrl)
 
     try {
       const res = await fetch("http://localhost:4000/tasktype/upload", {
         method: "POST",
         body: formdata
       })
+console.log(res)
 
       const data = await res.json();
       console.log(data);
@@ -102,7 +103,7 @@ export default function SellerDashboard() {
 
               <div className="flex justify-end gap-2 mt-2">
                 <Button onClick={() => setOpen(false)}>Cancel</Button>
-                <Button type="submit" onClick={() => { setOpen(false); }}>Add</Button>
+                <Button type="submit" onClick={() => {  setOpen(false); }}>Add</Button>
               </div>
             </PopoverContent>
           </form>
