@@ -7,6 +7,7 @@ import { Footer } from "./components/Layout/Footer"
 import Dashboard from "./pages/Dashboard/Dashboard"
 import { ProtectedRoutes } from "./Routes/ProtectedRoutes"
 import { PublicRoutes } from "./Routes/PublicRoutes"
+import { SellerList } from "./pages/UserPages/sellerlist"
 
 
 function App() {
@@ -15,10 +16,11 @@ function App() {
     <Navbar/>
 <Routes>
   <Route path='/' element={<Navigate to ='/home' replace/>} ></Route>
-  <Route path='/home' element={<PublicRoutes> <HomePage/> </PublicRoutes>} ></Route>
+  <Route path='/home' element={<PublicRoutes> <HomePage/> </PublicRoutes>}> </Route>
   <Route path='/register' element={<PublicRoutes> <Register/> </PublicRoutes> } ></Route>
   <Route path='/login' element={<PublicRoutes> <Login/> </PublicRoutes> } ></Route>
   <Route path='/dashboard' element={<ProtectedRoutes> <Dashboard/> </ProtectedRoutes>}> </Route>
+  <Route path='/sellerlist' element={<ProtectedRoutes> <SellerList/> </ProtectedRoutes>}> </Route>
 </Routes>
  <Footer/>
 </Router>

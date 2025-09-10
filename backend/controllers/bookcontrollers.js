@@ -18,9 +18,13 @@ exports.uploadpdf = async (req, res) => {
   try {
     // Extract task details from request body
     const { title, price } = req.body;
-    const sellerId =req.user.userId;
+    const sellerId =req.user?.userId;
 
-   if (!req.file || !req.file.path) {
+   if (!title || !price) {
+      return res.status(400).json({ message: "Title and price are required" });
+    }
+
+    if (!req.file || !req.file.path) {
       return res.status(400).json({ message: "PDF file is required" });
     }
 
