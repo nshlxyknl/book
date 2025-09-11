@@ -1,13 +1,13 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { ShoppingCart, DollarSign, Package } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Navigate } from "react-router-dom"
 
 export default function SellerDashboard() {
-  const [open, setOpen] = useState(false);
+  const [openPop, setOpenPop] = useState(false);
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [pdfFile, setPdfFile] = useState(null);
@@ -40,7 +40,7 @@ export default function SellerDashboard() {
 
       if (res.ok) {
         alert("upload success");
-        setOpen(false);
+        setOpenPop(false);
         setTitle("")
         setPrice("")
         setPdfFile(null)
@@ -102,23 +102,23 @@ export default function SellerDashboard() {
       </div>
 
       <div className="flex mx-4 ">
-        <Popover open={open} onOpenChange={setOpen} >
-          <PopoverTrigger asChild>
-            <Button onClick={() => setOpen(!open)}>Add PDF</Button>
-          </PopoverTrigger>
-            <PopoverContent className="flex flex-col gap-3 p-4 w-64 ml-10 ">
-          <form  onSubmit={handleadd}>
+        <Dialog open={openPop} onOpenChange={setOpenPop} >
+          <DialogTrigger asChild>
+            <Button onClick={() => setOpenPop(!openPop)}>Add PDF</Button>
+          </DialogTrigger>
+            <DialogContent className="max-w-md p-6 rounded-2xl shadow-lg bg-white ">
+          <form  onSubmit={handleadd} className="flex flex-col gap-4 mt-4">
               <Input type="text" placeholder="xyz" value={title} onChange={(e) => setTitle(e.target.value)} className="p-2 rounded-md " />
               <Input type="number" placeholder="$$" value={price} onChange={(e) => setPrice(e.target.value)} className="p-2 rounded-md " />
-              <Input type="file" accept=".pdf" placeholder=".pdf" onChange={(e) => setPdfFile(e.target.files[0])} className="p-2 rounded-md " />
+              <Input type="file"  placeholder=".pdf" accept=".pdf" onChange={(e) => setPdfFile(e.target.files[0])} className="p-2 rounded-md " />
 
-              <div className="flex justify-end gap-2 mt-2">
-                <Button type="button" onClick={() => setOpen(false)}>Cancel</Button>
+              <div className="flex justify-between gap-2 mt-2">
+                <Button type="button" onClick={() => setOpenPop(false)}>Cancel</Button>
                 <Button type="submit">Add</Button>
               </div>
           </form>
-            </PopoverContent>
-        </Popover>
+            </DialogContent>
+        </Dialog>
       </div>
     </div>
   )
