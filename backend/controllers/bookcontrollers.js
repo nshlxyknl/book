@@ -17,7 +17,7 @@ const Task = require("../models/Book");
 exports.uploadpdf = async (req, res) => {
   try {
     // Extract task details from request body
-    const { title, price } = req.body;
+    const { title, price} = req.body;
     const sellerId =req.user?.userId;
 
    if (!title || !price) {
@@ -28,12 +28,21 @@ exports.uploadpdf = async (req, res) => {
       return res.status(400).json({ message: "PDF file is required" });
     }
 
+ const previewUrl = req.cloudinary.url( {
+      page: 1,        
+      crop: "fill",
+      width: 300,
+      height: 400,
+      format: "jpg"
+    });
+
     // Create and save new task, assignedBy comes from authenticated user
     const task = await Task.create({
       title,
       price,
-      pdfUrl:req.file.path,
-      seller : sellerId
+      pdfUrl: req.file.path,
+      previewUrl: req.file.filename,
+      seller: sellerId
     });
     
     // Populate user details for the response

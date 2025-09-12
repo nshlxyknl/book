@@ -1,8 +1,29 @@
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { ShoppingCart, Users, DollarSign, Package } from "lucide-react"
+import { useEffect, useState } from "react";
+import BuyerCard from "../UserPages/BuyerCard";
 
-export default function BuyerDashboard({title, price , pdfUrl}) {
+
+export default function BuyerDashboard() {
+ const [uploads, setUploads] = useState([]);
+
+  useEffect(() => {
+    const fetchUploads = async () => {
+      try {
+        const res = await fetch("http://localhost:4000/tasktype/all",{
+          method:"GET",
+           headers: {
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  },
+      });
+        const data = await res.json();
+        setUploads(data.tasks);
+      } catch (err) {
+        console.error("Failed to fetch uploads", err);
+      }
+    };
+
+    fetchUploads();
+  }, []);
+
   return (
     <div className="min-h-screen my-10 bg-background p-6">
       <header className="mb-8">
@@ -10,39 +31,17 @@ export default function BuyerDashboard({title, price , pdfUrl}) {
         <p className="text-muted-foreground">Want some books?</p>
       </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-
-         <Card className="shadow-md hover:shadow-lg transition duration-200">
-      <CardHeader>
-        <CardTitle className="text-lg font-semibold">{title}</CardTitle>
-      </CardHeader>
-
-      <CardContent className="flex flex-col gap-3">
-        <p className="text-gray-600">Price: ${price}</p>
-
-        <div className="flex justify-between">
-          {/* For free viewing */}
-          <Button
-            asChild
-            variant="outline"
-          >
-            <a
-              href={pdfUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View
-            </a>
-          </Button>
-
-          {/* For paid option */}
-          <Button variant="default">Buy</Button>
-        </div>
-      </CardContent>
-    </Card>
-        
-
-      </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
+      {uploads.map((upload) => (
+        <BuyerCard
+          key={upload._id}
+          title={upload.title}
+          price={upload.price}
+          pdfUrl={upload.pdfUrl}
+          previewUrl={upload.previewUrl}
+        />
+      ))}
+    </div>
 
     </div>
   )

@@ -18,7 +18,7 @@ export const HomePage = () => {
           </Link>
           
           <Button asChild variant="outline" size="lg">
-          <a href='#f'> Learn More</a> 
+          <a href='#f'> Learn More </a> 
           </Button>
           
         </div>

@@ -33,7 +33,7 @@ export default function SellerDashboard() {
         method: "POST",
         body: formdata,
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`, // if auth required
+          Authorization: `Bearer ${localStorage.getItem("token")}`, 
         },
       })
 
@@ -122,9 +122,7 @@ export default function SellerDashboard() {
             </DialogContent>
         </Dialog>
       </div>
-       <div className="mt-6">
-        <Outlet />
-      </div>
+       
     </div>
     
   )
