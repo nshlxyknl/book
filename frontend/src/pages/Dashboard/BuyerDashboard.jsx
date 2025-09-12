@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ShoppingCart, Users, DollarSign, Package } from "lucide-react"
 
-export default function BuyerDashboard() {
+export default function BuyerDashboard({title, price , pdfUrl}) {
   return (
     <div className="min-h-screen my-10 bg-background p-6">
       <header className="mb-8">
@@ -12,25 +12,35 @@ export default function BuyerDashboard() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
 
-         <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Products</CardTitle>
-            <Package className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">234</div>
-          </CardContent>
-        </Card>
+         <Card className="shadow-md hover:shadow-lg transition duration-200">
+      <CardHeader>
+        <CardTitle className="text-lg font-semibold">{title}</CardTitle>
+      </CardHeader>
+
+      <CardContent className="flex flex-col gap-3">
+        <p className="text-gray-600">Price: ${price}</p>
+
+        <div className="flex justify-between">
+          {/* For free viewing */}
+          <Button
+            asChild
+            variant="outline"
+          >
+            <a
+              href={pdfUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View
+            </a>
+          </Button>
+
+          {/* For paid option */}
+          <Button variant="default">Buy</Button>
+        </div>
+      </CardContent>
+    </Card>
         
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Purchase</CardTitle>
-            <ShoppingCart className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">2</div>
-          </CardContent>
-        </Card>
 
       </div>
 

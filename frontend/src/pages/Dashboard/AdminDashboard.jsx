@@ -1,8 +1,12 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ShoppingCart, Users, DollarSign, Package } from "lucide-react"
+import { useNavigate } from "react-router-dom"
 
 export default function AdminDashboard() {
+
+const navigate= useNavigate();
+
   return (
     <div className="min-h-screen my-10 bg-background p-6">
       <header className="mb-8">
@@ -12,7 +16,7 @@ export default function AdminDashboard() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
 
-        <Card>
+        <Card onClick={()=>{navigate('/admin/mpdf')}}>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Manage PDF</CardTitle>
             <Package className="h-4 w-4 text-muted-foreground" />
@@ -22,7 +26,7 @@ export default function AdminDashboard() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card onClick={()=>{navigate('/admin/musers')}}>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Manage Users</CardTitle>
             <Users className="h-4 w-4 text-muted-foreground" />

@@ -4,13 +4,15 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { ShoppingCart, DollarSign, Package } from "lucide-react"
 import { useEffect, useState } from "react"
-import { Navigate } from "react-router-dom"
+import { Outlet, useNavigate } from "react-router-dom"
 
 export default function SellerDashboard() {
   const [openPop, setOpenPop] = useState(false);
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [pdfFile, setPdfFile] = useState(null);
+
+  const navigate= useNavigate();
 
 
   const handleadd = async (e) => {
@@ -69,7 +71,7 @@ export default function SellerDashboard() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
 
-        <Card >
+        <Card onClick={()=>{navigate('/seller/uploads')}}>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Uploads</CardTitle>
             <Package className="h-4 w-4 text-muted-foreground" />
@@ -120,6 +122,10 @@ export default function SellerDashboard() {
             </DialogContent>
         </Dialog>
       </div>
+       <div className="mt-6">
+        <Outlet />
+      </div>
     </div>
+    
   )
 }
