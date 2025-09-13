@@ -93,7 +93,6 @@ exports.getallpdf = async (req, res) => {
  */
 exports.getuserpdf = async (req, res) => {
   try {
-    // Find tasks where assignedTo matches the logged-in user's ID
     const tasks = await Task.find({ seller: req.user.userId })
       .populate("seller", "username")
       .sort({ createdAt: -1 });

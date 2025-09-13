@@ -2,9 +2,10 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
+import { useCount } from "@/context/CountContext"
 import { ShoppingCart, DollarSign, Package } from "lucide-react"
 import { useEffect, useState } from "react"
-import { Outlet, useNavigate } from "react-router-dom"
+import {  useNavigate } from "react-router-dom"
 
 export default function SellerDashboard() {
   const [openPop, setOpenPop] = useState(false);
@@ -15,7 +16,7 @@ export default function SellerDashboard() {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
-  const [countUploads, setCountUploads] = useState(0);
+  const {countUploads}=useCount()
 
 
   const handleadd = async (e) => {

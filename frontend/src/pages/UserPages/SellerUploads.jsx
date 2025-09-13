@@ -1,14 +1,16 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import BuyerCard from './BuyerCard'
+import { useCount } from '@/context/CountContext';
 
 export const SellerUploads = () => {
 
      const [uploads, setUploads] = useState([]);
+     const {setCountUploads, countUploads} = useCount();
     
       useEffect(() => {
         const fetchUploads = async () => {
           try {
-            const res = await fetch("http://localhost:4000/tasktype/all",{
+            const res = await fetch("http://localhost:4000/tasktype/user",{
               method:"GET",
                headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -16,6 +18,7 @@ export const SellerUploads = () => {
           });
             const data = await res.json();
             setUploads(data.tasks);
+            setCountUploads(data.count)
           } catch (err) {
             console.error("Failed to fetch uploads", err);
           }
@@ -23,6 +26,7 @@ export const SellerUploads = () => {
     
         fetchUploads();
       }, []);
+
 
   return (
      <div className="min-h-screen my-10 bg-background p-6">
@@ -45,3 +49,4 @@ export const SellerUploads = () => {
   
   )
 }
+
