@@ -1,4 +1,5 @@
 const Task = require("../models/Book");
+const cloudinary = require("cloudinary").v2;
 
 /**
  * Task Controller: Handles all task-related operations in the backend
@@ -17,10 +18,10 @@ const Task = require("../models/Book");
 exports.uploadpdf = async (req, res) => {
   try {
     // Extract task details from request body
-    const { title, price} = req.body;
-    const sellerId =req.user?.userId;
+    const { title, price } = req.body;
+    const sellerId = req.user?.userId;
 
-   if (!title || !price) {
+    if (!title || !price) {
       return res.status(400).json({ message: "Title and price are required" });
     }
 
@@ -28,8 +29,10 @@ exports.uploadpdf = async (req, res) => {
       return res.status(400).json({ message: "PDF file is required" });
     }
 
- const previewUrl = req.cloudinary.url( {
-      page: 1,        
+ const publicId = req.file.filename; 
+
+    const preview = cloudinary.url(publicId,{
+      page: 1,
       crop: "fill",
       width: 300,
       height: 400,
@@ -41,10 +44,10 @@ exports.uploadpdf = async (req, res) => {
       title,
       price,
       pdfUrl: req.file.path,
-      previewUrl: req.file.filename,
+      previewUrl: preview,
       seller: sellerId
     });
-    
+
     // Populate user details for the response
     await task.populate("seller", "username"); // if 'seller' is a ref to User
 
@@ -65,7 +68,7 @@ exports.uploadpdf = async (req, res) => {
  * Only admins can use this function (protected by middleware)
  */
 exports.getallpdf = async (req, res) => {
-  try { 
+  try {
     // Find all tasks and include user details for assignedTo and assignedBy
     const tasks = await Task.find()
       .populate("seller", "username")
@@ -91,7 +94,7 @@ exports.getallpdf = async (req, res) => {
 exports.getuserpdf = async (req, res) => {
   try {
     // Find tasks where assignedTo matches the logged-in user's ID
-    const tasks = await Task.find({ seller : req.user.userId })
+    const tasks = await Task.find({ seller: req.user.userId })
       .populate("seller", "username")
       .sort({ createdAt: -1 });
 
@@ -101,10 +104,10 @@ exports.getuserpdf = async (req, res) => {
       message: "Your tasks retrieved successfully",
     });
   } catch (error) {
-    res.status(500).json({ 
+    res.status(500).json({
       message: "Could not fetch your tasks",
       details: error.message,
-    }); 
+    });
   }
 };
 
@@ -119,7 +122,7 @@ exports.updateTaskStatus = async (req, res) => {
     const task = await Task.findOneAndUpdate(
       {
         _id: req.params.id,
-        seller : req.user.userId,
+        seller: req.user.userId,
       },
       { status: req.body.status },
       { new: true }
@@ -157,21 +160,22 @@ exports.delpdf = async (req, res) => {
       });
     }
 
-  if (
- req.user.role=== 'admin' ||
- book.seller.toString()== req.user.id
-  ){
-    await Task.findByIdAndDelete(req.params.id)
-  
-    res.json({
-      message: "Task deleted successfully",
-    });}
+    if (
+      req.user.role === 'admin' ||
+      book.seller.toString() == req.user.id
+    ) {
+      await Task.findByIdAndDelete(req.params.id)
 
-  else{
-     return res.status(403).json({
+      res.json({
+        message: "Task deleted successfully",
+      });
+    }
+
+    else {
+      return res.status(403).json({
         message: "Not authorized to delete this book",
       });
-  }
+    }
   } catch (error) {
     res.status(500).json({
       message: "Could not delete task",
