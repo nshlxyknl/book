@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import BuyerCard from './BuyerCard'
 import { useCount } from '@/context/CountContext';
+import SellerCard from './SellerCard';
 
 export const SellerUploads = () => {
 
      const [uploads, setUploads] = useState([]);
-     const {setCountUploads, countUploads} = useCount();
+     const {setCountUploads} = useCount();
     
       useEffect(() => {
         const fetchUploads = async () => {
@@ -36,7 +36,7 @@ export const SellerUploads = () => {
 
    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
          {uploads.map((upload) => (
-           <BuyerCard
+           <SellerCard
              key={upload._id}
              title={upload.title}
              price={upload.price}

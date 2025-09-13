@@ -2,7 +2,13 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-export default function BuyerCard({ title, price, pdfUrl, previewUrl }) {
+export default function SellerCard({ title, price, pdfUrl, previewUrl }) {
+
+    const handledel=async(e)=>{
+        
+
+    }
+
   return (
     <Card className="shadow-md hover:shadow-lg transition duration-200">
       <CardHeader>
@@ -26,7 +32,7 @@ export default function BuyerCard({ title, price, pdfUrl, previewUrl }) {
               View
             </a>
           </Button>
-          <Button variant="default">Buy</Button>
+          <Button onclick={handledel} variant="destructive">Delete</Button>
         </div>
       </CardContent>
     </Card>
