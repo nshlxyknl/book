@@ -1,40 +1,64 @@
 
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useEffect } from "react";
 
-export default function SellerCard({ title, price, pdfUrl, previewUrl }) {
+export default function SellerCard({_id, title, price, pdfUrl, previewUrl, onDelete }) {
 
-    const handledel=async(e)=>{
-        
+    const handledel = async (e) => {
+        e.preventDefault();
 
+        try {
+            const res = await fetch(`http://localhost:4000/tasktype/del/${_id}`, {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+            })
+console.log(res)
+  
+            if(res.ok){
+            alert("deleted")
+             onDelete(_id);
+            }else{
+                alert("not deleted")
+            }
+        } catch (err) {
+            alert("error")
+        }
     }
 
-  return (
-    <Card className="shadow-md hover:shadow-lg transition duration-200">
-      <CardHeader>
-        <CardTitle className="text-lg font-semibold">{title}</CardTitle>
-      </CardHeader>
+    // useEffect(() => {
+    //     handledel()
+    // }
+    //     , [])
 
-      <CardContent className="flex flex-col gap-3">
-        {previewUrl && (
-          <img
-            src={previewUrl}
-            alt={title}
-            className="w-full h-48 object-cover rounded-md border"
-          />
-        )}
+    return (
+        <Card className="shadow-md hover:shadow-lg transition duration-200">
+            <CardHeader>
+                <CardTitle className="text-lg font-semibold">{title}</CardTitle>
+            </CardHeader>
 
-        <p className="text-gray-600">Price: ${price}</p>
+            <CardContent className="flex flex-col gap-3">
+                {previewUrl && (
+                    <img
+                        src={previewUrl}
+                        alt={title}
+                        className="w-full h-48 object-cover rounded-md border"
+                    />
+                )}
 
-        <div className="flex justify-between">
-          <Button asChild variant="outline">
-            <a href={pdfUrl} target="_blank" rel="noopener noreferrer">
-              View
-            </a>
-          </Button>
-          <Button onclick={handledel} variant="destructive">Delete</Button>
-        </div>
-      </CardContent>
-    </Card>
-  );
+                <p className="text-gray-600">Price: ${price}</p>
+
+                <div className="flex justify-between">
+                    <Button asChild variant="outline">
+                        <a href={pdfUrl} target="_blank" rel="noopener noreferrer">
+                            View
+                        </a>
+                    </Button>
+                    <Button onClick={handledel} variant="destructive">Delete</Button>
+                </div>
+            </CardContent>
+        </Card>
+    );
 }

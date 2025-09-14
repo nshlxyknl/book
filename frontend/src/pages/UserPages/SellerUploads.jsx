@@ -38,10 +38,12 @@ export const SellerUploads = () => {
          {uploads.map((upload) => (
            <SellerCard
              key={upload._id}
+             _id={upload._id}
              title={upload.title}
              price={upload.price}
              pdfUrl={upload.pdfUrl}
              previewUrl={upload.previewUrl}
+             onDelete={(id) => setUploads(prev => prev.filter(u => u._id !== id))}
            />
          ))}
        </div>

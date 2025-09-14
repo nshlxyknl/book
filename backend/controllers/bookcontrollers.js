@@ -29,9 +29,9 @@ exports.uploadpdf = async (req, res) => {
       return res.status(400).json({ message: "PDF file is required" });
     }
 
- const publicId = req.file.filename; 
+    const publicId = req.file.filename;
 
-    const preview = cloudinary.url(publicId,{
+    const preview = cloudinary.url(publicId, {
       page: 1,
       crop: "fill",
       width: 300,
@@ -159,9 +159,10 @@ exports.delpdf = async (req, res) => {
       });
     }
 
+
     if (
       req.user.role === 'admin' ||
-      book.seller.toString() == req.user.id
+      book.seller.toString() === req.user.userId
     ) {
       await Task.findByIdAndDelete(req.params.id)
 
