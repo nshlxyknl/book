@@ -4,7 +4,9 @@ const { uploadpdf,
         delpdf,
         getallpdf,
         getuserpdf,
-        updateTaskStatus
+        updateTaskStatus,
+        getcart,
+
  }=require(`../controllers/bookcontrollers`)
 const auth=require(`../middlewares/auth`)
 const checkRole = require("../middlewares/roleCheck")
@@ -13,6 +15,7 @@ const { upload } = require("../config/cloudinary")
 router.post(`/upload`,auth, checkRole("seller"), upload.single("pdf"), uploadpdf)
 router.delete(`/del/:id`,auth, delpdf)
 router.get(`/all`,auth, getallpdf)
+router.get(`/cart`,auth, getcart)
 router.get(`/user`,auth,getuserpdf)
 router.put(`/:id`,auth,updateTaskStatus)
 

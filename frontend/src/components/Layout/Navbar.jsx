@@ -2,14 +2,23 @@ import { useAuth } from '@/context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom'
 import { Button } from '../ui/button';
 import { ShoppingCartIcon } from 'lucide-react';
+import { Sheet, SheetContent, SheetFooter, SheetTrigger } from '../ui/sheet';
+import { useState } from 'react';
+import { SheetCard } from '@/pages/UserPages/SheetCard';
 
 export default function Navbar() {
   const { token, logout, role } = useAuth();
   const navigate = useNavigate()
 
+  const [openSheet,setOpenSheet] =useState(false)
+
   const handlelogout = () => {
     logout();
     navigate("/login", { replace: true })
+  }
+
+  const handlecart = () => {
+    cart();
   }
 
 
@@ -27,18 +36,38 @@ export default function Navbar() {
             <Link to="/login" className="hover:text-blue-600">Login</Link>
           </nav>
         )
-          : ( 
+          : (
             <nav className="hidden md:flex space-x-6">
               {
-                (role == 'buyer') ? 
-                <Button onClick={handlecart}>
-                   <ShoppingCartIcon />
-                </Button>
+                (role == 'buyer') ? (
+                    <div>
+                  <Sheet open={openSheet} onOpenChange={setOpenSheet}>
+                    <SheetTrigger asChild>
+                    <Button variant="outline" > <ShoppingCartIcon /> </Button>
+                    </SheetTrigger>
+                    <SheetContent>
+                  <div>
+                  <SheetCard />
+                  </div>
+                  <SheetFooter>
+                  <div className="flex justify-between gap-2 mt-2">
+                    <Button variant="default" >Checkout</Button>
+                    <Button variant="outline" onClick={()=>{setOpenSheet(false)}}>Continue Shopping</Button>
+                  </div>
+                  </SheetFooter>
+                    </SheetContent>
+                  </Sheet>
+
+                
+                  </div>
+                )
                   : ""
-              } 
-              <Button onClick={handlelogout} > Logout
+              }
+              <Button variant="destructive" onClick={handlelogout} > Logout
               </Button>
-              <Link to="/profile" className="hover:text-blue-600">Profile</Link>
+              <Button variant="outline">
+              <Link to="/profile">Profile</Link>
+              </Button>
             </nav>
           )}
       </div>
