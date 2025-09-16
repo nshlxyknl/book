@@ -14,8 +14,6 @@ exports.getcart = async (req, res) => {
   }
 }
 
-
-
 exports.addcart = async (req, res) => {
     try {
         const {userId, productId, price ,title}=req.body;
@@ -43,8 +41,6 @@ exports.addcart = async (req, res) => {
       details: error.message,
     })
 }}
-
-
 
 exports.deletecart = async (req, res) => {
 try {
