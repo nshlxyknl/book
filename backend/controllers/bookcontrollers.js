@@ -184,16 +184,3 @@ exports.delpdf = async (req, res) => {
   }
 };
 
-//add button >buyerid >productid >db store >
-
-exports.getcart = async (req, res) => {
-  try {
-    const { title, price}=req.user.Id;
-
-  } catch (error) {
-    res.status(500).json({
-      message: "Could not add to cart",
-      details: error.message,
-    })
-  }
-}
