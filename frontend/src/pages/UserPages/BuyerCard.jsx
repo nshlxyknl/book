@@ -1,29 +1,38 @@
 
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 export default function BuyerCard({ title, price, pdfUrl, previewUrl }) {
 
+  const navigate = useNavigate();
   const addcart = async (e) => {
-     e.preventDefault();
+    e.preventDefault();
     try {
-      const res = await fetch( "http://localhost:4000/carttype/add",
+      const res = await fetch("http://localhost:4000/carttype/add",
         {
-         method: "POST",
-          headers: `Bearer ${localStorage.getItem("token")}`,
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`,
+            "Content": "application/json"
+          },
+          body: JSON.stringify({ userId, productId, title, price })
         }
       )
-    
+
       const data = await res.json();
       console.log(data);
+
+      if (res.ok) {
+        alert("added in your cart")
+      } else {
+        alert("error")
+      }
 
     } catch (error) {
       console.log("error")
     }
-
-
   }
-
 
   return (
     <Card className="shadow-md hover:shadow-lg transition duration-200">
