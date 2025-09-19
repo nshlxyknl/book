@@ -14,8 +14,6 @@ exports.getcart = async (req, res) => {
 }
 
 
-
-
 exports.addcart = async (req, res) => {
     try {
         const { userId, productId, price, title } = req.body;

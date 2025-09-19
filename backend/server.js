@@ -20,6 +20,7 @@ app.get('/', (req, res) => {
 });
 app.use(`/logtype`,require(`./routes/auth`))
 app.use(`/tasktype`,require(`./routes/books`))
+app.use(`/carttype`,require(`./routes/cart`))
 
 app.listen(PORT,() => {
     console.log(`Server running on port ${PORT}`);
