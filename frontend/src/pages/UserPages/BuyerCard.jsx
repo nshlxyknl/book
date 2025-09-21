@@ -3,9 +3,9 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 
-export default function BuyerCard({ title, price, pdfUrl, previewUrl }) {
-
-  const navigate = useNavigate();
+export default function BuyerCard({ _id, title, price, pdfUrl, previewUrl }) {
+   const navigate = useNavigate();
+   
   const addcart = async (e) => {
     e.preventDefault();
     try {
@@ -14,9 +14,9 @@ export default function BuyerCard({ title, price, pdfUrl, previewUrl }) {
           method: "POST",
           headers: {
             "Authorization": `Bearer ${localStorage.getItem("token")}`,
-            "Content": "application/json"
+            "Content-Type": "application/json"
           },
-          body: JSON.stringify({ userId, productId, title, price })
+          body: JSON.stringify({ productId: _id, title, price })
         }
       )
 
@@ -30,7 +30,7 @@ export default function BuyerCard({ title, price, pdfUrl, previewUrl }) {
       }
 
     } catch (error) {
-      console.log("error")
+      console.error("error")
     }
   }
 
