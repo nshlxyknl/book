@@ -29,14 +29,14 @@ exports.register = async (req, res) => {
 
     // Generate JWT token for immediate login
     const token = jwt.sign(
-      { userId: user._id , role: user.role},
+      { userId: user.id , role: user.role},
       process.env.JWT_SECRET,
       { expiresIn: "24h" }
     );
 
     res.status(201).json({ token, 
       user: {
-        id: user._id,
+        id: user.id,
         username,
         role: user.role,
       },
@@ -82,7 +82,7 @@ exports.login = async (req, res) => {
 
     // Generate JWT token on successful login
     const token = jwt.sign(
-      { userId: user._id, role:user.role },
+      { userId: user.id, role:user.role },
       process.env.JWT_SECRET,
       { expiresIn: "24h" }
     );
@@ -90,7 +90,7 @@ exports.login = async (req, res) => {
     res.json({
       token,
       user: {
-        id: user._id,
+        id: user.id,
         username,
         role: user.role,
       },

@@ -35,6 +35,7 @@ export default function BuyerDashboard() {
       {uploads.map((upload) => (
         <BuyerCard
           key={upload._id}
+          _id={upload._id}
           title={upload.title}
           price={upload.price}
           pdfUrl={upload.pdfUrl}

@@ -17,8 +17,8 @@ export default function Navbar() {
     navigate("/login", { replace: true })
   }
 
-  const handlecart = () => {
-    cart();
+  const getcart = () => {
+    
   }
 
 
@@ -51,7 +51,7 @@ export default function Navbar() {
                   </div>
                   <SheetFooter>
                   <div className="flex justify-between gap-2 mt-2">
-                    <Button variant="default" >Checkout</Button>
+                    <Button variant="default"> Checkout</Button>
                     <Button variant="outline" onClick={()=>{setOpenSheet(false)}}>Continue Shopping</Button>
                   </div>
                   </SheetFooter>

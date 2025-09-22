@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function BuyerCard({ _id, title, price, pdfUrl, previewUrl }) {
    const navigate = useNavigate();
-   
+
   const addcart = async (e) => {
     e.preventDefault();
     try {
