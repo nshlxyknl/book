@@ -3,23 +3,43 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Button } from '../ui/button';
 import { ShoppingCartIcon } from 'lucide-react';
 import { Sheet, SheetContent, SheetFooter, SheetTrigger } from '../ui/sheet';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SheetCard } from '@/pages/UserPages/SheetCard';
 
 export default function Navbar() {
   const { token, logout, role } = useAuth();
   const navigate = useNavigate()
 
-  const [openSheet,setOpenSheet] =useState(false)
+  const [openSheet, setOpenSheet] = useState(false)
 
   const handlelogout = () => {
     logout();
     navigate("/login", { replace: true })
   }
 
-  const getcart = () => {
-    
-  }
+  //taneko buyercard ra dashboard bata  
+
+   const [uploads, setUploads] = useState([]);
+
+  useEffect(() => {
+    const fetchUploads = async () => {
+      try {
+        const res = await fetch("http://localhost:4000/carttype/get",{
+          method:"GET",
+           headers: {
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  },
+      });
+        const data = await res.json();
+        console.log(data)
+        setUploads(data.tasks);
+      } catch (err) {
+        console.error("Failed to fetch uploads", err);
+      }
+    };
+
+    fetchUploads();
+  }, []);
 
 
   return (
@@ -40,25 +60,32 @@ export default function Navbar() {
             <nav className="hidden md:flex space-x-6">
               {
                 (role == 'buyer') ? (
-                    <div>
-                  <Sheet open={openSheet} onOpenChange={setOpenSheet}>
-                    <SheetTrigger asChild>
-                    <Button variant="outline" > <ShoppingCartIcon /> </Button>
-                    </SheetTrigger>
-                    <SheetContent>
                   <div>
-                  <SheetCard />
-                  </div>
-                  <SheetFooter>
-                  <div className="flex justify-between gap-2 mt-2">
-                    <Button variant="default"> Checkout</Button>
-                    <Button variant="outline" onClick={()=>{setOpenSheet(false)}}>Continue Shopping</Button>
-                  </div>
-                  </SheetFooter>
-                    </SheetContent>
-                  </Sheet>
+                    <Sheet open={openSheet} onOpenChange={setOpenSheet}>
+                      <SheetTrigger asChild>
+                        <Button variant="outline" > <ShoppingCartIcon /> </Button>
+                      </SheetTrigger>
+                      <SheetContent>
+                        <div>
+                           {uploads.map((upload) => (
+                                  <SheetCard
+                                    key={upload._id}
+                                    _id={upload._id}
+                                    title={upload.title}
+                                    price={upload.price}
+                                  />
+                                ))}
+                        </div>
+                        <SheetFooter>
+                          <div className="flex justify-between gap-2 mt-2">
+                            <Button variant="default"> Checkout</Button>
+                            <Button variant="outline" onClick={() => { setOpenSheet(false) }}>Continue Shopping</Button>
+                          </div>
+                        </SheetFooter>
+                      </SheetContent>
+                    </Sheet>
 
-                
+
                   </div>
                 )
                   : ""
@@ -66,7 +93,7 @@ export default function Navbar() {
               <Button variant="destructive" onClick={handlelogout} > Logout
               </Button>
               <Button variant="outline">
-              <Link to="/profile">Profile</Link>
+                <Link to="/profile">Profile</Link>
               </Button>
             </nav>
           )}

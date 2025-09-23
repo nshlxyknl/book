@@ -1,10 +1,8 @@
 
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
 
 export default function BuyerCard({ _id, title, price, pdfUrl, previewUrl }) {
-   const navigate = useNavigate();
 
   const addcart = async (e) => {
     e.preventDefault();

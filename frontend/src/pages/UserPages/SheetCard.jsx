@@ -6,7 +6,7 @@ import React from 'react'
 
 export const SheetCard = ({ title, price }) => {
 
-    const {cartItems , cartCount} = useCart()
+    const {cartItems} = useCart()
 
     return (
        <div className="p-4 w-80 bg-white shadow-lg">

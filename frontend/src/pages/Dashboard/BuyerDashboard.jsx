@@ -24,6 +24,8 @@ export default function BuyerDashboard() {
     fetchUploads();
   }, []);
 
+  
+
   return (
     <div className="min-h-screen my-10 bg-background p-6">
       <header className="mb-8">
