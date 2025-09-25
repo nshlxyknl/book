@@ -2,7 +2,7 @@ import { useAuth } from '@/context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom'
 import { Button } from '../ui/button';
 import { ShoppingCartIcon } from 'lucide-react';
-import { Sheet, SheetContent, SheetFooter, SheetTrigger } from '../ui/sheet';
+import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTrigger } from '../ui/sheet';
 import { useEffect, useState } from 'react';
 import { SheetCard } from '@/pages/UserPages/SheetCard';
 import { useCart } from '@/context/CartContext';
@@ -71,16 +71,20 @@ export default function Navbar() {
                       </SheetTrigger>
                       <SheetContent>
                         <div>
+                           <h2 className="font-bold text-lg mb-2">Your Cart</h2>
                           { uploads?.length > 0 ?
                            (uploads
                             .filter(item => item && item.title && item.price)
                             .map((upload) => (
+                              <>
                                   <SheetCard
                                     key={upload._id}
                                     _id={upload._id}
                                     title={upload.title}
                                     price={upload.price}
                                   />
+                                
+                                  </>
                                 ))) :
                                 <div> empty </div>
                                 }
@@ -93,8 +97,6 @@ export default function Navbar() {
                         </SheetFooter>
                       </SheetContent>
                     </Sheet>
-
-
                   </div>
                 )
                   : ""

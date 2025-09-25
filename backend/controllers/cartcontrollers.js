@@ -54,9 +54,16 @@ exports.addcart = async (req, res) => {
 
 exports.deletecart = async (req, res) => {
     try {
-        let cart = await Cart.findOne({ userId: req.params.userId });
-        if (!cart) return res.json([]);
-        cart.items = cart.items.filter(item => item.productId.toString() !== req.params.productId);
+        let cart = await Cart.findOne({ userId: req.user.userId });
+        const { productId } = req.body;
+
+         if (!cart) 
+            return res.status(404).json({ message: "Cart not found" });
+
+        cart.items = cart.items.filter(
+      (item) => item.productId.toString() !== productId
+    );
+
         await cart.save();
         res.json(cart.items);
 
