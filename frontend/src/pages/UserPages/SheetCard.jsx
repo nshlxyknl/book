@@ -4,17 +4,16 @@ import React from 'react'
 
 
 
-export const SheetCard = ({ title, price }) => {
+export const SheetCard = () => {
 
     const {cartItems} = useCart()
+    console.log(cartItems)
 
     return (
-       <div className="p-4 w-80 bg-white shadow-lg">
+      <div>
       <h2 className="font-bold text-lg mb-2">Your Cart</h2>
-      {cartItems.length === 0 ? (
-        <p className="text-gray-500">Cart is empty</p>
-      ) : (
-        cartItems.map((item) => (
+       <div className="p-4 w-80 bg-white shadow-lg">
+      
           <div
             key={item.productId}
             className="flex justify-between items-center border-b py-2"
@@ -27,8 +26,8 @@ export const SheetCard = ({ title, price }) => {
             </div>
             <p className="font-bold">${item.price * item.quantity}</p>
           </div>
-        ))
-      )}
+          
+    </div>
     </div>
     )
 }

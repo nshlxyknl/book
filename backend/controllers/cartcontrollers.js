@@ -1,9 +1,11 @@
 const Cart = require("../models/Cart")
+const Book = require("../models/Book")
 //add button >buyerid >productid >db store >
 
 exports.getcart = async (req, res) => {
     try {
         const cart = await Cart.findOne({ userId: req.user.userId });
+        
         res.json(cart ? cart.items : []);
     } catch (error) {
         res.status(500).json({
@@ -15,9 +17,17 @@ exports.getcart = async (req, res) => {
 
 exports.addcart = async (req, res) => {
     try {
-        console.log(req.user)
+        
         const userId =req.user.userId;
         const {  productId, price, title } = req.body;
+
+         if (!productId) {
+      return res.status(400).json({ message: "ProductId is required" });
+    }
+
+    const product = await Book.findById(productId);
+    if (!product) return res.status(404).json({ message: "Product not found" });
+
         let cart = await Cart.findOne({ userId });
         if (!cart) {
             cart = new Cart({ userId, items: [] });

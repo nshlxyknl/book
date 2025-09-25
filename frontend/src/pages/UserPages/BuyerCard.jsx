@@ -1,35 +1,17 @@
 
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useCart } from "@/context/CartContext";
+
+
 
 export default function BuyerCard({ _id, title, price, pdfUrl, previewUrl }) {
 
-  const addcart = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await fetch("http://localhost:4000/carttype/add",
-        {
-          method: "POST",
-          headers: {
-            "Authorization": `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ productId: _id, title, price })
-        }
-      )
-
-      const data = await res.json();
-      console.log(data);
-
-      if (res.ok) {
-        alert("added in your cart")
-      } else {
-        alert("error")
-      }
-
-    } catch (error) {
-      console.error("error")
-    }
+  const {cartadd} =useCart()
+  
+  const addcart =  () => {
+    cartadd({ _id, title, price });
+    
   }
 
   return (

@@ -5,10 +5,14 @@ import { ShoppingCartIcon } from 'lucide-react';
 import { Sheet, SheetContent, SheetFooter, SheetTrigger } from '../ui/sheet';
 import { useEffect, useState } from 'react';
 import { SheetCard } from '@/pages/UserPages/SheetCard';
+import { useCart } from '@/context/CartContext';
+
 
 export default function Navbar() {
   const { token, logout, role } = useAuth();
   const navigate = useNavigate()
+
+   const { cart } = useCart(); 
 
   const [openSheet, setOpenSheet] = useState(false)
 
@@ -31,8 +35,8 @@ export default function Navbar() {
   },
       });
         const data = await res.json();
-        console.log(data)
-        setUploads(data.tasks);
+        console.log("d",data)
+        setUploads(data);
       } catch (err) {
         console.error("Failed to fetch uploads", err);
       }
@@ -67,14 +71,19 @@ export default function Navbar() {
                       </SheetTrigger>
                       <SheetContent>
                         <div>
-                           {uploads.map((upload) => (
+                          { uploads?.length > 0 ?
+                           (uploads
+                            .filter(item => item && item.title && item.price)
+                            .map((upload) => (
                                   <SheetCard
                                     key={upload._id}
                                     _id={upload._id}
                                     title={upload.title}
                                     price={upload.price}
                                   />
-                                ))}
+                                ))) :
+                                <div> empty </div>
+                                }
                         </div>
                         <SheetFooter>
                           <div className="flex justify-between gap-2 mt-2">

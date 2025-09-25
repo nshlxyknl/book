@@ -3,17 +3,42 @@ import CartContext from './CartContext';
 
 export const CartProvider = ({ children }) => {
 
-const [cartCount, setCartCount] = useState(0);
-  const [cartItems, setCartItems] = useState([]);
+// const [cartCount, setCartCount] = useState(0);
+const [cartItems, setCartItems] = useState([]);
 
   const updateCart = (newCart) => {
     setCartItems(newCart.items);
-    setCartCount(newCart.items.reduce((acc, item) => acc + item.quantity, 0));
+    // setCartCount(newCart.items.reduce((acc, item) => acc + item.quantity, 0));
   };
 
+  const cartadd= async({ _id, title, price })=>{
+      try {
+        const res = await fetch("http://localhost:4000/carttype/add",
+          {
+            method: "POST",
+            headers: {
+              "Authorization": `Bearer ${localStorage.getItem("token")}`,
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ productId: _id, title, price })
+          }
+        )
+  
+        const hi = await res.json();
+        updateCart(hi)
+  
+        if (res.ok) {
+          alert("added in your cart")
+        } else {
+          alert("error")
+        }
+      } catch (error) {
+        console.error("error")
+      }
+    }
 
     return (
-        <CartContext.Provider value={{cartCount,cartItems,updateCart}}>
+        <CartContext.Provider value={{cartItems,cartadd}}>
             {children}
         </CartContext.Provider>
     )
