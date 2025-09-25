@@ -1,13 +1,8 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { useCart } from '@/context/CartContext'
+
 import React from 'react'
-
-
 
 export const SheetCard = () => {
 
-    const {cartItems} = useCart()
-    console.log(cartItems)
 
     return (
       <div>
@@ -15,18 +10,17 @@ export const SheetCard = () => {
        <div className="p-4 w-80 bg-white shadow-lg">
       
           <div
-            key={item.productId}
-            className="flex justify-between items-center border-b py-2"
-          >
+            key={productId}
+            className="flex justify-between items-center border-b py-2">
             <div>
-              <h3 className="font-semibold">{item.title}</h3>
+              <h3 className="font-semibold">{title}</h3>
               <p className="text-sm text-gray-600">
-                ${item.price} × {item.quantity}
+                ${price} × {quantity}
               </p>
             </div>
-            <p className="font-bold">${item.price * item.quantity}</p>
+            <p className="font-bold">${price * quantity}</p>
           </div>
-          
+
     </div>
     </div>
     )
