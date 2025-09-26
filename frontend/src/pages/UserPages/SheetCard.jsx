@@ -5,6 +5,8 @@ import React from 'react'
 export const SheetCard = ({title,price, quantity}) => {
 
     const delcart = async()=>{
+
+      try{
       const res = await fetch("http://localhost:4000/carttype/delete",{
         method: "DELETE",
         headers: {
@@ -12,9 +14,14 @@ export const SheetCard = ({title,price, quantity}) => {
         }
       })
 
-      const data=res.json();
+      const data= await res.json();
+      console.log("hhjcbnc",data)
+      alert("deleted successfully")
     }
-
+    catch(error){
+      alert("error")
+    }
+  }
     return (
       
        
@@ -31,7 +38,7 @@ export const SheetCard = ({title,price, quantity}) => {
             <p className="font-bold">${price * quantity}</p>
           </div>
 
-          <Button variant="destructive" onclick={delcart}> Delete </Button>
+          <Button variant="destructive" onClick={delcart}> Delete </Button>
     </div>
     
     )
