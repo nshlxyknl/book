@@ -79,9 +79,11 @@ export default function Navbar() {
                               <>
                                   <SheetCard
                                     key={upload._id}
-                                    _id={upload._id}
+                                    productId={upload._id}
                                     title={upload.title}
                                     price={upload.price}
+                                     onDelete={(deletedId) =>
+          setUploads((prev) => prev.filter((u) => u._id !== deletedId))}
                                   />
                                 
                                   </>
