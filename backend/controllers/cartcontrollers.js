@@ -65,7 +65,7 @@ exports.deletecart = async (req, res) => {
     );
 
         await cart.save();
-        res.json(cart.items);
+       return res.json(cart.items);
 
     } catch (error) {
         res.status(500).json({

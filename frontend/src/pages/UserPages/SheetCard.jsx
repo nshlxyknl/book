@@ -14,22 +14,22 @@ export const SheetCard = ({productId, title,price, quantity, onDelete}) => {
         }
       })
 
-     if(res.ok){
       const data= await res.json();
+      
+     if(res.ok){
+      //  setCart(data)
       console.log("hhjcbnc",data)
       alert("deleted successfully")
        onDelete(productId);
      }else{
       alert("not ok res")
      }
-      
     }
     catch(error){
-      alert("error in ")
+      alert("error in res")
     }
   }
     return (
-      
        
        <div className="p-4 w-80 bg-white shadow-lg">
       
