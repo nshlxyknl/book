@@ -12,9 +12,10 @@ export default function Navbar() {
   const { token, logout, role } = useAuth();
   const navigate = useNavigate()
 
-   const { cart } = useCart(); 
+   
 
   const [openSheet, setOpenSheet] = useState(false)
+
 
   const handlelogout = () => {
     logout();
@@ -22,8 +23,7 @@ export default function Navbar() {
   }
 
   //taneko buyercard ra dashboard bata  
-
-   const [uploads, setUploads] = useState([]);
+  const [cart, setCart] = useState([])
 
   useEffect(() => {
     const fetchUploads = async () => {
@@ -36,7 +36,7 @@ export default function Navbar() {
       });
         const data = await res.json();
         console.log("d",data)
-        setUploads(data);
+        setCart(data);
       } catch (err) {
         console.error("Failed to fetch uploads", err);
       }
@@ -72,18 +72,18 @@ export default function Navbar() {
                       <SheetContent>
                         <div>
                            <h2 className="font-bold text-lg mb-2">Your Cart</h2>
-                          { uploads?.length > 0 ?
-                           (uploads
+                          { cart?.length > 0 ?
+                           (cart
                             .filter(item => item && item.title && item.price)
-                            .map((upload) => (
+                            .map((cart) => (
                               <>
                                   <SheetCard
-                                    key={upload._id}
-                                    productId={upload._id}
-                                    title={upload.title}
-                                    price={upload.price}
+                                    key={cart._id}
+                                    productId={cart._id}
+                                    title={cart.title}
+                                    price={cart.price}
                                      onDelete={(deletedId) =>
-          setUploads((prev) => prev.filter((u) => u._id !== deletedId))}
+          setCart((prev) => prev.filter((u) => u._id !== deletedId))}
                                   />
                                 
                                   </>
