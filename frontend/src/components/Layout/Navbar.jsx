@@ -12,10 +12,7 @@ export default function Navbar() {
   const { token, logout, role } = useAuth();
   const navigate = useNavigate()
 
-   
-
   const [openSheet, setOpenSheet] = useState(false)
-
 
   const handlelogout = () => {
     logout();
@@ -35,16 +32,21 @@ export default function Navbar() {
   },
       });
         const data = await res.json();
+        setCart(data.items);
         console.log("d",data)
-        setCart(data);
       } catch (err) {
         console.error("Failed to fetch uploads", err);
       }
     };
 
+  if (openSheet){
     fetchUploads();
-  }, []);
+  }
+  }, [openSheet]);
 
+  const delhandle = (deletedId) =>{
+      setCart((prev) => prev.filter((u) => u.productId !== deletedId))
+  }
 
   return (
     <header className="w-full shadow-md bg-white dark:bg-gray-900">
@@ -65,7 +67,12 @@ export default function Navbar() {
               {
                 (role == 'buyer') ? (
                   <div>
-                    <Sheet open={openSheet} onOpenChange={setOpenSheet}>
+                    <Sheet open={openSheet} onOpenChange={(open)=>{
+                      setOpenSheet(open)
+                      if(open){
+                        fetchUploads();
+                      }
+                    } }>
                       <SheetTrigger asChild>
                         <Button variant="outline" > <ShoppingCartIcon /> </Button>
                       </SheetTrigger>
@@ -78,14 +85,12 @@ export default function Navbar() {
                             .map((cart) => (
                               <>
                                   <SheetCard
-                                    key={cart._id}
+                                    key={cart.productId}
                                     productId={cart.productId}
                                     title={cart.title}
                                     price={cart.price}
-                                     onDelete={(deletedId) =>
-          setCart((prev) => prev.filter((u) => u._id !== deletedId))}
+                                     onDelete={delhandle}
                                   />
-                                
                                   </>
                                 ))) :
                                 <div> empty </div>

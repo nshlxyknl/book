@@ -2,18 +2,7 @@ const Cart = require("../models/Cart")
 const Book = require("../models/Book")
 //add button >buyerid >productid >db store >
 
-exports.getcart = async (req, res) => {
-    try {
-        const cart = await Cart.findOne({ userId: req.user.userId });
-        
-        res.json(cart ? cart.items : []);
-    } catch (error) {
-        res.status(500).json({
-            message: "Could not get any",
-            details: error.message,
-        })
-    }
-}
+
 
 exports.addcart = async (req, res) => {
     try {
@@ -75,6 +64,19 @@ exports.deletecart = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             message: "Could not add to cart",
+            details: error.message,
+        })
+    }
+}
+
+exports.getcart = async (req, res) => {
+    try {
+        const cart = await Cart.findOne({ userId: req.user.userId });
+        
+        res.json(cart ? cart.items : []);
+    } catch (error) {
+        res.status(500).json({
+            message: "Could not get any",
             details: error.message,
         })
     }

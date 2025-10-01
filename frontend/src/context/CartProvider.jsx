@@ -38,7 +38,7 @@ const [cartItems, setCartItems] = useState([]);
     }
 
     return (
-        <CartContext.Provider value={{cartItems,cartadd}}>
+        <CartContext.Provider value={{cartItems,cartadd,updateCart}}>
             {children}
         </CartContext.Provider>
     )
