@@ -79,7 +79,7 @@ export default function Navbar() {
                               <>
                                   <SheetCard
                                     key={cart._id}
-                                    productId={cart._id}
+                                    productId={cart.productId}
                                     title={cart.title}
                                     price={cart.price}
                                      onDelete={(deletedId) =>

@@ -60,9 +60,14 @@ exports.deletecart = async (req, res) => {
          if (!cart) 
             return res.status(404).json({ message: "Cart not found" });
 
+        // console.log("Deleting product:", productId);
+// console.log("Before:", cart.items.map(i => i.productId.toString()));
+
         cart.items = cart.items.filter(
       (item) => item.productId.toString() !== productId
     );
+
+    // console.log("After:", cart.items.map(i => i.productId.toString()));
 
         await cart.save();
        return res.json(cart.items);
