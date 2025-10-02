@@ -22,7 +22,7 @@ export default function Navbar() {
   //taneko buyercard ra dashboard bata  
   const [cart, setCart] = useState([])
 
-  useEffect(() => {
+      useEffect(() => {
     const fetchUploads = async () => {
       try {
         const res = await fetch("http://localhost:4000/carttype/get",{
