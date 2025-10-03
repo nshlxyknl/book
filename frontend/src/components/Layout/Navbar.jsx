@@ -5,7 +5,6 @@ import { ShoppingCartIcon } from 'lucide-react';
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTrigger } from '../ui/sheet';
 import { useEffect, useState } from 'react';
 import { SheetCard } from '@/pages/UserPages/SheetCard';
-import { useCart } from '@/context/CartContext';
 
 
 export default function Navbar() {
@@ -21,7 +20,8 @@ export default function Navbar() {
 
   //taneko buyercard ra dashboard bata  
   const [cart, setCart] = useState([])
-
+  const [q, setq] = useState(0)
+  
       useEffect(() => {
     const fetchUploads = async () => {
       try {
@@ -34,6 +34,10 @@ export default function Navbar() {
         const data = await res.json();
         setCart(data);
         console.log("cart data",data)
+
+         setq(
+      (data || []).reduce((acc, item) => acc + (item.quantity || 0), 0)
+    );
       } catch (err) {
         console.error("Failed to fetch uploads", err);
       }
@@ -45,7 +49,8 @@ export default function Navbar() {
   }, [openSheet]);
 
   const delhandle = (deletedId) =>{
-      setCart((prev) => prev.filter((u) => u.productId !== deletedId))
+      setCart((prev) => prev.filter((u) => u.productId !== deletedId)
+    )
   }
 
   return (
@@ -89,6 +94,7 @@ export default function Navbar() {
                                     productId={cart.productId}
                                     title={cart.title}
                                     price={cart.price}
+                                    quantity={cart.quantity}
                                      onDelete={delhandle}
                                   />
                                   </>

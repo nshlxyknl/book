@@ -5,13 +5,12 @@ import { useCart } from "@/context/CartContext";
 
 
 
-export default function BuyerCard({ _id, title, price, pdfUrl, previewUrl }) {
+export default function BuyerCard({ _id, title, price, quantity, pdfUrl, previewUrl }) {
 
   const {cartadd} =useCart()
   
   const addcart =  () => {
-    cartadd({ _id, title, price });
-    
+    cartadd({ _id, title, price, quantity });
   }
 
   return (

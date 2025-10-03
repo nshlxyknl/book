@@ -3,12 +3,12 @@ import CartContext from './CartContext';
 
 export const CartProvider = ({ children }) => {
 
-// const [cartCount, setCartCount] = useState(0);
+const [cartCount, setCartCount] = useState(0);
 const [cartItems, setCartItems] = useState([]);
 
   const updateCart = (newCart) => {
     setCartItems(newCart.items);
-    // setCartCount(newCart.items.reduce((acc, item) => acc + item.quantity, 0));
+    setCartCount(newCart.items.reduce((acc, item) => acc + item.quantity, 0));
   };
 
   const cartadd= async({ _id, title, price })=>{
@@ -38,7 +38,7 @@ const [cartItems, setCartItems] = useState([]);
     }
 
     return (
-        <CartContext.Provider value={{cartItems,cartadd,updateCart}}>
+        <CartContext.Provider value={{cartItems,cartCount,cartadd,updateCart}}>
             {children}
         </CartContext.Provider>
     )
