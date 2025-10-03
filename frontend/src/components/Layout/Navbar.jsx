@@ -32,7 +32,7 @@ export default function Navbar() {
   },
       });
         const data = await res.json();
-        setCart(data.items);
+        setCart(data);
         console.log("d",data)
       } catch (err) {
         console.error("Failed to fetch uploads", err);
