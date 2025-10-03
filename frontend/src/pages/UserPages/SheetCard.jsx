@@ -18,7 +18,7 @@ export const SheetCard = ({productId, title,price, quantity, onDelete}) => {
       
      if(res.ok){
       //  setCart(data)
-      console.log("hhjcbnc",data)
+      console.log("deleted data",data)
       alert("deleted successfully")
        onDelete(productId);
      }else{
