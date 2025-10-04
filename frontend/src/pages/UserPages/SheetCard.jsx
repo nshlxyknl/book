@@ -23,6 +23,7 @@ export const SheetCard = ({productId, title,price, quantity, onDelete}) => {
        onDelete(productId);
      }else{
       alert("not ok res")
+      
      }
     }
     catch(error){
