@@ -11,7 +11,7 @@ const [cartItems, setCartItems] = useState([]);
     setCartCount(newCart.items.reduce((acc, item) => acc + item.quantity, 0));
   };
 
-  const cartadd= async({ _id, title, price })=>{
+  const cartadd= async({ _id, title, price, quantity })=>{
       try {
         const res = await fetch("http://localhost:4000/carttype/add",
           {
@@ -20,7 +20,7 @@ const [cartItems, setCartItems] = useState([]);
               "Authorization": `Bearer ${localStorage.getItem("token")}`,
               "Content-Type": "application/json"
             },
-            body: JSON.stringify({ productId: _id, title, price })
+            body: JSON.stringify({ productId: _id, title, price, quantity })
           }
         )
   

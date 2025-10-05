@@ -52,11 +52,21 @@ exports.deletecart = async (req, res) => {
         // console.log("Deleting product:", productId);
 // console.log("Before:", cart.items.map(i => i.productId.toString()));
 
-        cart.items = cart.items.filter(
-      (item) => item.productId.toString() !== productId
-    );
+    //     cart.items = cart.items.filter(
+    //   (item) => item.productId.toString() !== productId
+    // );
 
     // console.log("After:", cart.items.map(i => i.productId.toString()));
+
+     const existingItem = cart.items.find(item => item.productId.toString() === productId);
+
+        if (existingItem) {
+            existingItem.quantity -= 1;
+        } else {
+          cart.items.filter(
+      (item) => item.productId.toString() !== productId
+    );
+        }
 
         await cart.save();
        return res.json(cart.items);
