@@ -15,7 +15,7 @@ export default function BuyerDashboard() {
   },
       });
         const data = await res.json();
-        setUploads(data.tasks);
+        setUploads(data.tasks) || [];
       } catch (err) {
         console.error("Failed to fetch uploads", err);
       }
