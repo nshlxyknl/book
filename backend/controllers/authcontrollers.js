@@ -48,6 +48,7 @@ exports.register = async (req, res) => {
 };
 
 
+
 /**
  * Authenticate user and get token
  * @route POST /api/auth/login
