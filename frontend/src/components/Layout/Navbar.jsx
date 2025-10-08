@@ -20,7 +20,6 @@ export default function Navbar() {
 
   //taneko buyercard ra dashboard bata  
   const [cart, setCart] = useState([])
-  const [q, setq] = useState(0)
   
       useEffect(() => {
     const fetchUploads = async () => {
@@ -35,9 +34,7 @@ export default function Navbar() {
         setCart(data);
         console.log("cart data",data)
 
-         setq(
-      (data || []).reduce((acc, item) => acc + (item.quantity || 0), 0)
-    );
+    
       } catch (err) {
         console.error("Failed to fetch uploads", err);
       }
@@ -49,6 +46,7 @@ export default function Navbar() {
   }, [openSheet]);
 
   const delhandle = (deletedId) =>{
+    
       setCart((prev) => prev.filter((u) => u.productId !== deletedId)
     )
   }
