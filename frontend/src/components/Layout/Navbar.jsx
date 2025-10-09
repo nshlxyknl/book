@@ -45,10 +45,26 @@ export default function Navbar() {
   }
   }, [openSheet]);
 
+  const addhandle = (addId) =>{
+
+      setCart((prev) => 
+      prev.map((u) =>
+    u.productId === addId
+      ? { ...u, quantity: u.quantity } 
+      : u
+  )
+);
+  }
+
   const delhandle = (deletedId) =>{
-    
-      setCart((prev) => prev.filter((u) => u.productId !== deletedId)
-    )
+
+      setCart((prev) => 
+      prev.map((u) =>
+    u.productId === deletedId
+      ? { ...u, quantity: u.quantity } 
+      : u
+  )
+);
   }
 
   return (
@@ -94,6 +110,7 @@ export default function Navbar() {
                                     price={cart.price}
                                     quantity={cart.quantity}
                                      onDelete={delhandle}
+                                     onAdd={addhandle}
                                   />
                                   </>
                                 ))) :

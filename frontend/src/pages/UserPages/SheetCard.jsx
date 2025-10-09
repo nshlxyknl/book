@@ -1,11 +1,21 @@
 
 import { Button } from '@/components/ui/button'
+import { useCart } from '@/context/CartContext'
 import React from 'react'
 
-export const SheetCard = ({productId, title,price, quantity, onDelete}) => {
+
+export const SheetCard = ({ _id,productId, title,price, quantity, onDelete}) => {
+  
+    const {cartadd}= useCart()
+
+
+   const handleeadd=({_id,title, price, productId, quantity})=> {
+    alert("added sucessfully")
+    console.log("SheetCard Add clicked", { productId, quantity });
+    cartadd({ _id,title, price, productId,quantity} )
+}
 
     const delcart = async()=>{
-
       try{
       const res = await fetch(`http://localhost:4000/carttype/delete/${productId}`,{
         method: "DELETE",
@@ -20,7 +30,8 @@ export const SheetCard = ({productId, title,price, quantity, onDelete}) => {
       //  setCart(data)
       console.log("deleted data",data)
       alert("deleted successfully")
-       onDelete(productId);
+       onDelete(productId,quantity);
+
      }else{
       alert("not ok res")
      }
@@ -43,9 +54,11 @@ export const SheetCard = ({productId, title,price, quantity, onDelete}) => {
             </div>
             <p className="font-bold">${price * quantity}</p>
           </div>
-
-          <Button variant="destructive" onClick={delcart}> Delete </Button>
+       <div className="flex items-center gap-2 mt-1">
+          <Button variant="outline" size="sm" onClick={delcart}>-</Button>
+          <span>{quantity}</span>
+          <Button variant="outline" size="sm" onClick={handleeadd}>+</Button>
+        </div>
     </div>
-    
     )
 }
