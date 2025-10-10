@@ -9,10 +9,9 @@ export const SheetCard = ({ _id,productId, title,price, quantity, onDelete}) => 
     const {cartadd}= useCart()
 
 
-   const handleeadd=({_id,title, price, productId, quantity})=> {
-    alert("added sucessfully")
+   const handleeadd=()=> {
     console.log("SheetCard Add clicked", { productId, quantity });
-    cartadd({ _id,title, price, productId,quantity} )
+    cartadd({ _id:productId, title, price, quantity} )
 }
 
     const delcart = async()=>{
