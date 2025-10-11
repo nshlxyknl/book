@@ -1,12 +1,13 @@
 
 import { Button } from '@/components/ui/button'
 import { useCart } from '@/context/CartContext'
-import React from 'react'
+import React, { useState } from 'react'
 
 
-export const SheetCard = ({ _id,productId, title,price, quantity, onDelete}) => {
+export const SheetCard = ({productId, title,price, quantity, onDelete}) => {
   
     const {cartadd}= useCart()
+    const [q,setq]=useState(quantity)
 
 
    const handleeadd=()=> {
@@ -48,15 +49,29 @@ export const SheetCard = ({ _id,productId, title,price, quantity, onDelete}) => 
             <div>
               <h3 className="font-semibold">{title}</h3>
               <p className="text-sm text-gray-600">
-                ${price} × {quantity}
+                ${price} × {q}
               </p>
             </div>
             <p className="font-bold">${price * quantity}</p>
           </div>
        <div className="flex items-center gap-2 mt-1">
-          <Button variant="outline" size="sm" onClick={delcart}>-</Button>
-          <span>{quantity}</span>
-          <Button variant="outline" size="sm" onClick={handleeadd}>+</Button>
+          <Button variant="outline" size="sm" 
+            onClick={() => {
+        if (q >= 1) {
+          setq(q - 1);
+          delcart(productId);
+        }
+        else if(q=0){
+          onDelete(productId)
+        }
+      }}
+            >-</Button>
+          <span>{q}</span>
+          <Button variant="outline" size="sm" onClick={
+            () => {
+          setq(q + 1);
+            handleeadd(productId)}}
+            >+</Button>
         </div>
     </div>
     )

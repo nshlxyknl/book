@@ -6,16 +6,16 @@ const Book = require("../models/Book")
 
 exports.addcart = async (req, res) => {
     try {
-        
-        const userId =req.user.userId;
-        const {  productId, price, title } = req.body;
 
-         if (!productId) {
-      return res.status(400).json({ message: "ProductId is required" });
-    }
+        const userId = req.user.userId;
+        const { productId, price, title } = req.body;
 
-    const product = await Book.findById(productId);
-    if (!product) return res.status(404).json({ message: "Product not found" });
+        if (!productId) {
+            return res.status(400).json({ message: "ProductId is required" });
+        }
+
+        const product = await Book.findById(productId);
+        if (!product) return res.status(404).json({ message: "Product not found" });
 
         let cart = await Cart.findOne({ userId });
         if (!cart) {
@@ -46,30 +46,30 @@ exports.deletecart = async (req, res) => {
         let cart = await Cart.findOne({ userId: req.user.userId });
         const { productId } = req.params;
 
-         if (!cart) 
+        if (!cart)
             return res.status(404).json({ message: "Cart not found" });
 
         // console.log("Deleting product:", productId);
-// console.log("Before:", cart.items.map(i => i.productId.toString()));
+        // console.log("Before:", cart.items.map(i => i.productId.toString()));
 
-    //     cart.items = cart.items.filter(
-    //   (item) => item.productId.toString() !== productId
-    // );
+        //     cart.items = cart.items.filter(
+        //   (item) => item.productId.toString() !== productId
+        // );
 
-    // console.log("After:", cart.items.map(i => i.productId.toString()));
+        // console.log("After:", cart.items.map(i => i.productId.toString()));
 
-     const existingItem = cart.items.find(item => item.productId.toString() === productId);
+        const existingItem = cart.items.find(item => item.productId.toString() === productId);
 
         if (existingItem) {
             existingItem.quantity -= 1;
         } else {
-          cart.items.filter(
-      (item) => item.productId.toString() !== productId
-    );
+            cart.items.filter(
+                (item) => item.productId.toString() !== productId
+            );
         }
 
         await cart.save();
-       return res.json(cart.items);
+        return res.json(cart.items);
 
     } catch (error) {
         res.status(500).json({
@@ -82,7 +82,7 @@ exports.deletecart = async (req, res) => {
 exports.getcart = async (req, res) => {
     try {
         const cart = await Cart.findOne({ userId: req.user.userId });
-        
+
         res.json(cart ? cart.items : []);
     } catch (error) {
         res.status(500).json({
@@ -91,3 +91,53 @@ exports.getcart = async (req, res) => {
         })
     }
 }
+
+exports.clearcart = async (req, res) => {
+    try {
+        const cart = await Cart.findOne({ userId: req.user.userId });
+        if (!cart) {
+            return res.status(404).json({ message: "Cart not found" });
+        }
+        cart.items = [];
+        await cart.save();
+
+        res.json({ message: "Cart cleared successfully", cart });
+
+    } catch (error) {
+        res.status(500).json({
+            message: "Could not clear",
+            details: error.message,
+        })
+    }
+}
+
+exports.pay = async (req, res) => {
+   try {
+     const session = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
+        mode: 'payment',
+        line_items: [
+            {
+                price_data: {
+                    currency: 'usd',
+                    product_data: { name: 'Toy Car' },
+                    unit_amount: 1000, // $10.00
+                },
+                quantity: 1,
+            },
+        ],
+        success_url: 'http://localhost:5173/success',
+        cancel_url: 'http://localhost:5173/cancel',
+    });
+    res.json({ url: session.url });
+
+   } catch (error) {
+    res.status(500).json({
+            message: "Could not pay",
+            details: error.message,
+            })
+   }
+   
+
+}
+

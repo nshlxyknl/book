@@ -20,51 +20,82 @@ export default function Navbar() {
 
   //taneko buyercard ra dashboard bata  
   const [cart, setCart] = useState([])
-  
-      useEffect(() => {
+
+  useEffect(() => {
     const fetchUploads = async () => {
       try {
-        const res = await fetch("http://localhost:4000/carttype/get",{
-          method:"GET",
-           headers: {
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
-  },
-      });
+        const res = await fetch("http://localhost:4000/carttype/get", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
         const data = await res.json();
         setCart(data);
-        console.log("cart data",data)
+        console.log("cart data", data)
 
-    
+
       } catch (err) {
         console.error("Failed to fetch uploads", err);
       }
     };
 
-  if (openSheet){
-    fetchUploads();
-  }
+    if (openSheet) {
+      fetchUploads();
+    }
   }, [openSheet]);
 
-  const addhandle = (addId) =>{
+  const addhandle = (addId) => {
 
-      setCart((prev) => 
+    setCart((prev) =>
       prev.map((u) =>
-    u.productId === addId
-      ? { ...u, quantity: u.quantity } 
-      : u
-  )
-);
+        u.productId === addId
+          ? { ...u, quantity: u.quantity }
+          : u
+      )
+    );
   }
 
-  const delhandle = (deletedId) =>{
+  const delhandle = (deletedId) => {
 
-      setCart((prev) => 
+    setCart((prev) =>
       prev.map((u) =>
-    u.productId === deletedId
-      ? { ...u, quantity: u.quantity } 
-      : u
-  )
-);
+        u.productId === deletedId
+          ? { ...u, quantity: u.quantity }
+          : u
+      )
+    );
+  }
+
+  const hello = async () => {
+    alert("clear cart")
+    try {
+      const res = await fetch("http://localhost:4000/carttype/clearcart", {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      
+      const data = await res.json();
+      
+       if(res.ok){
+       setCart([])
+      console.log("cart clear data",data)
+     }else{
+      alert("not ok res")
+     }
+    } catch (err) {
+      console.error("clear bhayena la", err);
+    }
+  }
+
+  const handlepay=()=>{
+    try {
+      
+    } catch (error) {
+      
+    }
   }
 
   return (
@@ -86,40 +117,41 @@ export default function Navbar() {
               {
                 (role == 'buyer') ? (
                   <div>
-                    <Sheet open={openSheet} onOpenChange={(open)=>{
+                    <Sheet open={openSheet} onOpenChange={(open) => {
                       setOpenSheet(open)
-                      if(open){
+                      if (open) {
                         fetchUploads();
                       }
-                    } }>
+                    }}>
                       <SheetTrigger asChild>
                         <Button variant="outline" > <ShoppingCartIcon /> </Button>
                       </SheetTrigger>
                       <SheetContent>
                         <div>
-                           <h2 className="font-bold text-lg mb-2">Your Cart</h2>
-                          { cart?.length > 0 ?
-                           (cart
-                            .filter(item => item && item.title && item.price)
-                            .map((cart) => (
-                              <>
+                          <h2 className="font-bold text-lg mb-2">Your Cart</h2>
+                          {cart?.length > 0 ?
+                            (cart
+                              .filter(item => item && item.title && item.price && item.quantity > 0)
+                              .map((cart) => (
+                                <>
                                   <SheetCard
                                     key={cart.productId}
                                     productId={cart.productId}
                                     title={cart.title}
                                     price={cart.price}
                                     quantity={cart.quantity}
-                                     onDelete={delhandle}
-                                     onAdd={addhandle}
+                                    onDelete={delhandle}
+                                    onAdd={addhandle}
                                   />
-                                  </>
-                                ))) :
-                                <div> empty </div>
-                                }
+                                </>
+                              ))) :
+                            <div> empty </div>
+                          }
                         </div>
                         <SheetFooter>
                           <div className="flex justify-between gap-2 mt-2">
-                            <Button variant="default"> Checkout</Button>
+                            <Button variant="destructive" onClick={hello} > Clear Cart</Button>
+                            <Button variant="default" onclick={handlepay}> Checkout</Button>
                             <Button variant="outline" onClick={() => { setOpenSheet(false) }}>Continue Shopping</Button>
                           </div>
                         </SheetFooter>
