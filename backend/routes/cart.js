@@ -8,6 +8,6 @@ router.get(`/get`,auth, getcart)
 router.post(`/add`,auth, addcart)
 router.delete(`/delete/:productId`,auth, deletecart)
 router.delete(`/clearcart`,auth, clearcart)
-router.post(`/pay`, pay)
+router.post(`/pay`,auth, pay)
 
 module.exports=router

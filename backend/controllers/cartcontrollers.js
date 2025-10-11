@@ -1,6 +1,8 @@
 const Cart = require("../models/Cart")
 const Book = require("../models/Book")
 //add button >buyerid >productid >db store >
+require("dotenv").config();
+
 
 
 
@@ -92,6 +94,8 @@ exports.getcart = async (req, res) => {
     }
 }
 
+const stripe= require("stripe")(process.env.SECRET_KEY)
+
 exports.clearcart = async (req, res) => {
     try {
         const cart = await Cart.findOne({ userId: req.user.userId });
@@ -116,16 +120,16 @@ exports.pay = async (req, res) => {
      const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
         mode: 'payment',
-        line_items: [
-            {
-                price_data: {
-                    currency: 'usd',
-                    product_data: { name: 'Toy Car' },
-                    unit_amount: 1000, // $10.00
-                },
-                quantity: 1,
-            },
-        ],
+        line_items: req.body.items.map(item => ({
+  price_data: {
+    currency: 'usd',
+    product_data: {
+      name: item.title,
+    },
+    unit_amount: item.price * 100, // Stripe uses cents
+  },
+  quantity: item.quantity,
+})),
         success_url: 'http://localhost:5173/success',
         cancel_url: 'http://localhost:5173/cancel',
     });
@@ -137,7 +141,6 @@ exports.pay = async (req, res) => {
             details: error.message,
             })
    }
-   
 
 }
 
