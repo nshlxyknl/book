@@ -115,12 +115,18 @@ exports.clearcart = async (req, res) => {
     }
 }
 
-exports.pay = async (req, res) => {
+exports.payc = async (req, res) => {
    try {
+    const items = req.body.items; 
+
+    if (!items || !items.length) {
+      return res.status(400).json({ message: "Cart is empty" });
+    }
+
      const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
         mode: 'payment',
-        line_items: req.body.items.map(item => ({
+        line_items: items.map(item => ({
   price_data: {
     currency: 'usd',
     product_data: {

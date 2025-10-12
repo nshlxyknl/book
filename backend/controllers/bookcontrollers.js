@@ -32,6 +32,7 @@ exports.uploadpdf = async (req, res) => {
     const publicId = req.file.filename;
 
     const preview = cloudinary.url(publicId, {
+      resource_type: "image",
       page: 1,
       crop: "fill",
       width: 300,

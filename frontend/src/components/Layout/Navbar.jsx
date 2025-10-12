@@ -5,6 +5,8 @@ import { ShoppingCartIcon } from 'lucide-react';
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTrigger } from '../ui/sheet';
 import { useEffect, useState } from 'react';
 import { SheetCard } from '@/pages/UserPages/SheetCard';
+import { useCart } from '@/context/CartContext';
+
 
 
 export default function Navbar() {
@@ -90,21 +92,27 @@ export default function Navbar() {
     }
   }
 
-  const handlepay=async()=>{
+
+  const handlepay=async(req,res)=>{
     try {
+       if (!cart || !cart.length) {
+      alert("Your cart is empty");
+      return;
+    }
+
       const res = await fetch("http://localhost:4000/carttype/pay", {
     method: "POST",
     headers: { "Content-Type": "application/json",
       Authorization: `Bearer ${localStorage.getItem("token")}`,
      },
-    body: JSON.stringify({ items: cartItems }),
+    body: JSON.stringify({ items: cart }),
   });
 
   const data = await res.json();
   window.location.href = data.url;
 
     } catch (error) {
-       console.error("pay bhayena la");
+     console.error("Stripe error:", error.message);
     }
   }
 
