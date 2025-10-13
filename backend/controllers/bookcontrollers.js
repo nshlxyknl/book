@@ -130,7 +130,7 @@ exports.updateTaskStatus = async (req, res) => {
 
     if (!task) {
       return res.status(404).json({
-        message: "Task not found or not assigned to you",
+        message: "sold out",
       });
     }
 

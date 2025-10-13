@@ -61,7 +61,7 @@ export const SheetCard = ({productId, title,price, quantity, onDelete}) => {
           setq(q - 1);
           delcart(productId);
         }
-        else if(q=0){
+        else if(q===0){
           onDelete(productId)
         }
       }}

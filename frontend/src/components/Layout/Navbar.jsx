@@ -181,9 +181,6 @@ export default function Navbar() {
               }
               <Button variant="destructive" onClick={handlelogout} > Logout
               </Button>
-              <Button variant="outline">
-                <Link to="/profile">Profile</Link>
-              </Button>
             </nav>
           )}
       </div>
