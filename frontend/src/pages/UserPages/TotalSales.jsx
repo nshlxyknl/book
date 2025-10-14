@@ -1,10 +1,20 @@
 import React, { useEffect, useState } from 'react'
 
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+
+
 export const TotalSales = () => {
   const [sales,setSales]=useState([])
 
   useEffect(()=>{
-    const handlesales=async(req,res)=>{
+    const handlesales=async()=>{
       const res= await fetch("http://localhost:4000/tasktype/sales",
         {
           headers:{
@@ -13,7 +23,7 @@ export const TotalSales = () => {
         }
       )
 
-      const data=res.json()
+      const data= await res.json()
       setSales(data)
   }
   handlesales()
@@ -21,28 +31,43 @@ export const TotalSales = () => {
   
 
   return (
-    <div className="p-6">
-      <h2 className="text-2xl font-bold mb-4">📈 Your PDF Sales</h2>
-      <table className="min-w-full border border-gray-300">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className="border p-2">Title</th>
-            <th className="border p-2">Total Sold</th>
-            <th className="border p-2">Total Revenue ($)</th>
-          </tr>
-        </thead>
-        <tbody>
-          {sales.map((sale) => (
-            <tr key={sale._id}>
-              <td className="border p-2">{sale.title}</td>
-              <td className="border p-2">{sale.totalSold}</td>
-              <td className="border p-2">{sale.totalRevenue}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
+
   
+    <div className=" overflow-hidden rounded-md border ">
+      <Table>
+        <TableHeader>
+           <TableRow>
+            <TableHead>Date</TableHead>
+            <TableHead>Book Title</TableHead>
+            <TableHead>Quantity Sold</TableHead>
+            <TableHead>Total Revenue ($)</TableHead>
+          </TableRow>
+        </TableHeader>
+
+        <TableBody>
+          
+              {sales.length > 0 ? ( 
+            sales.map((item, i) => (
+              <TableRow key={i}>
+                <TableCell>{item.date}</TableCell>
+                <TableCell>{item.title}</TableCell>
+                <TableCell>{item.totalSold}</TableCell>
+                <TableCell>{item.totalRevenue}</TableCell>
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={3} align="center">
+                No sales data yet.
+              </TableCell>
+            </TableRow>
+          )}
+            
+        </TableBody>
+      </Table>
+    </div>
+  
+)}
+
+
 
