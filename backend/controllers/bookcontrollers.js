@@ -197,7 +197,10 @@ exports.getsales =async (req,res)=>{
           totalSold: { $sum: "$quantity" },
           totalRevenue: { $sum: { $multiply: ["$price", "$quantity"] } }
         }
-      }
+      },{
+         $sort: { totalSold: -1 }
+        }
+      
     ]);
     res.json(sales);
     
