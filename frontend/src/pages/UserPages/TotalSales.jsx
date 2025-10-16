@@ -13,6 +13,7 @@ import {
 export const TotalSales = () => {
   const [sales,setSales]=useState([])
 
+
   useEffect(()=>{
     const handlesales=async()=>{
       const res= await fetch("http://localhost:4000/tasktype/sales",
@@ -24,7 +25,8 @@ export const TotalSales = () => {
       )
 
       const data= await res.json()
-      setSales(data)
+      setSales(data);
+    
   }
   handlesales()
   },[])

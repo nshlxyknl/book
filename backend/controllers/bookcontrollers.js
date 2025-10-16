@@ -186,7 +186,7 @@ exports.delpdf = async (req, res) => {
   }
 };
 
-exports.getsales =async (req,res)=>{
+exports.getsales = async (req, res) => {
   try {
     const sales = await Sale.aggregate([
       { $match: { sellerId: req.user.userId } },
@@ -197,16 +197,16 @@ exports.getsales =async (req,res)=>{
           totalSold: { $sum: "$quantity" },
           totalRevenue: { $sum: { $multiply: ["$price", "$quantity"] } }
         }
-      },{
-         $sort: { totalSold: -1 }
-        }
+      }, {
+        $sort: { totalSold: -1 }
+      }
     ]);
     res.json(sales);
   } catch (error) {
-     res.status(500).json({
+    res.status(500).json({
       message: "Could not get sales",
       details: error.message,
-       });
+    });
   }
 }
 

@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Button } from '../ui/button';
 import { ShoppingCartIcon } from 'lucide-react';
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTrigger } from '../ui/sheet';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { SheetCard } from '@/pages/UserPages/SheetCard';
 import { useCart } from '@/context/CartContext';
 
@@ -13,108 +13,15 @@ export default function Navbar() {
   const { token, logout, role } = useAuth();
   const navigate = useNavigate()
 
-  const [openSheet, setOpenSheet] = useState(false)
 
   const handlelogout = () => {
     logout();
     navigate("/login", { replace: true })
   }
 
-  //taneko buyercard ra dashboard bata  
-  const [cart, setCart] = useState([])
+   const [openSheet, setOpenSheet] = useState(false)
 
-  useEffect(() => {
-    const fetchUploads = async () => {
-      try {
-        const res = await fetch("http://localhost:4000/carttype/get", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
-        const data = await res.json();
-        setCart(data);
-        console.log("cart data", data)
-
-
-      } catch (err) {
-        console.error("Failed to fetch uploads", err);
-      }
-    };
-
-    if (openSheet) {
-      fetchUploads();
-    }
-  }, [openSheet]);
-
-  const addhandle = (addId) => {
-
-    setCart((prev) =>
-      prev.map((u) =>
-        u.productId === addId
-          ? { ...u, quantity: u.quantity }
-          : u
-      )
-    );
-  }
-
-  const delhandle = (deletedId) => {
-
-    setCart((prev) =>
-      prev.map((u) =>
-        u.productId === deletedId
-          ? { ...u, quantity: u.quantity }
-          : u
-      )
-    );
-  }
-
-  const hello = async () => {
-    alert("clear cart")
-    try {
-      const res = await fetch("http://localhost:4000/carttype/clearcart", {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      
-      const data = await res.json();
-      
-       if(res.ok){
-       setCart([])
-      console.log("cart clear data",data)
-     }else{
-      alert("not ok res")
-     }
-    } catch (err) {
-      console.error("clear bhayena la", err);
-    }
-  }
-
-
-  const handlepay=async(req,res)=>{
-    try {
-       if (!cart || !cart.length) {
-      alert("Your cart is empty");
-      return;
-    }
-
-      const res = await fetch("http://localhost:4000/carttype/pay", {
-    method: "POST",
-    headers: { "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-     },
-    body: JSON.stringify({ items: cart }),
-  });
-
-  const data = await res.json();
-  window.location.href = data.url;
-
-    } catch (error) {
-     console.error("Stripe error:", error.message);
-    }
-  }
+  const {cart,addhandle,delhandle,clearcart,handlepay} =useCart();
 
   return (
     <header className="w-full shadow-md bg-white dark:bg-gray-900">
@@ -149,7 +56,7 @@ export default function Navbar() {
                           <h2 className="font-bold text-lg mb-2">Your Cart</h2>
                           {cart?.length > 0 ?
                             (cart
-                              .filter(item => item && item.title && item.price && item.quantity > 0)
+                              .filter(item => item && item.title && item.quantity > 0)
                               .map((cart) => (
                                 <>
                                   <SheetCard
@@ -168,7 +75,7 @@ export default function Navbar() {
                         </div>
                         <SheetFooter>
                           <div className="flex justify-between gap-2 mt-2">
-                            <Button variant="destructive" onClick={hello} > Clear Cart</Button>
+                            <Button variant="destructive" onClick={clearcart} > Clear Cart</Button>
                             <Button variant="default" onClick={handlepay}> Checkout</Button>
                             <Button variant="outline" onClick={() => { setOpenSheet(false) }}>Continue Shopping</Button>
                           </div>

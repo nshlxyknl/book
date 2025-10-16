@@ -7,7 +7,7 @@ import { useCart } from "@/context/CartContext";
 
 export default function BuyerCard({ _id, title, price, quantity, pdfUrl, previewUrl }) {
 
-  const {cartadd} =useCart()
+  const {cartadd, handlepay} =useCart()
   
   const addcart =  () => {
     cartadd({ _id, title, price, quantity });
@@ -36,7 +36,7 @@ export default function BuyerCard({ _id, title, price, quantity, pdfUrl, preview
               View
             </a>
           </Button>
-          <Button variant="default">Buy</Button>
+          <Button variant="default" onClick={handlepay}>Buy</Button>
           <Button variant="outline" onClick={addcart}>Add to Cart</Button>
         </div>
       </CardContent>
