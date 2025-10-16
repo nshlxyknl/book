@@ -200,10 +200,8 @@ exports.getsales =async (req,res)=>{
       },{
          $sort: { totalSold: -1 }
         }
-      
     ]);
     res.json(sales);
-    
   } catch (error) {
      res.status(500).json({
       message: "Could not get sales",
