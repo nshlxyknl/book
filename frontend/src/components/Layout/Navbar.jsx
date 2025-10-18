@@ -5,7 +5,7 @@ import { ShoppingCartIcon } from 'lucide-react';
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTrigger } from '../ui/sheet';
 import { useContext, useEffect, useState } from 'react';
 import { SheetCard } from '@/pages/UserPages/SheetCard';
-import { useCart } from '@/context/CartContext';
+import { usepay } from '@/context/PayContext';
 
 
 
@@ -20,8 +20,7 @@ export default function Navbar() {
   }
 
    const [openSheet, setOpenSheet] = useState(false)
-
-  const {cart,addhandle,delhandle,clearcart,handlepay} =useCart();
+  const {cart,fetchUploads,addhandle,delhandle,clearcart,handlepay} =usepay();
 
   return (
     <header className="w-full shadow-md bg-white dark:bg-gray-900">

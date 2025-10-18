@@ -67,8 +67,8 @@ export const SheetCard = ({productId, title,price, quantity, onDelete}) => {
       }}
             >-</Button>
           <span>{q}</span>
-          <Button variant="outline" size="sm" onClick={
-            () => {
+          <Button variant="outline" size="sm" 
+          onClick={  () => {
           setq(q + 1);
             handleeadd(productId)}}
             >+</Button>

@@ -2,12 +2,14 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartContext";
+import { usepay } from "@/context/PayContext";
 
 
 
 export default function BuyerCard({ _id, title, price, quantity, pdfUrl, previewUrl }) {
 
-  const {cartadd, handlepay} =useCart()
+  const {cartadd} =useCart()
+  const {handlepay}=usepay()
   
   const addcart =  () => {
     cartadd({ _id, title, price, quantity });

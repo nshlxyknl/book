@@ -6,7 +6,7 @@ export const PayProvider = ({children}) => {
       const [openSheet, setOpenSheet] = useState(false)
       const [cart, setCart] = useState([])
 
-  useEffect(() => {
+  
     const fetchUploads = async () => {
       try {
         const res = await fetch("http://localhost:4000/carttype/get", {
@@ -23,13 +23,13 @@ export const PayProvider = ({children}) => {
         console.error("Failed to fetch uploads", err);
       }
     };
-
+useEffect(() => {
     if (openSheet) {
       fetchUploads();
     }
   }, [openSheet]);
 
-  
+
   const addhandle = (addId) => {
 
     setCart((prev) =>
@@ -76,7 +76,7 @@ export const PayProvider = ({children}) => {
   }
 
 
-  const handlepay=async({cart})=>{
+  const handlepay=async()=>{
     try {
        if (!cart || !cart.length) {
       alert("Your cart is empty");
@@ -101,7 +101,7 @@ export const PayProvider = ({children}) => {
 
 
   return (
-    <PayContext.Provider value={{cart,openSheet, setOpenSheet,addhandle,delhandle,clearcart,handlepay}}>
+    <PayContext.Provider value={{cart,fetchUploads,openSheet, setOpenSheet,addhandle,delhandle,clearcart,handlepay}}>
         {children}
     </PayContext.Provider>
   )
