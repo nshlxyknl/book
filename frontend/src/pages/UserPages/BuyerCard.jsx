@@ -2,18 +2,21 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartContext";
-import { usepay } from "@/context/PayContext";
+import { useEffect, useState } from "react";
 
 
 
 export default function BuyerCard({ _id, title, price, quantity, pdfUrl, previewUrl }) {
 
-  const {cartadd} =useCart()
-  const {handlepay}=usepay()
-  
-  const addcart =  () => {
+  const { cartadd } = useCart()
+
+  const addcart = () => {
     cartadd({ _id, title, price, quantity });
   }
+
+const buypay=()=>{
+  
+}
 
   return (
     <Card className="shadow-md hover:shadow-lg transition duration-200">
@@ -38,7 +41,7 @@ export default function BuyerCard({ _id, title, price, quantity, pdfUrl, preview
               View
             </a>
           </Button>
-          <Button variant="default" onClick={handlepay}>Buy</Button>
+          <Button variant="default" onClick={buypay}>Buy</Button>
           <Button variant="outline" onClick={addcart}>Add to Cart</Button>
         </div>
       </CardContent>

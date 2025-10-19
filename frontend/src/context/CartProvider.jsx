@@ -38,6 +38,9 @@ const [cartItems, setCartItems] = useState([]);
       }
     }
 
+
+     
+
     return (
         <CartContext.Provider value={{cartItems,cartCount,cartadd,updateCart}}>
             {children}
