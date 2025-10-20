@@ -10,9 +10,10 @@ export const SheetCard = ({productId, title,price, quantity, onDelete}) => {
     const [q,setq]=useState(quantity)
 
 
-   const handleeadd=()=> {
+   const handleeadd=async ()=> {
     console.log("SheetCard Add clicked", { productId, quantity });
     cartadd({ _id:productId, title, price, quantity} )
+    await fetchUploads();
 }
 
     const delcart = async()=>{
@@ -31,6 +32,7 @@ export const SheetCard = ({productId, title,price, quantity, onDelete}) => {
       console.log("deleted data",data)
       alert("deleted successfully")
        onDelete(productId,quantity);
+       await fetchUploads();
 
      }else{
       alert("not ok res")
