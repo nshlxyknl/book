@@ -10,7 +10,7 @@ exports.addcart = async (req, res) => {
     try {
 
         const userId = req.user.userId;
-        const { productId, price, title } = req.body;
+        const { productId, price, title, quantity } = req.body;
 
         if (!productId) {
             return res.status(400).json({ message: "ProductId is required" });
@@ -28,9 +28,9 @@ exports.addcart = async (req, res) => {
         const existingItem = cart.items.find(item => item.productId.toString() === productId);
 
         if (existingItem) {
-            existingItem.quantity += 1;
+            existingItem.quantity += quantity;
         } else {
-            cart.items.push({ productId, title, price, quantity: 1 });
+            cart.items.push({ productId, title, price, quantity });
         }
 
         await cart.save();

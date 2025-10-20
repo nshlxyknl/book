@@ -8,7 +8,7 @@ export default function AdminDashboard() {
 const navigate= useNavigate();
 
   return (
-    <div className="min-h-screen my-10 bg-background p-6">
+    <div className="min-h-screen my-20 bg-background p-6">
       <header className="mb-8">
         <h1 className="text-3xl font-bold">Admin Dashboard</h1>
         <p className="text-muted-foreground">Welcome, Admin!</p>

@@ -73,7 +73,7 @@ export default function SellerDashboard() {
 
 
   return (
-    <div className="min-h-screen my-10 bg-background p-6">
+    <div className="min-h-screen my-20 bg-background p-6">
       <header className="mb-8">
         <h1 className="text-3xl font-bold"> Seller Dashboard</h1>
         <p className="text-muted-foreground">Welcome back to your store</p>

@@ -91,7 +91,7 @@ useEffect(() => {
     }
   }
 
-   const handlepay=async({cart})=>{
+   const handlepay=async()=>{
     try {
        if (!cart || !cart.length) {
       alert("Your cart is empty");
@@ -114,23 +114,10 @@ useEffect(() => {
     }
   }
 
-    // const [triggerPay, setTriggerPay] = useState(false);
-   
-    //  const paypay = async () => {
-    //    await fetchUploads();
-    //    setTriggerPay(true)
-    //  }
-   
-    //  useEffect(()=>{
-    //    if (triggerPay && cart.length > 0) {
-    //    handlepay();
-    //    setTriggerPay(false)
-    //    }
-    //  },[cart,triggerPay])
 
   return (
-    <header className="w-full shadow-md bg-white dark:bg-gray-900">
-      <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+    <header className="fixed top-0 left-0  z-50  w-full shadow-md bg-white dark:bg-gray-900">
+      <div className=" max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
 
         <Link to="/dashboard" className="text-xl font-bold text-blue-600">
           Readme
@@ -154,7 +141,7 @@ useEffect(() => {
                       }
                     }}>
                       <SheetTrigger asChild>
-                        <Button variant="outline" > <ShoppingCartIcon /> </Button>
+                        <Button variant="outline" > My Cart <ShoppingCartIcon /> </Button>
                       </SheetTrigger>
                       <SheetContent>
                         <div>
