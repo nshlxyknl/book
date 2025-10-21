@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Button } from '../ui/button';
 import { ShoppingCartIcon } from 'lucide-react';
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTrigger } from '../ui/sheet';
-import {  useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SheetCard } from '@/pages/UserPages/SheetCard';
 
 
@@ -17,33 +17,34 @@ export default function Navbar() {
     logout();
     navigate("/login", { replace: true })
   }
-  
 
-    const [openSheet, setOpenSheet] = useState(false)
-      const [cart, setCart] = useState([])
 
-  
-    const fetchUploads = async () => {
-      try {
-        const res = await fetch("http://localhost:4000/carttype/get", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
-        const data = await res.json();
-        setCart(data);
-        console.log("cart data", data)
-        return data;
-      } catch (err) {
-        console.error("Failed to fetch uploads", err);
-      }
-    };
-useEffect(() => {
+  const [openSheet, setOpenSheet] = useState(false)
+  const [cart, setCart] = useState([])
+
+
+  const fetchUploads = async () => {
+    try {
+      const res = await fetch("http://localhost:4000/carttype/get", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      const data = await res.json();
+      setCart(data);
+      console.log("cart data", data)
+      return data;
+    } catch (err) {
+      console.error("Failed to fetch uploads", err);
+    } 
+  };
+  useEffect(() => {
     if (openSheet) {
       fetchUploads();
     }
   }, [openSheet]);
+
 
 
   const addhandle = (addId) => {
@@ -77,40 +78,41 @@ useEffect(() => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      
+
       const data = await res.json();
-      
-       if(res.ok){
-       setCart([])
-      console.log("cart clear data",data)
-     }else{
-      alert("not ok res")
-     }
+
+      if (res.ok) {
+        setCart([])
+        console.log("cart clear data", data)
+      } else {
+        alert("not ok res")
+      }
     } catch (err) {
       console.error("clear bhayena la", err);
     }
   }
 
-   const handlepay=async()=>{
+  const handlepay = async () => {
     try {
-       if (!cart || !cart.length) {
-      alert("Your cart is empty");
-      return;
-    }
+      if (!cart || !cart.length) {
+        alert("Your cart is empty");
+        return;
+      }
 
       const res = await fetch("http://localhost:4000/carttype/pay", {
-    method: "POST",
-    headers: { "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-     },
-    body: JSON.stringify({ items: cart }),
-  });
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({ items: cart }),
+      });
 
-  const data = await res.json();
-  window.location.href = data.url;
+      const data = await res.json();
+      window.location.href = data.url;
 
     } catch (error) {
-     console.error("Stripe error:", error.message);
+      console.error("Stripe error:", error.message);
     }
   }
 
