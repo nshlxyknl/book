@@ -5,7 +5,9 @@ const { uploadpdf,
         getallpdf,
         getuserpdf,
         updateTaskStatus,
-        getsales
+        getsales,
+        getAllUsers,
+        deluser
 
  }=require(`../controllers/bookcontrollers`)
 const auth=require(`../middlewares/auth`)
@@ -17,7 +19,9 @@ router.delete(`/del/:id`,auth, delpdf)
 router.get(`/all`,auth, getallpdf)
 router.get(`/sales`,auth, getsales)
 router.get(`/user`,auth,getuserpdf)
-router.put(`/:id`,auth,updateTaskStatus)
+// router.put(`/:id`,auth,updateTaskStatus)
+router.get(`/users`,auth,getAllUsers)
+router.delete(`/:id`,auth,deluser)
 
 
 module.exports=router

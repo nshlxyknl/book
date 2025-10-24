@@ -1,5 +1,6 @@
 const Task = require("../models/Book");
 const Sale = require("../models/Sales");
+const User = require("../models/User");
 const cloudinary = require("cloudinary").v2;
 
 /**
@@ -210,3 +211,22 @@ exports.getsales = async (req, res) => {
   }
 }
 
+exports.deluser = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    await Upload.deleteMany({ uploader: userId });
+    await User.findByIdAndDelete(userId);
+    res.json({ message: "User and their uploads deleted successfully" });
+  } catch (error) {
+    console.log("error in del user")
+  }
+}
+
+exports.getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find().select("-password"); // hide passwords
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: "Failed to get users", error });
+  }
+};

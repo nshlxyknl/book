@@ -17,7 +17,7 @@ export const TotalSales = () => {
   useEffect(()=>{
     const handlesales=async()=>{
       const res= await fetch("http://localhost:4000/tasktype/sales",
-        {
+        {method: "GET",
           headers:{
             Authorization:`Bearer ${localStorage.getItem("token")}`
           }
