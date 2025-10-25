@@ -1,17 +1,22 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 export const ManagePdf = () => {
-const [pdf,setPdf]= useState("")
+const [pdf,setPdf]= useState([])
 
-  const handleusers =async()=>{
+  const handlepdf =async()=>{
     const res = await fetch("http://localhost:4000/tasktype/all",{
       method: "GET",
       headers:{"Authorization" : `Bearer ${localStorage.getItem("token")}`},
     })
-    const data = res.json();
-    setPdf(data)
+    const data = await res.json();
+    setPdf(data.tasks)
     console.log(data) 
   }
+
+   useEffect(() => {
+    handlepdf()
+  }, [])
+  
 
   return (
     <div className="p-4 w-80 bg-white shadow-lg">

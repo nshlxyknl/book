@@ -1,17 +1,21 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 export const ManageUsers = () => {
-  const [user,setUser]= useState("")
+  const [user,setUser]= useState([])
 
   const handleusers =async()=>{
     const res = await fetch("http://localhost:4000/tasktype/users",{
       method: "GET",
       headers:{"Authorization" : `Bearer ${localStorage.getItem("token")}`},
     })
-    const data = res.json();
+    const data =  await res.json();
     setUser(data) 
   }
 
+    useEffect(() => {
+    handleusers()
+  }, [])
+  
   
   return (
     
