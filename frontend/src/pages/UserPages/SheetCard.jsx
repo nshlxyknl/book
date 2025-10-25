@@ -3,7 +3,6 @@ import { Button } from '@/components/ui/button'
 import { useCart } from '@/context/CartContext'
 import React, { useState } from 'react'
 
-
 export const SheetCard = ({productId, title,price, quantity, onDelete}) => {
   
     const {cartadd}= useCart()
@@ -44,8 +43,7 @@ export const SheetCard = ({productId, title,price, quantity, onDelete}) => {
   }
     return (
        
-       <div className="p-4 w-80 bg-white shadow-lg">
-      
+       <div className="p-4 w-80 bg-white shadow-lg"> 
           <div
             className="flex justify-between items-center border-b py-2">
             <div>
@@ -78,3 +76,5 @@ export const SheetCard = ({productId, title,price, quantity, onDelete}) => {
     </div>
     )
 }
+
+

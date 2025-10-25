@@ -3,7 +3,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 
-export default function SellerCard({_id, title, price, pdfUrl, previewUrl, onDelete }) {
+export default function SellerCard({ _id, title, price, pdfUrl, previewUrl, onDelete }) {
 
     const handledel = async (e) => {
         e.preventDefault();
@@ -15,12 +15,12 @@ export default function SellerCard({_id, title, price, pdfUrl, previewUrl, onDel
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
                 },
             })
-console.log(res)
-  
-            if(res.ok){
-            alert("deleted")
-             onDelete(_id);
-            }else{
+            console.log(res)
+
+            if (res.ok) {
+                alert("deleted")
+                onDelete(_id);
+            } else {
                 alert("not deleted")
             }
         } catch (err) {

@@ -85,7 +85,7 @@ exports.getcart = async (req, res) => {
     try {
         const cart = await Cart.findOne({ userId: req.user.userId })
 
-        res.json(cart ? cart.items : []);
+        res.json(cart ? cart.items.filter(item => item.productId) : []);
     } catch (error) {
         res.status(500).json({
             message: "Could not get any",

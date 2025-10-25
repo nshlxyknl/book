@@ -151,6 +151,7 @@ export default function Navbar() {
                           {cart?.length > 0 ?
                             (cart
                               .filter(item => item && item.title && item.quantity > 0)
+                              .filter(item => item.productId)
                               .map((cart) => (
                                 <>
                                   <SheetCard

@@ -1,36 +1,42 @@
 import React, { useEffect, useState } from 'react'
+import { AdminCardPdf } from './AdminCardPdf'
 
 export const ManagePdf = () => {
-const [pdf,setPdf]= useState([])
+  const [pdf, setPdf] = useState([])
 
-  const handlepdf =async()=>{
-    const res = await fetch("http://localhost:4000/tasktype/all",{
+  const handlepdf = async () => {
+    const res = await fetch("http://localhost:4000/tasktype/all", {
       method: "GET",
-      headers:{"Authorization" : `Bearer ${localStorage.getItem("token")}`},
+      headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` },
     })
     const data = await res.json();
     setPdf(data.tasks)
-    console.log(data) 
+    console.log(data)
   }
 
-   useEffect(() => {
+  useEffect(() => {
     handlepdf()
   }, [])
-  
 
   return (
-    <div className="p-4 w-80 bg-white shadow-lg">
-      
-          <div
-            className="flex justify-between items-center border-b py-2">
-            <div>
-              <h3 className="font-semibold">{pdf.title}</h3>
-              <p className="text-sm text-gray-600">
-                ${pdf.price} 
-              </p>
-            </div>
-            <p className="font-bold">${pdf.username}</p>
-          </div>
-          </div>
+    <div className="min-h-screen my-20 bg-background p-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
+        {pdf.length === 0 ? (
+          <p className="text-gray-500">No PDFs found</p>
+        ) : (
+          pdf.map((pdfs) => (
+            <AdminCardPdf
+              key={pdfs._id}
+              _id={pdfs._id}
+              title={pdfs.title}
+              price={pdfs.price}
+              username={pdfs.seller?.username || "Unknown"}
+              onDelete={(id) => setPdf(prev => prev.filter(u => u._id !== id))}
+            />
+
+          ))
+        )}
+      </div>
+    </div>
   )
 }

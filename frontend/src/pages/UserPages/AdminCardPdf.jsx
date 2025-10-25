@@ -1,0 +1,47 @@
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import React from 'react'
+
+export const AdminCardPdf = ({ _id, username, title, price }) => {
+
+  const handledel = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await fetch(`http://localhost:4000/tasktype/del/${_id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+
+      if (res.ok) {
+        alert("deleted")
+        onDelete(_id);
+      } else {
+        alert("not deleted")
+      }
+    } catch (err) {
+      alert("error")
+    }
+  }
+
+  return (
+
+    <Card className="shadow-md hover:shadow-lg transition duration-200">
+      <CardHeader>
+        <CardTitle className="text-lg font-semibold">{title}</CardTitle>
+      </CardHeader>
+
+      <CardContent className="flex flex-col gap-3">
+        <p className="text-gray-600">Price: ${price}</p>
+        <p className="text-gray-600">Uploaded by: {username}</p>
+        <div className="flex justify-between">
+          <div className="flex items-center gap-2 mt-1">
+            <Button variant="destructive" onClick={handledel}> Delete </Button>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
