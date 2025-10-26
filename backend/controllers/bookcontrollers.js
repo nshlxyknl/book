@@ -1,3 +1,4 @@
+const Book = require("../models/Book");
 const Task = require("../models/Book");
 const Sale = require("../models/Sales");
 const User = require("../models/User");
@@ -213,13 +214,14 @@ exports.getsales = async (req, res) => {
 
 exports.deluser = async (req, res) => {
   try {
-    const { userId } = req.params;
-    await Upload.deleteMany({ uploader: userId });
-    await User.findByIdAndDelete(userId);
+    const { id } = req.params;
+    await Book.deleteMany({ seller : id });
+    await User.findByIdAndDelete(id );
     res.json({ message: "User and their uploads deleted successfully" });
   } catch (error) {
-    console.log("error in del user")
-  }
+   res.status(500).json({
+      message: "Could not get sales",
+      details: error.message,  });}
 }
 
 exports.getAllUsers = async (req, res) => {

@@ -1,38 +1,47 @@
 import React, { useEffect, useState } from 'react'
+import { AdminCardUser } from './AdminCardUser'
 
 export const ManageUsers = () => {
-  const [user,setUser]= useState([])
+  const [user, setUser] = useState([])
 
-  const handleusers =async()=>{
-    const res = await fetch("http://localhost:4000/tasktype/users",{
+  const handleusers = async () => {
+    const res = await fetch("http://localhost:4000/tasktype/users", {
       method: "GET",
-      headers:{"Authorization" : `Bearer ${localStorage.getItem("token")}`},
+      headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` },
     })
-    const data =  await res.json();
-    setUser(data) 
+    const data = await res.json();
+    setUser(data)
   }
 
-    useEffect(() => {
+  useEffect(() => {
     handleusers()
   }, [])
-  
-  
+
+
   return (
-    
-        <div className="p-4 w-80 bg-white shadow-lg">
-          
-              <div
-                className="flex justify-between items-center border-b py-2">
-                <div>
-                  <h3 className="font-semibold">{user.username}</h3>
-                  <p className="text-sm text-gray-600">
-                    {user.role}
-                  </p>
-                </div>
-               
-              </div>
-              </div>
-          
+
+    <div className="min-h-screen my-20 bg-background p-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
+        {user.length === 0 ? (
+          <p className="text-gray-500">No Users found</p>
+        ) : (
+          user.map((users) => (
+            <AdminCardUser
+              key={users._id}
+              _id={users._id}
+              username={users.username || "Unknown"}
+              role={users.role}
+              onDelete={async (id) => {
+                setUser(prev => prev.filter(u => u._id !== id))
+                await handleusers()
+              }}
+            />
+
+          ))
+        )}
+      </div>
+    </div>
+
   )
 }
 

@@ -21,7 +21,7 @@ router.get(`/sales`,auth, getsales)
 router.get(`/user`,auth,getuserpdf)
 // router.put(`/:id`,auth,updateTaskStatus)
 router.get(`/users`,auth,getAllUsers)
-router.delete(`/:id`,auth,deluser)
+router.delete(`/deluser/:id`,auth,deluser)
 
 
 module.exports=router
