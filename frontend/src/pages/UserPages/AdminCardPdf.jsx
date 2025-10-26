@@ -21,8 +21,11 @@ export const AdminCardPdf = ({ _id, username, title, price }) => {
       } else {
         alert("not deleted")
       }
-    } catch (err) {
-      alert("error")
+    } catch (error) {
+    res.status(500).json({
+            message: "Could not add to cart",
+            details: error.message,
+    })
     }
   }
 

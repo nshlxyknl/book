@@ -38,8 +38,10 @@ export const SheetCard = ({productId, title,price, quantity, onDelete}) => {
      }
     }
     catch(error){
-      alert("error in res")
-    }
+       res.status(500).json({
+            message: "Could not add to cart",
+            details: error.message,
+    })}
   }
     return (
        

@@ -30,6 +30,7 @@ const [cartItems, setCartItems] = useState([]);
         if (res.ok) {
           alert("added in your cart")
           onAdd(productId,quantity)
+          
         } else {
           alert("error")
         }
@@ -37,7 +38,6 @@ const [cartItems, setCartItems] = useState([]);
         console.error("error")
       }
     }
-
 
      
 

@@ -4,8 +4,6 @@ const Book = require("../models/Book")
 require("dotenv").config();
 
 
-
-
 exports.addcart = async (req, res) => {
     try {
 
@@ -25,7 +23,7 @@ exports.addcart = async (req, res) => {
         }
 
         // check if item exists
-        const existingItem = cart.items.find(item => item.productId.toString() === productId);
+        const existingItem = cart.items.find(item => item.productId.toString() === productId.toString());
 
         if (existingItem) {
             existingItem.quantity += quantity;
@@ -60,7 +58,7 @@ exports.deletecart = async (req, res) => {
 
         // console.log("After:", cart.items.map(i => i.productId.toString()));
 
-        const existingItem = cart.items.find(item => item.productId.toString() === productId);
+        const existingItem = cart.items.find(item => item.productId.toString() === productId.toString());
 
         if (existingItem) {
             existingItem.quantity -= 1;
@@ -84,8 +82,9 @@ exports.deletecart = async (req, res) => {
 exports.getcart = async (req, res) => {
     try {
         const cart = await Cart.findOne({ userId: req.user.userId })
+        // .populate("items.productId")
 
-        res.json(cart ? cart.items.filter(item => item.productId) : []);
+        res.json(cart ? cart.items.filter(items=> items.productId !=null) : []);
     } catch (error) {
         res.status(500).json({
             message: "Could not get any",
