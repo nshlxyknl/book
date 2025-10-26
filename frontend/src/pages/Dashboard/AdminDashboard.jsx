@@ -1,11 +1,14 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { useCount } from "@/context/CountContext";
 import { ShoppingCart, Users, DollarSign, Package } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 
 export default function AdminDashboard() {
 
 const navigate= useNavigate();
+  const {countUploads}=useCount()
+
 
   return (
     <div className="min-h-screen my-20 bg-background p-6">
@@ -22,7 +25,7 @@ const navigate= useNavigate();
             <Package className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">234</div>
+            <div className="text-2xl font-bold">{countUploads}</div>
           </CardContent>
         </Card>
 

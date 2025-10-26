@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { AdminCardPdf } from './AdminCardPdf'
+import { useCount } from '@/context/CountContext';
 
 export const ManagePdf = () => {
   const [pdf, setPdf] = useState([])
+  const { setCountUploads } = useCount();
+
 
   const handlepdf = async () => {
     const res = await fetch("http://localhost:4000/tasktype/all", {
@@ -11,6 +14,8 @@ export const ManagePdf = () => {
     })
     const data = await res.json();
     setPdf(data.tasks)
+    setCountUploads(data.count)
+
     console.log(data)
   }
 
@@ -31,7 +36,9 @@ export const ManagePdf = () => {
               title={pdfs.title}
               price={pdfs.price}
               username={pdfs.seller?.username || "Unknown"}
-              onDelete={(id) => setPdf(prev => prev.filter(u => u._id !== id))}
+              onDelete={async (id) => {setPdf(prev => prev.filter(u => u._id !== id))
+                                   await  handlepdf()
+              }}
             />
 
           ))

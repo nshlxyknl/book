@@ -1,8 +1,9 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import React from 'react'
+import React, { useEffect } from 'react'
 
 export const AdminCardPdf = ({ _id, username, title, price }) => {
+
 
   const handledel = async (e) => {
     e.preventDefault();
@@ -14,20 +15,26 @@ export const AdminCardPdf = ({ _id, username, title, price }) => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
-
+      const data = await res.json()
       if (res.ok) {
         alert("deleted")
         onDelete(_id);
+        
+
       } else {
         alert("not deleted")
       }
     } catch (error) {
-    res.status(500).json({
-            message: "Could not add to cart",
-            details: error.message,
-    })
+      res.status(500).json({
+        message: "Could not add to cart",
+        details: error.message,
+      })
     }
   }
+
+  useEffect(()=>{
+    handledel()
+  },[])
 
   return (
 
