@@ -4,16 +4,19 @@ import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartContext";
 import { useEffect, useState } from "react";
 import { ShoppingCartIcon } from "lucide-react";
+import { Rating } from "@mui/material";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
 
 
 
 export default function BuyerCard({ _id, title, price, quantity, pdfUrl, previewUrl }) {
 
   const { cartadd } = useCart()
-  const [r, setr]=useState(1)
+  const [r, setr] = useState(1)
 
   const addcart = () => {
-    cartadd({ _id, title, price, quantity:r });
+    cartadd({ _id, title, price, quantity: r });
   }
 
   const buypay = async () => {
@@ -25,21 +28,76 @@ export default function BuyerCard({ _id, title, price, quantity, pdfUrl, preview
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          items:[
+          items: [
             {
               title,
               price,
-              quantity:r
+              quantity: r
             }
           ]
         })
       });
 
-      const data=await res.json();
-      window.location.href= data.url ;
+      const data = await res.json();
+      window.location.href = data.url;
 
     } catch (error) {
       console.error("error in payment")
+    }
+  }
+
+  const [star, setStar] = useState(0)
+  const [comments, setComments] = useState("")
+  const [loading, setLoading] = useState(false)
+  const [openPop, setOpenPop] = useState(false)
+
+  const review = async (e) => {
+    e.preventDefault();
+
+    if (!comments || !star) {
+      alert("Please fill the rating and comments")
+      return;
+    }
+      console.log("Sending review for product:", _id); 
+
+    setLoading(true)
+
+      const formdata = new FormData();
+    formdata.append("comments", comments)
+    formdata.append("star", star)
+
+    try {
+      const res = await fetch(`http://localhost:4000/retype/add/${_id}`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}`,
+                "Content-Type": "application/json",
+       },
+        body: JSON.stringify({ 
+        comments,
+        star,
+      }),
+      })
+
+      const data =await res.json();
+      console.log(data)
+
+      if(res.ok){
+        alert("upload success")
+        setOpenPop(false)
+        setComments("")
+        setStar(0)
+      }else if(res.status === 400 ) {
+        alert("You have already reviewed this product!");
+         setOpenPop(false)
+        setComments("")
+        setStar(0)
+      }
+
+    } catch (error) {
+      console.log('not submitted')
+      alert("error in submission")
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -66,26 +124,52 @@ export default function BuyerCard({ _id, title, price, quantity, pdfUrl, preview
               View
             </a>
           </Button>
-           <div className="flex items-center gap-2 mt-1">
-                    <Button variant="outline" size="sm" 
-                      onClick={() => {
-                  if (r >= 1) {
-                    setr(r - 1);
-                  }
-                  else{
-                    setr(0)
-                  }
-                }}
-                      >-</Button>
-                    <span>{r}</span>
-                    <Button variant="outline" size="sm" 
-                    onClick={  () => {
-                    setr(r+ 1);
-                     }}
-                      >+</Button>
-                  </div>
+          <div className="flex items-center gap-2 mt-1">
+            <Button variant="outline" size="sm"
+              onClick={() => {
+                if (r >= 1) {
+                  setr(r - 1);
+                }
+                else {
+                  setr(0)
+                }
+              }}
+            >-</Button>
+            <span>{r}</span>
+            <Button variant="outline" size="sm"
+              onClick={() => {
+                setr(r + 1);
+              }}
+            >+</Button>
+          </div>
           <Button variant="default" onClick={buypay}>Buy</Button>
           <Button variant="outline" onClick={addcart}> <ShoppingCartIcon /></Button>
+
+          <div className="flex mx-4 ">
+            <Dialog open={openPop} onOpenChange={setOpenPop} >
+              <DialogTrigger asChild>
+                <Button onClick={() => setOpenPop(!openPop)}>Rate me</Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-md p-6 rounded-2xl shadow-lg bg-white ">
+                <form onSubmit={review} className="flex flex-col gap-4 mt-4">
+                  <Input type="text" placeholder="comments" value={comments} onChange={(e) => setComments(e.target.value)} className="p-2 rounded-md " />
+                  <Rating
+                    name="simple-controlled"
+                    value={star}
+                    onChange={(event, newValue) => setStar(newValue)}
+                  />
+
+                  <div className="flex justify-between gap-2 mt-2">
+                    <Button type="button" onClick={() => setOpenPop(false)}>Cancel</Button>
+                    <Button type="submit" disabled={loading} >
+                      {loading ? "Uploading.." : "Add"}
+                    </Button>
+                  </div>
+                </form>
+              </DialogContent>
+            </Dialog>
+          </div>
+
         </div>
       </CardContent>
     </Card>
