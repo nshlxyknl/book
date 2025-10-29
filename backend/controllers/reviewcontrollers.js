@@ -30,20 +30,22 @@ exports.addreview = async (req, res) => {
   }
 };
 
-// 🟡 Get all reviews for a product
+
 exports.getreview = async (req, res) => {
   try {
     const { productId } = req.params;
 
-    const reviews = await Review.find({ productId }).sort({ createdAt: -1 });
+    const reviews = await Review.find({ productId })
+    .populate("userId","username")
+    .sort({ createdAt: -1 });
     const avgRating =
       reviews.length > 0
-        ? reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length
+        ? reviews.reduce((acc, r) => acc + Number(r.star || 0), 0) / reviews.length
         : 0;
 
     res.json({
       reviews,
-      averageRating: avgRating.toFixed(1),
+      avgRating: avgRating.toFixed(1),
       count: reviews.length,
     });
   } catch (error) {
