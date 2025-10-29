@@ -14,8 +14,7 @@ export const ManagePdf = () => {
     })
     const data = await res.json();
     setPdf(data.tasks)
-    setCountUploads(data.count)
-    console.log(data)
+    setCountUploads(data.tasks.length)
   }
 
   useEffect(() => {

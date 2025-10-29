@@ -3,9 +3,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { useCount } from "@/context/CountContext"
-import { ShoppingCart, DollarSign, Package } from "lucide-react"
+import { ShoppingCart, Package } from "lucide-react"
 import { useEffect, useState } from "react"
-import {  useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 export default function SellerDashboard() {
   const [openPop, setOpenPop] = useState(false);
@@ -16,7 +16,8 @@ export default function SellerDashboard() {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
-  const {countUploads}=useCount()
+  const { countUploads } = useCount()
+  // const [count, setCount] = useState(countUploads);
 
 
   const handleadd = async (e) => {
@@ -91,7 +92,7 @@ export default function SellerDashboard() {
           </CardContent>
         </Card>
 
-        <Card onClick={()=> navigate('/seller/sales')}>
+        <Card onClick={() => navigate('/seller/sales')}>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium"></CardTitle>
             <ShoppingCart className="h-4 w-4 text-muted-foreground" />

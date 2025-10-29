@@ -7,7 +7,7 @@ export const SellerUploads = () => {
      const [uploads, setUploads] = useState([]);
      const {setCountUploads} = useCount();
     
-      useEffect(() => {
+      
         const fetchUploads = async () => {
           try {
             const res = await fetch("http://localhost:4000/tasktype/user",{
@@ -18,18 +18,20 @@ export const SellerUploads = () => {
           });
             const data = await res.json();
             setUploads(data.tasks);
-            setCountUploads(data.count)
+            setCountUploads(data.tasks.length)
           } catch (err) {
             console.error("Failed to fetch uploads", err);
           }
         };
     
-        fetchUploads();
-      }, []);
+        useEffect(()=>{
+          fetchUploads()
+        },[])
+        
 
 
   return (
-     <div className="min-h-screen my-10 bg-background p-6">
+     <div className="min-h-screen my-20 bg-background p-6">
       <header className="mb-8">
         <h1 className="text-3xl font-bold"> Seller Uploads</h1>
       </header>
@@ -43,7 +45,9 @@ export const SellerUploads = () => {
              price={upload.price}
              pdfUrl={upload.pdfUrl}
              previewUrl={upload.previewUrl}
-             onDelete={(id) => setUploads(prev => prev.filter(u => u._id !== id))}
+             onDelete={async(id) => {setUploads(prev => prev.filter(u => u._id !== id))
+              await fetchUploads()}
+             }
            />
          ))}
        </div>

@@ -7,8 +7,9 @@ import { useNavigate } from "react-router-dom"
 export default function AdminDashboard() {
 
 const navigate= useNavigate();
-  const {countUploads}=useCount()
+  const {countUploads,countUser}=useCount()
 
+  
 
   return (
     <div className="min-h-screen my-20 bg-background p-6">
@@ -35,7 +36,7 @@ const navigate= useNavigate();
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">573</div>
+            <div className="text-2xl font-bold">{countUser}</div>
           </CardContent>
         </Card>
       </div>

@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { AdminCardUser } from './AdminCardUser'
+import { useCount } from '@/context/CountContext';
 
 export const ManageUsers = () => {
   const [user, setUser] = useState([])
+    const { setCountUser } = useCount();
+
 
   const handleusers = async () => {
     const res = await fetch("http://localhost:4000/tasktype/users", {
@@ -10,7 +13,10 @@ export const ManageUsers = () => {
       headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` },
     })
     const data = await res.json();
+    console.log("Drama",data)
     setUser(data)
+    setCountUser(data.length)
+
   }
 
   useEffect(() => {

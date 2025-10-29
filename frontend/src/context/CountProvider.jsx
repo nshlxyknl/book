@@ -8,14 +8,24 @@ export const CountProvider = ({ children }) => {
         return Number(localStorage.getItem("countUploads"))
     })
 
+    const [countUser, setCountUser] = useState(() => {
+        return Number(localStorage.getItem("countUser"))
+    })
+
     useEffect(() => {
         return () => {
             localStorage.setItem("countUploads", countUploads);
         }
     }, [countUploads])
 
+    useEffect(() => {
+        return () => {
+            localStorage.setItem("countUser", countUser);
+        }
+    }, [countUser])
+
     return (
-        <CountContext.Provider value={{ countUploads, setCountUploads }}>
+        <CountContext.Provider value={{ countUploads, setCountUploads, countUser ,setCountUser }}>
             {children}
         </CountContext.Provider>
 

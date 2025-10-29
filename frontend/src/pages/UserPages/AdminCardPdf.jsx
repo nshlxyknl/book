@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import React, { useEffect } from 'react'
 
-export const AdminCardPdf = ({ _id, username, title, price }) => {
+export const AdminCardPdf = ({ _id, username, title, price, onDelete }) => {
 
 
   const handledel = async (e) => {
@@ -32,9 +32,9 @@ export const AdminCardPdf = ({ _id, username, title, price }) => {
     }
   }
 
-  useEffect(()=>{
-    handledel()
-  },[])
+  // useEffect(()=>{
+  //   handledel()
+  // },[])
 
   return (
 
