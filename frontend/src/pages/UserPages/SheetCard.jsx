@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button'
 import { useCart } from '@/context/CartContext'
 import React, { useState } from 'react'
 
-export const SheetCard = ({productId, title,price, quantity, onDelete}) => {
+export const SheetCard = ({productId, title,price, quantity, onDelete, onClear}) => {
   
     const {cartadd}= useCart()
     const [q,setq]=useState(quantity)
@@ -57,7 +57,8 @@ export const SheetCard = ({productId, title,price, quantity, onDelete}) => {
             <p className="font-bold">${price * quantity}</p>
           </div>
        <div className="flex items-center gap-2 mt-1">
-          <Button variant="outline" size="sm" 
+          <Button disabled={q === 1}
+ variant="outline" size="sm" 
             onClick={() => {
         if (q >= 1) {
           setq(q - 1);
@@ -75,6 +76,7 @@ export const SheetCard = ({productId, title,price, quantity, onDelete}) => {
             handleeadd(productId)}}
             >+</Button>
         </div>
+        <Button onClick={ ()=>{ onClear(productId)}}>Delete</Button>
     </div>
     )
 }

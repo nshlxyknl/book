@@ -148,4 +148,3 @@ exports.payc = async (req, res) => {
    }
 
 }
-

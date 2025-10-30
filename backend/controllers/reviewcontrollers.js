@@ -10,7 +10,6 @@ exports.addreview = async (req, res) => {
     const product = await Book.findById(productId);
     if (!product) return res.status(404).json({ message: "Product not found" });
 
-    // Prevent same user from adding multiple reviews for the same product
     const existing = await Review.findOne({ productId, userId });
     if (existing)
       return res.status(400).json({ message: "You already reviewed this product" });

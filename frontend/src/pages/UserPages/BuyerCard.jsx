@@ -71,7 +71,7 @@ export default function BuyerCard({ _id, title, price, quantity, pdfUrl, preview
         },
         body: JSON.stringify({
           comments,
-          star,
+          star
         }),
       })
 

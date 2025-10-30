@@ -4,10 +4,7 @@ const Sale = require("../models/Sales");
 const User = require("../models/User");
 const cloudinary = require("cloudinary").v2;
 
-/**
- * Task Controller: Handles all task-related operations in the backend
- * This file contains the business logic for managing tasks
- */
+
 
 /** 
  * Creates a new task in the system
@@ -43,7 +40,6 @@ exports.uploadpdf = async (req, res) => {
       format: "jpg"
     });
 
-    // Create and save new task, assignedBy comes from authenticated user
     const task = await Task.create({
       title,
       price,
@@ -52,7 +48,6 @@ exports.uploadpdf = async (req, res) => {
       seller: sellerId
     });
 
-    // Populate user details for the response
     await task.populate("seller", "username"); // if 'seller' is a ref to User
 
     res.status(201).json({

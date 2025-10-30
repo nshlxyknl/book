@@ -6,6 +6,7 @@ export const Reviews = ({avgRating,reviews}) => {
   return (
      <div className="mt-4">
                   <p className="font-semibold">Average Rating: {avgRating} ⭐</p>
+                 
                   {reviews.length === 0 ? (
                     <p className="text-gray-500">No reviews yet</p>
                   ) : (

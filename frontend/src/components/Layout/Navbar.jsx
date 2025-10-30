@@ -116,6 +116,15 @@ export default function Navbar() {
     }
   }
 
+  const clearproduct=(deletedId)=>{
+    setCart((prev) =>
+      prev.map((u) =>
+        u.productId === deletedId
+          ? { ...u, quantity: 0 }
+          : u
+      )
+    );
+  }
 
   return (
     <header className="fixed top-0 left-0  z-50  w-full shadow-md bg-white dark:bg-gray-900">
@@ -162,6 +171,7 @@ export default function Navbar() {
                                     quantity={cart.quantity}
                                     onDelete={delhandle}
                                     onAdd={addhandle}
+                                    onClear={clearproduct}
                                   />
                                 </>
                               ))) :
