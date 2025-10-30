@@ -35,7 +35,7 @@ export const TotalSales = () => {
   return (
 
   
-    <div className=" overflow-hidden rounded-md border ">
+    <div className=" mt-20 overflow-hidden rounded-md border ">
       <Table>
         <TableHeader>
            <TableRow>
@@ -68,7 +68,6 @@ export const TotalSales = () => {
         </TableBody>
       </Table>
     </div>
-  
 )}
 
 
