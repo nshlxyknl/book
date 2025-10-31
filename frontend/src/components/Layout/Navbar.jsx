@@ -34,40 +34,19 @@ export default function Navbar() {
       const data = await res.json();
       setCart(data);
       console.log("cart data", data)
-      return data;
+      // return data;
     } catch (err) {
       console.error("Failed to fetch uploads", err);
     } 
   };
-  useEffect(() => {
-    if (openSheet) {
+
+  useEffect(() => { 
       fetchUploads();
-    }
-  }, [openSheet]);
+  }, []);
 
 
 
-  const addhandle = (addId) => {
 
-    setCart((prev) =>
-      prev.map((u) =>
-        u.productId === addId
-          ? { ...u, quantity: u.quantity }
-          : u
-      )
-    );
-  }
-
-  const delhandle = (deletedId) => {
-
-    setCart((prev) =>
-      prev.map((u) =>
-        u.productId === deletedId
-          ? { ...u, quantity: u.quantity }
-          : u
-      )
-    );
-  }
 
   const clearcart = async () => {
     alert("clear cart")
@@ -116,15 +95,8 @@ export default function Navbar() {
     }
   }
 
-  const clearproduct=(deletedId)=>{
-    setCart((prev) =>
-      prev.map((u) =>
-        u.productId === deletedId
-          ? { ...u, quantity: 0 }
-          : u
-      )
-    );
-  }
+
+  
 
   return (
     <header className="fixed top-0 left-0  z-50  w-full shadow-md bg-white dark:bg-gray-900">
@@ -148,7 +120,7 @@ export default function Navbar() {
                     <Sheet open={openSheet} onOpenChange={(open) => {
                       setOpenSheet(open)
                       if (open) {
-                        fetchUploads();
+                        fetchUploads(); /////////////yo hola
                       }
                     }}>
                       <SheetTrigger asChild>
@@ -169,9 +141,7 @@ export default function Navbar() {
                                     title={cart.title}
                                     price={cart.price}
                                     quantity={cart.quantity}
-                                    onDelete={delhandle}
-                                    onAdd={addhandle}
-                                    onClear={clearproduct}
+                                    
                                   />
                                 </>
                               ))) :

@@ -22,7 +22,6 @@ exports.addcart = async (req, res) => {
             cart = new Cart({ userId, items: [] });
         }
 
-        // check if item exists
         const existingItem = cart.items.find(item => item.productId.toString() === productId.toString());
 
         if (existingItem) {
@@ -84,7 +83,7 @@ exports.getcart = async (req, res) => {
         const cart = await Cart.findOne({ userId: req.user.userId })
         // .populate("items.productId")
 
-        res.json(cart ? cart.items.filter(items=> items.productId !=null) : []);
+        res.json(cart ? cart.items.filter(items => items.productId != null) : []);
     } catch (error) {
         res.status(500).json({
             message: "Could not get any",
@@ -93,7 +92,7 @@ exports.getcart = async (req, res) => {
     }
 }
 
-const stripe= require("stripe")(process.env.SECRET_KEY)
+const stripe = require("stripe")(process.env.SECRET_KEY)
 
 exports.clearcart = async (req, res) => {
     try {
@@ -115,36 +114,94 @@ exports.clearcart = async (req, res) => {
 }
 
 exports.payc = async (req, res) => {
-   try {
-    const items = req.body.items; 
+    try {
+        const items = req.body.items;
 
-    if (!items || !items.length) {
-      return res.status(400).json({ message: "Cart is empty" });
-    }
+        if (!items || !items.length) {
+            return res.status(400).json({ message: "Cart is empty" });
+        }
 
-     const session = await stripe.checkout.sessions.create({
-        payment_method_types: ['card'],
-        mode: 'payment',
-        line_items: items.map(item => ({
-  price_data: {
-    currency: 'usd',
-    product_data: {
-      name: item.title,
-    },
-    unit_amount: item.price * 100, // Stripe uses cents
-  },
-  quantity: item.quantity,
-})),
-        success_url: 'http://localhost:5173/success',
-        cancel_url: 'http://localhost:5173/cancel',
-    });
-    res.json({ url: session.url });
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            mode: 'payment',
+            line_items: items.map(item => ({
+                price_data: {
+                    currency: 'usd',
+                    product_data: {
+                        name: item.title,
+                    },
+                    unit_amount: item.price * 100, // Stripe uses cents
+                },
+                quantity: item.quantity,
+            })),
+            success_url: 'http://localhost:5173/success',
+            cancel_url: 'http://localhost:5173/cancel',
+        });
+        res.json({ url: session.url });
 
-   } catch (error) {
-    res.status(500).json({
+    } catch (error) {
+        res.status(500).json({
             message: "Could not pay",
             details: error.message,
-            })
-   }
+        })
+    }
 
+}
+
+exports.plus = async (req, res) => {
+    try {
+        const { productId } = req.body;
+        const userId = req.user.userId;
+        let cart = await Cart.findOne({ userId });
+        const existingItem = cart.items.find(item => item.productId.toString() === productId.toString());
+
+        if (existingItem) {
+            existingItem.quantity += 1;
+        }
+        res.json(cart);
+
+    } catch (error) {
+        res.status(500).json({
+            message: "Could not clear",
+            details: error.message,
+        })
+    }
+}
+
+// exports.minus = async (req, res) => {
+//     try {
+//         const { productId } = req.params;
+//         const userId = req.user.userId;
+//         let cart = await Cart.findOne({ userId });
+//         const existingItem = cart.items.find(item => item.productId.toString() === productId.toString());
+
+//         if (existingItem) {
+//             existingItem.quantity -= 1;
+//         }
+//         res.json(cart);
+
+//     } catch (error) {
+//         res.status(500).json({
+//             message: "Could not clear",
+//             details: error.message,
+//         })
+//     }
+// }
+
+exports.clean = async (req, res) => {
+    try {
+        const {productId}=req.params;
+         const userId = req.user.userId;
+         const cart = await Cart.findOne({ userId });
+       
+        cart.items = cart.items.find(item => item.productId.toString() !== productId.toString());;
+        await cart.save();
+
+        res.json({ message: "Cart item cleared", cart });
+
+
+    } catch (error) {
+       console.log(error)
+        
+    }
 }
