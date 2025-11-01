@@ -143,7 +143,7 @@ try {
             </a>
           </Button>
           <div className="flex items-center gap-2 mt-1">
-            <Button variant="outline" size="sm"
+            <Button disabled={r === 1} variant="outline" size="sm"
               onClick={() => {
                 if (r >= 1) {
                   setr(r - 1);

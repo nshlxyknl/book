@@ -3,20 +3,44 @@ import { Button } from '@/components/ui/button'
 import { useCart } from '@/context/CartContext'
 import React, { useState } from 'react'
 
-export const SheetCard = ({ productId, title, price, quantity, onDelete, onClear }) => {
+export const SheetCard = ({ productId, title, price, quantity,  refreshCart  }) => {
 
-  const { cartadd } = useCart()
+  const {  updateCart } = useCart()
   const [q, setq] = useState(quantity)
-  const [c,setC]=useState([])
-  
 
 
-     const handleeadd=async ()=> {
-      console.log("SheetCard Add clicked", { productId, quantity });
-      cartadd({ _id:productId, title, price, quantity} )
-      await fetchUploads();
+  //yo ni thik xa useeefeect 
+  const pluscart = async () => {
+    try {
+      const res = await fetch("http://localhost:4000/carttype/plus",
+        {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ productId, quantity })
+        }
+      )
+
+      const data = await res.json();
+      updateCart(data)
+
+      if (res.ok) {
+        alert("added in your cart")
+                await refreshCart()
+
+      } else {
+        alert("error")
+      }
+
+    } catch (error) {
+      console.log(error)
+
+    }
   }
 
+  //yo thik xa
   const delcart = async () => {
     try {
       const res = await fetch(`http://localhost:4000/carttype/delete/${productId}`, {
@@ -27,14 +51,10 @@ export const SheetCard = ({ productId, title, price, quantity, onDelete, onClear
       })
 
       const data = await res.json();
-
       if (res.ok) {
-        //  setCart(data)
         console.log("deleted data", data)
         alert("deleted successfully")
-        // onDelete(productId, quantity);
-        await fetchUploads();
-
+        await refreshCart()
       } else {
         alert("not ok res")
       }
@@ -48,10 +68,10 @@ export const SheetCard = ({ productId, title, price, quantity, onDelete, onClear
   }
 
 
- 
 
 
 
+  // yo ni thik xa  tara useeefct 
   const clearproduct = async () => {
     try {
       const res = await fetch(`http://localhost:4000/carttype/clean/${productId}`, {
@@ -64,8 +84,9 @@ export const SheetCard = ({ productId, title, price, quantity, onDelete, onClear
       const data = await res.json();
 
       if (res.ok) {
-        console.log("deleted data", data)
+        console.log("del", data)
         alert("deleted successfully")
+        await refreshCart()
       } else {
         alert("not ok res")
       }
@@ -73,8 +94,9 @@ export const SheetCard = ({ productId, title, price, quantity, onDelete, onClear
     catch (error) {
       alert("error")
     }
-//////////hya 
   }
+
+
 
   return (
 
@@ -91,7 +113,7 @@ export const SheetCard = ({ productId, title, price, quantity, onDelete, onClear
       </div>
       <div className="flex items-center gap-2 mt-1">
         <Button disabled={q === 1} variant="outline" size="sm"
-          onClick={async() => {
+          onClick={async () => {
             if (q >= 1) {
               setq(q - 1);
               await delcart()
@@ -101,9 +123,9 @@ export const SheetCard = ({ productId, title, price, quantity, onDelete, onClear
         <span>{q}</span>
 
         <Button variant="outline" size="sm"
-          onClick={async() => {
+          onClick={async () => {
             setq(q + 1)
-            await handleeadd()
+            await pluscart()
           }} >+</Button>
       </div>
 

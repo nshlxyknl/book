@@ -6,7 +6,7 @@ const { getcart, deletecart, addcart, clearcart, payc, plus, minus, clean } = re
 
 router.get(`/get`,auth, getcart)
 router.post(`/add`,auth, addcart)
-// router.post(`/plus`,auth, plus)
+router.post(`/plus`,auth, plus)
 router.delete(`/delete/:productId`,auth, deletecart)
 // router.delete(`/minus/:productId`,auth, minus)
 router.delete(`/clearcart`,auth, clearcart)

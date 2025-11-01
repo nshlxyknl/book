@@ -130,7 +130,7 @@ exports.payc = async (req, res) => {
                     product_data: {
                         name: item.title,
                     },
-                    unit_amount: item.price * 100, // Stripe uses cents
+                    unit_amount: item.price * 100, 
                 },
                 quantity: item.quantity,
             })),
@@ -158,6 +158,7 @@ exports.plus = async (req, res) => {
         if (existingItem) {
             existingItem.quantity += 1;
         }
+        await cart.save();
         res.json(cart);
 
     } catch (error) {
@@ -168,25 +169,7 @@ exports.plus = async (req, res) => {
     }
 }
 
-// exports.minus = async (req, res) => {
-//     try {
-//         const { productId } = req.params;
-//         const userId = req.user.userId;
-//         let cart = await Cart.findOne({ userId });
-//         const existingItem = cart.items.find(item => item.productId.toString() === productId.toString());
 
-//         if (existingItem) {
-//             existingItem.quantity -= 1;
-//         }
-//         res.json(cart);
-
-//     } catch (error) {
-//         res.status(500).json({
-//             message: "Could not clear",
-//             details: error.message,
-//         })
-//     }
-// }
 
 exports.clean = async (req, res) => {
     try {

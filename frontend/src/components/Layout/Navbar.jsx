@@ -34,7 +34,7 @@ export default function Navbar() {
       const data = await res.json();
       setCart(data);
       console.log("cart data", data)
-      // return data;
+      return data;
     } catch (err) {
       console.error("Failed to fetch uploads", err);
     } 
@@ -46,8 +46,7 @@ export default function Navbar() {
 
 
 
-
-
+// yo thik xa 
   const clearcart = async () => {
     alert("clear cart")
     try {
@@ -71,6 +70,7 @@ export default function Navbar() {
     }
   }
 
+  //yo thik xa 
   const handlepay = async () => {
     try {
       if (!cart || !cart.length) {
@@ -108,8 +108,8 @@ export default function Navbar() {
 
         {!token ? (
           <nav className="hidden md:flex space-x-6">
-            <Link to="/register" className="hover:text-blue-600">Register</Link>
-            <Link to="/login" className="hover:text-blue-600">Login</Link>
+            {/* <Link to="/register" className="hover:text-blue-600">Register</Link>
+            <Link to="/login" className="hover:text-blue-600">Login</Link> */}
           </nav>
         )
           : (
@@ -120,7 +120,7 @@ export default function Navbar() {
                     <Sheet open={openSheet} onOpenChange={(open) => {
                       setOpenSheet(open)
                       if (open) {
-                        fetchUploads(); /////////////yo hola
+                        fetchUploads(); 
                       }
                     }}>
                       <SheetTrigger asChild>
@@ -132,7 +132,6 @@ export default function Navbar() {
                           {cart?.length > 0 ?
                             (cart
                               .filter(item => item && item.title && item.quantity > 0)
-                              // .filter(item => item._id)
                               .map((cart) => (
                                 <>
                                   <SheetCard
@@ -141,7 +140,7 @@ export default function Navbar() {
                                     title={cart.title}
                                     price={cart.price}
                                     quantity={cart.quantity}
-                                    
+                                    refreshCart={fetchUploads}
                                   />
                                 </>
                               ))) :
