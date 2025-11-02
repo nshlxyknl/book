@@ -1,6 +1,5 @@
 const Book = require("../models/Book");
 const Task = require("../models/Book");
-const Sale = require("../models/Sales");
 const User = require("../models/User");
 const cloudinary = require("cloudinary").v2;
 
@@ -183,29 +182,7 @@ exports.delpdf = async (req, res) => {
   }
 };
 
-exports.getsales = async (req, res) => {
-  try {
-    const sales = await Sale.aggregate([
-      { $match: { sellerId: req.user.userId } },
-      {
-        $group: {
-          _id: "$productId",
-          title: { $first: "$title" },
-          totalSold: { $sum: "$quantity" },
-          totalRevenue: { $sum: { $multiply: ["$price", "$quantity"] } }
-        }
-      }, {
-        $sort: { totalSold: -1 }
-      }
-    ]);
-    res.json(sales);
-  } catch (error) {
-    res.status(500).json({
-      message: "Could not get sales",
-      details: error.message,
-    });
-  }
-}
+
 
 exports.deluser = async (req, res) => {
   try {

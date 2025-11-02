@@ -2,7 +2,7 @@ const express= require(`express`)
 const router = express.Router()
 
 const auth=require(`../middlewares/auth`)
-const { getcart, deletecart, addcart, clearcart, payc, plus, minus, clean } = require("../controllers/cartcontrollers")
+const { getcart, deletecart, addcart, clearcart, payc, plus, minus, clean, webhook } = require("../controllers/cartcontrollers")
 
 router.get(`/get`,auth, getcart)
 router.post(`/add`,auth, addcart)

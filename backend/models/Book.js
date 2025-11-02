@@ -7,6 +7,7 @@ const bookSchema = new mongoose.Schema(
     pdfUrl: { type: String, required: true }, 
     previewUrl: { type: String },
     seller: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    status: {type: String, enum: ["pending", "approved", "rejected"], default: "pending" }
   },
   { timestamps: true }
 );

@@ -14,9 +14,9 @@ export const TotalSales = () => {
   const [sales,setSales]=useState([])
 
 
-  useEffect(()=>{
     const handlesales=async()=>{
-      const res= await fetch("http://localhost:4000/tasktype/sales",
+      try {
+        const res= await fetch("http://localhost:4000/salestype/",
         {method: "GET",
           headers:{
             Authorization:`Bearer ${localStorage.getItem("token")}`
@@ -24,13 +24,22 @@ export const TotalSales = () => {
         }
       )
 
-      const data= await res.json()
-      setSales(data);
-    
+      const data= await res.json();
+      console.log("hehe",data)
+
+      if(res.ok){
+        setSales(data);
+      }
+      } catch (error) {
+        alert("error in getting")
+      }
   }
-  handlesales()
+
+  useEffect(()=>{
+    handlesales();
   },[])
   
+
 
   return (
 

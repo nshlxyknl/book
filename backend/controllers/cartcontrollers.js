@@ -92,7 +92,6 @@ exports.getcart = async (req, res) => {
     }
 }
 
-const stripe = require("stripe")(process.env.SECRET_KEY)
 
 exports.clearcart = async (req, res) => {
     try {
@@ -113,9 +112,10 @@ exports.clearcart = async (req, res) => {
     }
 }
 
+const stripe = require("stripe")(process.env.SECRET_KEY)
 exports.payc = async (req, res) => {
     try {
-        const items = req.body.items;
+        const {items, buyerId} = req.body;
 
         if (!items || !items.length) {
             return res.status(400).json({ message: "Cart is empty" });
@@ -130,12 +130,16 @@ exports.payc = async (req, res) => {
                     product_data: {
                         name: item.title,
                     },
-                    unit_amount: item.price * 100, 
+                    unit_amount: item.price * 100,
                 },
                 quantity: item.quantity,
             })),
-            success_url: 'http://localhost:5173/success',
-            cancel_url: 'http://localhost:5173/cancel',
+            success_url: 'http://localhost:5173/dashboard?payment=success',
+            cancel_url: 'http://localhost:5173/dashboard?payment=cancel',
+            metadata: {
+                buyerId,
+                items: JSON.stringify(items),
+            },
         });
         res.json({ url: session.url });
 
@@ -145,7 +149,6 @@ exports.payc = async (req, res) => {
             details: error.message,
         })
     }
-
 }
 
 exports.plus = async (req, res) => {
@@ -173,10 +176,10 @@ exports.plus = async (req, res) => {
 
 exports.clean = async (req, res) => {
     try {
-        const {productId}=req.params;
-         const userId = req.user.userId;
-         const cart = await Cart.findOne({ userId });
-       
+        const { productId } = req.params;
+        const userId = req.user.userId;
+        const cart = await Cart.findOne({ userId });
+
         cart.items = cart.items.find(item => item.productId.toString() !== productId.toString());;
         await cart.save();
 
@@ -184,7 +187,8 @@ exports.clean = async (req, res) => {
 
 
     } catch (error) {
-       console.log(error)
-        
+        console.log(error)
+
     }
 }
+

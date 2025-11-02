@@ -7,6 +7,7 @@ const salesItems = new mongoose.Schema({
     title: String,
     price: Number,
     quantity: Number,
+    status: {type: String, enum: ["pending", "approved", "rejected"], default: "pending" },
     date: { type: Date, default: Date.now },
 },{ timestamps: true }
 )

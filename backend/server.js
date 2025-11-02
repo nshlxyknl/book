@@ -18,10 +18,14 @@ app.use(cors({ origin:'http://localhost:5173',
 app.get('/', (req, res) => {
   res.send('Backend is running');
 });
+
+
+
 app.use(`/logtype`,require(`./routes/auth`))
 app.use(`/tasktype`,require(`./routes/books`))
 app.use(`/carttype`,require(`./routes/cart`))
 app.use(`/retype`,require(`./routes/review`))
+app.use(`/salestype`,require(`./routes/sales`))
 
 app.listen(PORT,() => {
     console.log(`Server running on port ${PORT}`);
