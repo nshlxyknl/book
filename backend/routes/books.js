@@ -4,8 +4,6 @@ const { uploadpdf,
         delpdf,
         getallpdf,
         getuserpdf,
-        updateTaskStatus,
-        getsales,
         getAllUsers,
         deluser
 

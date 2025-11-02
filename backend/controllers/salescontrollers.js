@@ -2,10 +2,23 @@ const Sale = require("../models/Sales");
 
 exports.pending  = async (req, res) => { 
     try {
+        const {items}= req.body;
+        const buyerId = req.user.userId;
        
+          for (const item of items) {
+  await Sale.create({
+          buyerId,
+          sellerId: item.sellerId,
+          productId: item.productId,
+          title: item.title,
+          price: item.price,
+          quantity: item.quantity,
+          status: "pending",
+        })
+    }
+    
          res.status(201).json({
-      task,
-      message: "Task created successfully",
+      message: "sales list"
     });
     } catch (error) {
        res.status(500).json({
@@ -15,14 +28,15 @@ exports.pending  = async (req, res) => {
     }
 }
 
-
 exports.updateSalesStatus = async (req, res) => { 
     try {
 
-        res.status(201).json({
-      task,
-      message: "Task created successfully",
-    });
+        const { id } = req.params;
+    const { status } = req.body;
+
+    const sale = await Sale.findByIdAndUpdate(id, { status }, { new: true });
+    res.json(sale);
+    
     } catch (error) {
         res.status(500).json({
       message: "Could not update",
@@ -30,3 +44,12 @@ exports.updateSalesStatus = async (req, res) => {
     });
     }
 }
+
+exports.getsales = async (req, res) => {
+  try {
+    const sales = await Sale.find({ sellerId: req.user.userId });
+    res.json(sales);
+  } catch (error) {
+    res.status(500).json({ message: "Could not get sales" });
+  }
+};

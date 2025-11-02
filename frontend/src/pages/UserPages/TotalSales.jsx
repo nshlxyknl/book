@@ -8,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { Button } from '@/components/ui/button'
 
 
 export const TotalSales = () => {
@@ -16,7 +17,7 @@ export const TotalSales = () => {
 
     const handlesales=async()=>{
       try {
-        const res= await fetch("http://localhost:4000/salestype/",
+        const res= await fetch("http://localhost:4000/salestype/sales",
         {method: "GET",
           headers:{
             Authorization:`Bearer ${localStorage.getItem("token")}`
@@ -40,18 +41,36 @@ export const TotalSales = () => {
   },[])
   
 
+const updateStatus = async (id, status) => {
+  try {
+    const res = await fetch(`http://localhost:4000/salestype/${id}/status`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify({ status }),
+    });
+    const updated = await res.json();
+
+    setSales((prev) =>
+      prev.map((s) => (s._id === id ? { ...s, status: updated.status } : s))
+    );
+  } catch (error) {
+    alert("Error updating sale");
+  }
+};
+
 
   return (
-
-  
     <div className=" mt-20 overflow-hidden rounded-md border ">
       <Table>
         <TableHeader>
            <TableRow>
             <TableHead>Date</TableHead>
             <TableHead>Book Title</TableHead>
-            <TableHead>Quantity Sold</TableHead>
-            <TableHead>Total Revenue ($)</TableHead>
+            <TableHead>Status</TableHead>
+
           </TableRow>
         </TableHeader>
 
@@ -62,13 +81,27 @@ export const TotalSales = () => {
               <TableRow key={i}>
                 <TableCell>{item.date}</TableCell>
                 <TableCell>{item.title}</TableCell>
-                <TableCell>{item.totalSold}</TableCell>
-                <TableCell>{item.totalRevenue}</TableCell>
+                <TableCell>
+          {item.status === "pending" ? (
+            <>
+              <Button onClick={() => updateStatus(item._id, "approved")}>Approve</Button>
+              <Button onClick={() => updateStatus(item._id, "rejected")}>Reject</Button>
+            </>
+          ) : (
+            <span
+              style={{
+                color: item.status === "approved" ? "green" : "red",
+              }}
+            >
+              {item.status}
+            </span>
+          )}
+        </TableCell>
               </TableRow>
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={3} align="center">
+              <TableCell colSpan={4} align="center">
                 No sales data yet.
               </TableCell>
             </TableRow>
