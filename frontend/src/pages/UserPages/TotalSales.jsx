@@ -17,7 +17,7 @@ export const TotalSales = () => {
 
     const handlesales=async()=>{
       try {
-        const res= await fetch("http://localhost:4000/salestype/sales",
+        const res= await fetch(`http://localhost:4000/salestype/sales`,
         {method: "GET",
           headers:{
             Authorization:`Bearer ${localStorage.getItem("token")}`

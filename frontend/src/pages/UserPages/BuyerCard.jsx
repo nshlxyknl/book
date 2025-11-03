@@ -10,7 +10,8 @@ import { Input } from "@/components/ui/input";
 import { Reviews } from "./Reviews";
 
 
-export default function BuyerCard({ _id, title, price, quantity, pdfUrl, previewUrl }) {
+
+export default function BuyerCard({ _id, title, price, quantity, pdfUrl, previewUrl, upload }) {
 
   const { cartadd } = useCart()
   const [r, setr] = useState(1)
@@ -137,11 +138,23 @@ try {
         <p className="text-gray-600">Price: ${price}</p>
 
         <div className="flex justify-between">
-          <Button asChild variant="outline">
-            <a href={pdfUrl} target="_blank" rel="noopener noreferrer">
-              View
-            </a>
-          </Button>
+
+         { upload.status === "approved" ? (
+          <Button>
+        <a
+          href={upload.pdfUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn btn-outline"
+        >
+          View PDF
+        </a>
+        </Button>
+      ) : (
+        ""
+      )}
+
+
           <div className="flex items-center gap-2 mt-1">
             <Button disabled={r === 1} variant="outline" size="sm"
               onClick={() => {

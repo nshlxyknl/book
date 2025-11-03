@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import BuyerCard from "../UserPages/BuyerCard";
+import { useSearch } from "@/context/SearchContext";
 
 
 export default function BuyerDashboard() {
+  const { searchQuery } = useSearch();
  const [uploads, setUploads] = useState([]);
 
-  useEffect(() => {
+
     const fetchUploads = async () => {
       try {
         const res = await fetch("http://localhost:4000/tasktype/all",{
@@ -21,10 +23,17 @@ export default function BuyerDashboard() {
       }
     };
 
+      useEffect(() => {
     fetchUploads();
   }, []);
 
-  
+  // Filter uploads based on searchQuery from Navbar
+const filterUploads = uploads.filter((upload) =>
+  searchQuery
+    ? upload.title.toLowerCase().includes(searchQuery.toLowerCase())
+    : true 
+);
+
 
   return (
     <div className="min-h-screen my-20 bg-background p-6">
@@ -34,7 +43,7 @@ export default function BuyerDashboard() {
       </header>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
-      {uploads.map((upload) => (
+      {filterUploads.map((upload) => (
         <BuyerCard
           key={upload._id}
           _id={upload._id}
@@ -42,10 +51,10 @@ export default function BuyerDashboard() {
           price={upload.price}
           pdfUrl={upload.pdfUrl}
           previewUrl={upload.previewUrl}
+          upload={upload}
         />
       ))}
     </div>
-
     </div>
   )
 }

@@ -10,9 +10,11 @@ const { uploadpdf,
  }=require(`../controllers/bookcontrollers`)
 const auth=require(`../middlewares/auth`)
 const checkRole = require("../middlewares/roleCheck")
-const { upload } = require("../config/cloudinary")
+const { uploadBoth } = require("../config/cloudinary")
 
-router.post(`/upload`,auth, checkRole("seller"), upload.single("pdf"), uploadpdf)
+router.post(`/upload`,auth, checkRole("seller"),uploadBoth.fields([
+    { name: "image", maxCount: 1 },
+    { name: "pdf", maxCount: 1 }]), uploadpdf)
 router.delete(`/del/:id`,auth, delpdf)
 router.get(`/all`,auth, getallpdf)
 router.get(`/user`,auth,getuserpdf)

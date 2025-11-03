@@ -26,7 +26,7 @@ const Dashboard = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        body: JSON.stringify({ items: cartItems }),
+        body: JSON.stringify({ items: cartItems, buyerId: localStorage.getItem("userId") }),
       })
         .then(res => res.json())
         .then(data => console.log("Sales saved:", data))

@@ -1,10 +1,13 @@
 import { useAuth } from '@/context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom'
 import { Button } from '../ui/button';
-import { ShoppingCartIcon } from 'lucide-react';
+import { Search, SearchIcon, ShoppingCartIcon } from 'lucide-react';
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTrigger } from '../ui/sheet';
 import { useEffect, useState } from 'react';
 import { SheetCard } from '@/pages/UserPages/SheetCard';
+import { InputGroup, InputGroupAddon, InputGroupInput } from '../ui/input-group';
+import { Input } from '../ui/input';
+import { useSearch } from '@/context/SearchContext';
 
 
 
@@ -95,6 +98,7 @@ export default function Navbar() {
     }
   }
 
+  const { searchQuery, setSearchQuery } = useSearch();
 
   
 
@@ -107,16 +111,26 @@ export default function Navbar() {
         </Link>
 
         {!token ? (
-          <nav className="hidden md:flex space-x-6">
-            {/* <Link to="/register" className="hover:text-blue-600">Register</Link>
-            <Link to="/login" className="hover:text-blue-600">Login</Link> */}
-          </nav>
+         ""
         )
           : (
             <nav className="hidden md:flex space-x-6">
               {
                 (role == 'buyer') ? (
-                  <div>
+                  <div className='flex items-center space-x-2 w-full'>
+                      <div className="relative w-[500px]  mr-40 ">
+        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+        <Input
+          type="search"
+          placeholder="Search..."
+          className="pl-8"
+          value={searchQuery}
+  onChange={(e) => {setSearchQuery(e.target.value);
+    fetchBooks(e.target.value); }
+  }
+
+        />
+      </div>
                     <Sheet open={openSheet} onOpenChange={(open) => {
                       setOpenSheet(open)
                       if (open) {
@@ -124,7 +138,7 @@ export default function Navbar() {
                       }
                     }}>
                       <SheetTrigger asChild>
-                        <Button variant="outline" > My Cart <ShoppingCartIcon /> </Button>
+                        <Button variant="outline" > My Cart <ShoppingCartIcon className="w-4 h-4" /> </Button>
                       </SheetTrigger>
                       <SheetContent>
                         <div>

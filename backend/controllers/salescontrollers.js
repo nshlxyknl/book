@@ -1,55 +1,56 @@
 const Sale = require("../models/Sales");
 
-exports.pending  = async (req, res) => { 
+exports.pending = async (req, res) => {
     try {
-        const {items}= req.body;
-        const buyerId = req.user.userId;
-       
-          for (const item of items) {
-  await Sale.create({
-          buyerId,
-          sellerId: item.sellerId,
-          productId: item.productId,
-          title: item.title,
-          price: item.price,
-          quantity: item.quantity,
-          status: "pending",
-        })
-    }
-    
-         res.status(201).json({
-      message: "sales list"
-    });
+        const { items, buyerId } = req.body;
+        console.log(items)
+
+        for (const item of items) {
+            await Sale.create({
+                buyerId,
+                sellerId: item.sellerId,
+                productId: item.productId,
+                title: item.title,
+                price: item.price,
+                quantity: item.quantity,
+                status: "pending",
+            })
+        }
+        // res.status(201).json({
+        //     message: "sales list"
+        // });
     } catch (error) {
-       res.status(500).json({
-      message: "Could not make pending",
-      details: error.message,
-    });
+        res.status(500).json({
+            items,
+            message: "Could not make pending",
+            details: error.message,
+        });
     }
 }
 
-exports.updateSalesStatus = async (req, res) => { 
+exports.updateSalesStatus = async (req, res) => {
     try {
-
         const { id } = req.params;
-    const { status } = req.body;
+        const { status } = req.body;
 
-    const sale = await Sale.findByIdAndUpdate(id, { status }, { new: true });
-    res.json(sale);
-    
+        const sale = await Sale.findByIdAndUpdate(id, { status }, { new: true });
+        res.json(sale);
+
     } catch (error) {
         res.status(500).json({
-      message: "Could not update",
-      details: error.message,
-    });
+            message: "Could not update",
+            details: error.message,
+            
+        });
     }
 }
 
 exports.getsales = async (req, res) => {
-  try {
-    const sales = await Sale.find({ sellerId: req.user.userId });
-    res.json(sales);
-  } catch (error) {
-    res.status(500).json({ message: "Could not get sales" });
-  }
+    try {
+        const sales = await Sale.find({ sellerId: req.user.userId });
+        res.json(sales);
+    } catch (error) {
+        res.status(500).json({ message: "Could not get sales" });
+    }
 };
+

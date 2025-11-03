@@ -24,27 +24,34 @@ exports.uploadpdf = async (req, res) => {
       return res.status(400).json({ message: "Title and price are required" });
     }
 
-    if (!req.file || !req.file.path) {
-      return res.status(400).json({ message: "PDF file is required" });
-    }
+    
 
-    const publicId = req.file.filename;
+    // if (!req.file || !req.file.path) {
+    //   return res.status(400).json({ message: "IMG file is required" });
+    // }
 
-    const preview = cloudinary.url(publicId, {
-      resource_type: "image",
-      page: 1,
-      crop: "fill",
-      width: 300,
-      height: 400,
-      format: "jpg"
-    });
+
+    // const result = await cloudinary.uploader.upload(req.file.path, {
+    //   resource_type: "image",
+    //   folder:  "img_uploads",
+    //   public_id: req.file.filename,
+    // });
+    
+
+    const imageFile = req.files?.image?.[0];
+    const pdfFile = req.files?.pdf?.[0];
+
+  //   if (!imageFile || !pdfFile) {
+  // return res.status(400).json({ message: "Please upload an image or a PDF" });
+
+
 
     const task = await Task.create({
       title,
       price,
-      pdfUrl: req.file.path,
-      previewUrl: preview,
-      seller: sellerId
+      previewUrl: imageFile?.path || null,
+      pdfUrl : pdfFile?.path || null,
+      seller: sellerId,
     });
 
     await task.populate("seller", "username"); // if 'seller' is a ref to User

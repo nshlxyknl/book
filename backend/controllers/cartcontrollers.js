@@ -33,7 +33,7 @@ exports.addcart = async (req, res) => {
         await cart.save();
         res.json(cart);
 
-          localStorage.setItem("cartItems", JSON.stringify(cart));
+        //   localStorage.setItem("cartItems", JSON.stringify(cart));
 
     } catch (error) {
         res.status(500).json({

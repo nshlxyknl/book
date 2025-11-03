@@ -11,6 +11,7 @@ export default function SellerDashboard() {
   const [openPop, setOpenPop] = useState(false);
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
+  const [imgFile, setImgFile] = useState(null);
   const [pdfFile, setPdfFile] = useState(null);
 
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ export default function SellerDashboard() {
   const handleadd = async (e) => {
     e.preventDefault();
 
-    if (!title || !price || !pdfFile) {
+    if (!title || !price || !pdfFile || !imgFile) {
       alert("Please fill all fields and select a PDF");
       return;
     }
@@ -32,15 +33,16 @@ export default function SellerDashboard() {
     const formdata = new FormData();
     formdata.append("title", title)
     formdata.append("price", price)
-    formdata.append("pdf", pdfFile)
+     formdata.append("image", imgFile)
+     formdata.append("pdf", pdfFile)
 
     try {
       const res = await fetch("http://localhost:4000/tasktype/upload", {
         method: "POST",
-        body: formdata,
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
+        body: formdata,
       })
 
       const data = await res.json();
@@ -51,6 +53,7 @@ export default function SellerDashboard() {
         setOpenPop(false);
         setTitle("")
         setPrice("")
+        setImgFile(null)
         setPdfFile(null)
 
       } else {
@@ -113,7 +116,8 @@ export default function SellerDashboard() {
             <form onSubmit={handleadd} className="flex flex-col gap-4 mt-4">
               <Input type="text" placeholder="xyz" value={title} onChange={(e) => setTitle(e.target.value)} className="p-2 rounded-md " />
               <Input type="number" placeholder="$$" value={price} onChange={(e) => setPrice(e.target.value)} className="p-2 rounded-md " />
-              <Input type="file" placeholder=".pdf" accept=".pdf" onChange={(e) => setPdfFile(e.target.files[0])} className="p-2 rounded-md " />
+              <Input type="file" placeholder=".pdf" accept="application/pdf" onChange={(e) => setPdfFile(e.target.files[0])} className="p-2 rounded-md " />
+              <Input type="file" placeholder=".jpg" accept="image/*" onChange={(e) => setImgFile(e.target.files[0])} className="p-2 rounded-md " />
 
               <div className="flex justify-between gap-2 mt-2">
                 <Button type="button" onClick={() => setOpenPop(false)}>Cancel</Button>
