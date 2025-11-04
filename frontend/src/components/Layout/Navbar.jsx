@@ -51,8 +51,6 @@ export default function Navbar() {
     fetchUploads();
   }, []);
 
-
-
   // yo thik xa 
   const clearcart = async () => {
     alert("clear cart")
@@ -108,14 +106,14 @@ export default function Navbar() {
     <div>
 
       <header className="fixed top-0 left-0  z-50  w-full shadow-md bg-white dark:bg-gray-900">
-        <div className=" max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+        <div className=" max-w-7xl mx-auto flex justify-between items-center px-4 py-4">
 
           {/* <Link to="/dashboard" className="text-xl font-bold text-blue-600">
           Readme
         </Link> */}
 
           {!token ? (
-            <Link to="/dashboard" className="text-xl font-bold text-blue-600">
+            <Link to="/dashboard" className=" text-xl font-bold text-blue-600">
               Readme
             </Link>
           )
@@ -124,27 +122,22 @@ export default function Navbar() {
                 {
                   (role == 'buyer') ? (<>
 
-                    <Button variant="outline" onClick={() => { setOpenSheet2(!openSheet2) }}>  <Menu className="size-5" /> </Button>
+                    <Button variant="outline" className="flex px-20" onClick={() => { setOpenSheet2(!openSheet2) }}>  <Menu className="size-5" /> </Button>
 
                     <aside className={`fixed top-20 left-0 w-64 h-[calc(100vh-5rem)] border-r bg-white dark:bg-gray-900 shadow-md
         transform transition-transform duration-300 ${openSheet2 ? "translate-x-0" : "-translate-x-full"}`}>
                       <SidebarLay />
                     </aside>
 
-                    {/* <main
-        className={`flex-1 p-6 transition-all duration-300 ${
-          openSheet2 ? "md:ml-64" : ""
-        }`}> */}
-
-                    <Link to="/dashboard" className="text-xl font-bold text-blue-600"> Readme  </Link>
-
-
+ <Link to="/dashboard" className=" ml-15 text-xl font-bold text-blue-600">
+          Readme
+        </Link>
                     <div className='flex items-center space-x-2 w-full'>
-                      <div className="relative w-[500px]  mr-40 ">
-                        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                      <div className="relative w-[500px]  ml-35 ">
+                        <Search className="absolute right-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                         <Input
                           type="search"
-                          placeholder="Search..."
+                          placeholder="Search product ..."
                           className="pl-8"
                           value={searchQuery}
                           onChange={(e) => {
@@ -162,7 +155,7 @@ export default function Navbar() {
                         }
                       }}>
                         <SheetTrigger asChild>
-                          <Button variant="outline" > My Cart <ShoppingCartIcon className="w-4 h-4" /> </Button>
+                          <Button variant="outline" className="flex ml-70" > My Cart <ShoppingCartIcon className="w-4 h-4" /> </Button>
                         </SheetTrigger>
                         <SheetContent>
                           <div>

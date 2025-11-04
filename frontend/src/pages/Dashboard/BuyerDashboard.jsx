@@ -28,12 +28,20 @@ export default function BuyerDashboard() {
     fetchUploads();
   }, []);
 
-  // Filter uploads based on searchQuery from Navbar
-  const filterUploads = uploads.filter((upload) =>
-    searchQuery
+  // Filter search ra orders
+
+const {tab } =useSidebar();
+    const filterUploads = uploads.filter((upload) => {
+    const matchesSearch = searchQuery
       ? upload.title.toLowerCase().includes(searchQuery.toLowerCase())
       : true
-  );
+
+    if (tab === "orders") {
+      return matchesSearch && upload.status === "approved"
+    }
+
+    return matchesSearch
+  })
 
   const {openSheet2} =useSidebar()
 
@@ -51,7 +59,9 @@ export default function BuyerDashboard() {
       </header>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
-        {filterUploads.map((upload) => (
+        { filterUploads.length>0 ?
+        filterUploads.map((upload) => (
+          
           <BuyerCard
             key={upload._id}
             _id={upload._id}
@@ -61,7 +71,8 @@ export default function BuyerDashboard() {
             previewUrl={upload.previewUrl}
             upload={upload}
           />
-        ))}
+        ))
+      : "No any orders or products"}
       </div>
     </div>
 </main>
