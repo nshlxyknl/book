@@ -89,11 +89,14 @@ export default function Navbar() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        body: JSON.stringify({ items: cart }),
+        body: JSON.stringify({ items: cartItems }),
       });
 
       const data = await res.json();
       window.location.href = data.url;
+
+          sessionStorage.setItem("purchasedItems", JSON.stringify(items));
+
 
     } catch (error) {
       console.error("Stripe error:", error.message);

@@ -10,6 +10,8 @@ const Dashboard = () => {
   const location = useLocation()
   const navigate = useNavigate()
 
+
+
   useEffect(() => {
     const query = new URLSearchParams(location.search);
     const status = query.get("payment");
@@ -17,27 +19,32 @@ const Dashboard = () => {
     if (status === "success") {
       alert("Payment successful");
 
+            const purchasedItems = JSON.parse(sessionStorage.getItem("purchasedItems") || "[]");
 
+      if (purchasedItems.length > 0) {
       fetch("http://localhost:4000/salestype/pending", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        body: JSON.stringify({ items: cartItems, buyerId: localStorage.getItem("userId") }),
+        body: JSON.stringify({ items: purchasedItem,
+           buyerId: localStorage.getItem("userId") }),
       })
-        .then(res => res.json())
-        .then(data => console.log("Sales saved:", data))
-        .catch(err => console.error("Error saving sales:", err));
+      .then(res => res.json())
+      .then(data => {console.log("Sales saved:", data)
+                  sessionStorage.removeItem("purchasedItems");
+        navigate(`/dashboard`, { replace: true })
+    })
+      .catch(err => console.error("Error saving sales:", err));
+  }
     
-    
-      navigate(`/dashboard`, { replace: true })
     } else if (status === "cancel") {
       alert("Payment canceled");
       navigate(`/dashboard`, { replace: true })
     }
 
-  }, [location, navigate]);
+  }, [location.search ,  navigate]);
 
   if (!role)
     return <Navigate to="/login" />;

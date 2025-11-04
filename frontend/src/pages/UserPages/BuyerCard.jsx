@@ -42,6 +42,9 @@ export default function BuyerCard({ _id, title, price, quantity, pdfUrl, preview
       const data = await res.json();
       window.location.href = data.url;
 
+      sessionStorage.setItem("purchasedItems", JSON.stringify([items]));
+
+
     } catch (error) {
       console.error("error in payment")
     }
@@ -99,24 +102,25 @@ export default function BuyerCard({ _id, title, price, quantity, pdfUrl, preview
     }
   }
 
-  const [reviews,setReview]=useState([])
+  const [reviews, setReview] = useState([])
   const [avgRating, setAvgRating] = useState(0);
 
 
-  const handleget =async()=>{
-try {
-  const res = await fetch(`http://localhost:4000/retype/see/${_id}`,{
-    method:"GET",
-    headers:{ Authorization: `Bearer ${localStorage.getItem("token")}`}
-  }) 
+  const handleget = async () => {
+    try {
+      const res = await fetch(`http://localhost:4000/retype/see/${_id}`, {
+        method: "GET",
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+      })
 
-  const data= await res.json()
-  console.log("reviews",data)
-  setReview(data.reviews)
-  setAvgRating(data.avgRating)
-} catch (error) {
-  console.log(error)
-} }
+      const data = await res.json()
+      console.log("reviews", data)
+      setReview(data.reviews)
+      setAvgRating(data.avgRating)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
 
 
@@ -139,20 +143,20 @@ try {
 
         <div className="flex justify-between">
 
-         { upload.status === "approved" ? (
-          <Button>
-        <a
-          href={upload.pdfUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn btn-outline"
-        >
-          View PDF
-        </a>
-        </Button>
-      ) : (
-        ""
-      )}
+          {upload.status === "approved" ? (
+            <Button>
+              <a
+                href={upload.pdfUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-outline"
+              >
+                View PDF
+              </a>
+            </Button>
+          ) : (
+            ""
+          )}
 
 
           <div className="flex items-center gap-2 mt-1">
@@ -179,8 +183,10 @@ try {
           <div className="flex mx-4 ">
             <Dialog open={openPop} onOpenChange={setOpenPop} >
               <DialogTrigger asChild>
-                <Button onClick={async () => {setOpenPop(!openPop);
-                  await handleget();}
+                <Button onClick={async () => {
+                  setOpenPop(!openPop);
+                  await handleget();
+                }
                 }>Rate me</Button>
               </DialogTrigger>
               <DialogContent className="max-w-md p-6 rounded-2xl shadow-lg bg-white ">
@@ -195,14 +201,14 @@ try {
                     </Button>
                   </div>
                 </form>
-               
-               
-                <Reviews 
-                avgRating={avgRating}
-               reviews={reviews}
-               />
-               
-               
+
+
+                <Reviews
+                  avgRating={avgRating}
+                  reviews={reviews}
+                />
+
+
 
               </DialogContent>
             </Dialog>
