@@ -6,9 +6,11 @@ import { AuthProvider } from './context/AuthProvider'
 import { CountProvider } from './context/CountProvider'
 import { CartProvider } from './context/CartProvider'
 import { SearchProvider } from './context/SearchProvider'
+import { SidebarProvider } from './context/SidebarContext'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    <SidebarProvider>
    <SearchProvider>
     <AuthProvider>
       <CountProvider>
@@ -18,5 +20,6 @@ createRoot(document.getElementById('root')).render(
     </CountProvider>
     </AuthProvider>
    </SearchProvider>
+   </SidebarProvider>
   </StrictMode>,
 )
