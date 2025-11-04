@@ -5,8 +5,8 @@ exports.pending = async (req, res) => {
         const { items, buyerId } = req.body;
         console.log(items)
 
-        for (const item of items) {
-            await Sale.create({
+     
+            const sales = items.map(item=>({
                 buyerId,
                 sellerId: item.sellerId,
                 productId: item.productId,
@@ -15,7 +15,9 @@ exports.pending = async (req, res) => {
                 quantity: item.quantity,
                 status: "pending",
             })
-        }
+            )
+            await Sale.insertMany(sales); 
+
         // res.status(201).json({
         //     message: "sales list"
         // });
