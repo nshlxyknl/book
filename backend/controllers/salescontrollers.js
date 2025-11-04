@@ -23,7 +23,7 @@ exports.pending = async (req, res) => {
         // });
     } catch (error) {
         res.status(500).json({
-            items,
+            
             message: "Could not make pending",
             details: error.message,
         });

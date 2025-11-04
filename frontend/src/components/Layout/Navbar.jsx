@@ -89,7 +89,7 @@ export default function Navbar() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        body: JSON.stringify({ items: cartItems }),
+        body: JSON.stringify({ items: cart }),
       });
 
       const data = await res.json();
