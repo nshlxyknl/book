@@ -29,7 +29,7 @@ const Dashboard = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        body: JSON.stringify({ items: purchasedItems,
+        body: JSON.stringify({ items:purchasedItems,
            buyerId: localStorage.getItem("userId") }),
       })
       .then(res => res.json())
@@ -38,7 +38,7 @@ const Dashboard = () => {
         navigate(`/dashboard`, { replace: true })
     })
       .catch(err => console.error("Error saving sales:", err));
-  }
+      }
     
     } else if (status === "cancel") {
       toast.error("Payment canceled");

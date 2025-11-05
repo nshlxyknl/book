@@ -11,6 +11,7 @@ import { SellerUploads } from "./pages/UserPages/SellerUploads"
 import { ManagePdf } from "./pages/UserPages/ManagePdf"
 import { ManageUsers } from "./pages/UserPages/ManageUsers"
 import { TotalSales } from "./pages/UserPages/TotalSales"
+import { Toaster } from "sonner"
 
 
 function App() {
@@ -29,6 +30,8 @@ function App() {
       <Route path='/admin/musers' element={ <ProtectedRoutes>  <ManageUsers/> </ProtectedRoutes>}/> 
 </Routes>
  <Footer/>
+         <Toaster position="top-center" reverseOrder={false} />
+
 </Router>
  </>)
 }

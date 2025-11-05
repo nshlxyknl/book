@@ -2,13 +2,11 @@ const Sale = require("../models/Sales");
 
 exports.pending = async (req, res) => {
     try {
-        const { items, buyerId } = req.body;
-        console.log(items)
-
-     
+        const { items } = req.body;
+ const buyerId= req.user.userId
             const sales = items.map(item=>({
                 buyerId,
-                sellerId: item.sellerId,
+                sellerId: item.seller.sellerId,
                 productId: item.productId,
                 title: item.title,
                 price: item.price,
@@ -18,12 +16,12 @@ exports.pending = async (req, res) => {
             )
             await Sale.insertMany(sales); 
 
-        // res.status(201).json({
-        //     message: "sales list"
-        // });
+        res.status(201).json({
+            message: "sales list",
+            sales
+        });
     } catch (error) {
         res.status(500).json({
-            
             message: "Could not make pending",
             details: error.message,
         });

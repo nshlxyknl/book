@@ -12,7 +12,7 @@ import { toast } from "sonner";
 
 
 
-export default function BuyerCard({ _id, title, price, quantity, pdfUrl, previewUrl, upload }) {
+export default function BuyerCard({ _id, title, price,productId, quantity, pdfUrl, previewUrl, upload }) {
 
   const { cartadd } = useCart()
   const [r, setr] = useState(1)
@@ -23,6 +23,9 @@ export default function BuyerCard({ _id, title, price, quantity, pdfUrl, preview
 
   const buypay = async () => {
     try {
+      const cart = [{ title, price, quantity: r }]
+      sessionStorage.setItem("purchasedItems", JSON.stringify(cart));
+
       const res = await fetch("http://localhost:4000/carttype/pay", {
         method: "POST",
         headers: {
@@ -30,20 +33,16 @@ export default function BuyerCard({ _id, title, price, quantity, pdfUrl, preview
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          items: [
-            {
-              title,
-              price,
-              quantity: r
-            }
-          ]
+          items: cart,
+          // buyerId: localStorage.getItem("userId"),
+          // productId
         })
       });
 
       const data = await res.json();
+      console.log("my product", data)
       window.location.href = data.url;
 
-      sessionStorage.setItem("purchasedItems", JSON.stringify([items]));
 
 
     } catch (error) {

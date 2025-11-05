@@ -83,6 +83,7 @@ export default function Navbar() {
         toast.error("Your cart is empty");
         return;
       }
+        sessionStorage.setItem("purchasedItems", JSON.stringify(cart));
 
       const res = await fetch("http://localhost:4000/carttype/pay", {
         method: "POST",
@@ -95,8 +96,6 @@ export default function Navbar() {
 
       const data = await res.json();
       window.location.href = data.url;
-
-          sessionStorage.setItem("purchasedItems", JSON.stringify(items));
 
 
     } catch (error) {
