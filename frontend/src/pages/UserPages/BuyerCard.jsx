@@ -8,6 +8,7 @@ import { Rating } from "@mui/material";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Reviews } from "./Reviews";
+import { toast } from "sonner";
 
 
 
@@ -59,7 +60,7 @@ export default function BuyerCard({ _id, title, price, quantity, pdfUrl, preview
     e.preventDefault();
 
     if (!comments || !star) {
-      alert("Please fill the rating and comments")
+      toast.error("Please fill the rating and comments")
       return;
     }
     console.log("Sending review for product:", _id);
@@ -83,12 +84,12 @@ export default function BuyerCard({ _id, title, price, quantity, pdfUrl, preview
       console.log(data)
 
       if (res.ok) {
-        alert("upload success")
+        toast.success("upload success")
         setOpenPop(false)
         setComments("")
         setStar(0)
       } else if (res.status === 400) {
-        alert("You have already reviewed this product!");
+        toast.error("You have already reviewed this product!");
         setOpenPop(false)
         setComments("")
         setStar(0)
@@ -96,7 +97,7 @@ export default function BuyerCard({ _id, title, price, quantity, pdfUrl, preview
 
     } catch (error) {
       console.log('not submitted')
-      alert("error in submission")
+      toast.error("error in submission")
     } finally {
       setLoading(false)
     }

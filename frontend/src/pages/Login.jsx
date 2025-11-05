@@ -4,6 +4,7 @@ import { Input } from '../components/ui/input'
 import { Button } from '../components/ui/button'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/context/AuthContext'
+import { toast } from 'sonner'
 
 export const Login = () => {
     const [username, setUsername] = useState("");
@@ -26,14 +27,14 @@ const handleSubmit = async (e) => {
 
       if (res.ok) {
         login(data.token, data.user.role);
-        alert("Login successful!");
+        toast.success("Login successful!");
         navigate("/dashboard"); 
       } else {
-        alert(data.message || "Login failed");
+        toast.error(data.message || "Login failed");
       }
     } catch (err) {
       console.error("Error logging in:", err);
-      alert("Something went wrong");
+      toast.error("Something went wrong");
     }
   };
 

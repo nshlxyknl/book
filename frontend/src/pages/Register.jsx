@@ -4,6 +4,7 @@ import { Input } from '../components/ui/input'
 import { Button } from '../components/ui/button'
 import { Link, useNavigate} from 'react-router-dom'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { toast } from 'sonner'
 
 export const Register = () => {
 
@@ -26,14 +27,14 @@ const res= await fetch("http://localhost:4000/logtype/register",{
  console.log(data);
 
  if(res.ok){
-  alert("reg successful");
+  toast.success("reg successful");
   navigate(`/login`);
  }else {
-        alert(data.message || "Reg failed");
+        toast.error(data.message || "Reg failed");
       }
     } catch (err) {
       console.error("Error registrating in:", err);
-      alert("Something went wrong");
+      toast.error("Something went wrong");
     }
 
   }

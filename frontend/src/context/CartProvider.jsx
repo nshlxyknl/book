@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import CartContext from './CartContext';
+import { toast } from 'sonner';
 
 export const CartProvider = ({ children }) => {
 
@@ -28,11 +29,11 @@ const [cartItems, setCartItems] = useState([]);
         updateCart(hi)
   
         if (res.ok) {
-          alert("added in your cart")
+          toast.success("added in your cart")
           
           
         } else {
-          alert("error")
+          toast.error("error")
         }
       } catch (error) {
         console.error("error")

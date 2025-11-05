@@ -9,6 +9,7 @@ import { Input } from '../ui/input';
 import { useSearch } from '@/context/SearchContext';
 import { SidebarLay } from '@/pages/UserPages/SidebarLay';
 import { useSidebar } from '@/context/SidebarContext';
+import { toast } from 'sonner';
 
 
 
@@ -53,7 +54,7 @@ export default function Navbar() {
 
   // yo thik xa 
   const clearcart = async () => {
-    alert("clear cart")
+    toast.success("clear cart")
     try {
       const res = await fetch("http://localhost:4000/carttype/clearcart", {
         method: "DELETE",
@@ -68,7 +69,7 @@ export default function Navbar() {
         setCart([])
         console.log("cart clear data", data)
       } else {
-        alert("not ok res")
+        toast.error("not ok res")
       }
     } catch (err) {
       console.error("clear bhayena la", err);
@@ -79,7 +80,7 @@ export default function Navbar() {
   const handlepay = async () => {
     try {
       if (!cart || !cart.length) {
-        alert("Your cart is empty");
+        toast.error("Your cart is empty");
         return;
       }
 

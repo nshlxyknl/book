@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import React, { useEffect } from 'react'
+import { toast } from 'sonner';
 
 export const AdminCardPdf = ({ _id, username, title, price, onDelete }) => {
 
@@ -17,12 +18,12 @@ export const AdminCardPdf = ({ _id, username, title, price, onDelete }) => {
       })
       const data = await res.json()
       if (res.ok) {
-        alert("deleted")
+        toast.success("deleted")
         onDelete(_id);
         
 
       } else {
-        alert("not deleted")
+        toast.error("not deleted")
       }
     } catch (error) {
       res.status(500).json({

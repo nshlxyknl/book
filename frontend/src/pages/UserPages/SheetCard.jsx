@@ -2,6 +2,7 @@
 import { Button } from '@/components/ui/button'
 import { useCart } from '@/context/CartContext'
 import React, { useState } from 'react'
+import { toast } from 'sonner'
 
 export const SheetCard = ({ productId, title, price, quantity,  refreshCart  }) => {
 
@@ -27,11 +28,11 @@ export const SheetCard = ({ productId, title, price, quantity,  refreshCart  }) 
       updateCart(data)
 
       if (res.ok) {
-        alert("added in your cart")
+        toast.success("added in your cart")
                 await refreshCart()
 
       } else {
-        alert("error")
+        toast.error("error")
       }
 
     } catch (error) {
@@ -53,10 +54,10 @@ export const SheetCard = ({ productId, title, price, quantity,  refreshCart  }) 
       const data = await res.json();
       if (res.ok) {
         console.log("deleted data", data)
-        alert("deleted successfully")
+        toast.success("deleted successfully")
         await refreshCart()
       } else {
-        alert("not ok res")
+        toast.error("not ok res")
       }
     }
     catch (error) {
@@ -85,14 +86,14 @@ export const SheetCard = ({ productId, title, price, quantity,  refreshCart  }) 
 
       if (res.ok) {
         console.log("del", data)
-        alert("deleted successfully")
+        toast.error("deleted successfully")
         await refreshCart()
       } else {
-        alert("not ok res")
+        toast.error("not ok res")
       }
     }
     catch (error) {
-      alert("error")
+      toast.error("error")
     }
   }
 

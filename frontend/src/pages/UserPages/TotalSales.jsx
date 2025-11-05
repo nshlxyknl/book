@@ -9,6 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Button } from '@/components/ui/button'
+import { toast } from 'sonner'
 
 
 export const TotalSales = () => {
@@ -32,7 +33,7 @@ export const TotalSales = () => {
         setSales(data);
       }
       } catch (error) {
-        alert("error in getting")
+        toast.error("error in getting")
       }
   }
 
@@ -57,7 +58,7 @@ const updateStatus = async (id, status) => {
       prev.map((s) => (s._id === id ? { ...s, status: updated.status } : s))
     );
   } catch (error) {
-    alert("Error updating sale");
+    toast.error("Error updating sale");
   }
 };
 

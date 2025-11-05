@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import React, { useEffect } from 'react'
+import { toast } from 'sonner'
 
 export const AdminCardUser = ({ _id, username, role, onDelete }) => {
     const handledeluser = async ( ) => {
@@ -14,11 +15,11 @@ export const AdminCardUser = ({ _id, username, role, onDelete }) => {
             })
             const data = await res.json()
             if (res.ok) {
-                alert("deleted")
+                toast.success("deleted")
                 onDelete(_id);
 
             } else {
-                alert("not deleted")
+                toast.error("not deleted")
             }
         } catch (error) {
             console.error("Error fetching users:", error);

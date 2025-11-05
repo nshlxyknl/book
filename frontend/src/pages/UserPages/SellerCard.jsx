@@ -2,6 +2,7 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
+import { toast } from "sonner";
 
 export default function SellerCard({ _id, title, price, pdfUrl, previewUrl, onDelete }) {
 
@@ -18,13 +19,13 @@ export default function SellerCard({ _id, title, price, pdfUrl, previewUrl, onDe
             console.log(res)
 
             if (res.ok) {
-                alert("deleted")
+                toast.success("deleted")
                 onDelete(_id);
             } else {
-                alert("not deleted")
+                toast.error("not deleted")
             }
         } catch (err) {
-            alert("error")
+            toast.error("error")
         }
     }
 

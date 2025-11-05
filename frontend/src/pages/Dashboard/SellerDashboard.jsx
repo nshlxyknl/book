@@ -6,6 +6,7 @@ import { useCount } from "@/context/CountContext"
 import { ShoppingCart, Package } from "lucide-react"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { toast } from "sonner"
 
 export default function SellerDashboard() {
   const [openPop, setOpenPop] = useState(false);
@@ -25,7 +26,7 @@ export default function SellerDashboard() {
     e.preventDefault();
 
     if (!title || !price || !pdfFile || !imgFile) {
-      alert("Please fill all fields and select a PDF");
+      toast.error("Please fill all fields and select a PDF");
       return;
     }
     setLoading(true)
@@ -49,7 +50,7 @@ export default function SellerDashboard() {
       console.log(data);
 
       if (res.ok) {
-        alert("upload success");
+        toast.success("upload success");
         setOpenPop(false);
         setTitle("")
         setPrice("")
@@ -57,12 +58,12 @@ export default function SellerDashboard() {
         setPdfFile(null)
 
       } else {
-        alert("upload failed")
+        toast.error("upload failed")
       }
 
     } catch (error) {
       console.log('not submitted')
-      alert("error in submission")
+      toast.error("error in submission")
     }
     finally {
       setLoading(false)

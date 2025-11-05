@@ -4,6 +4,7 @@ import AdminDashboard from "./AdminDashboard";
 import BuyerDashboard from "./BuyerDashboard";
 import SellerDashboard from "./SellerDashboard";
 import { HomePage } from "../HomePage";
+import { toast } from "sonner";
 
 const Dashboard = () => {
   const role = localStorage.getItem("role");
@@ -17,7 +18,7 @@ const Dashboard = () => {
     const status = query.get("payment");
 
     if (status === "success") {
-      alert("Payment successful");
+      toast.success("Payment successful");
 
             const purchasedItems = JSON.parse(sessionStorage.getItem("purchasedItems") || "[]");
 
@@ -40,7 +41,7 @@ const Dashboard = () => {
   }
     
     } else if (status === "cancel") {
-      alert("Payment canceled");
+      toast.error("Payment canceled");
       navigate(`/dashboard`, { replace: true })
     }
 
