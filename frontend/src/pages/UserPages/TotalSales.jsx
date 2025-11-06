@@ -79,8 +79,8 @@ const updateStatus = async (id, status) => {
           
               {sales.length > 0 ? ( 
             sales.map((item, i) => (
-              <TableRow key={i}>
-                <TableCell>{item.date}</TableCell>
+              <TableRow key={item._id}>
+                <TableCell>{new Date(item.date).toLocaleDateString()}</TableCell>
                 <TableCell>{item.title}</TableCell>
                 <TableCell>
           {item.status === "pending" ? (

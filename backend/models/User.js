@@ -1,23 +1,19 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
-// This is the blueprint for how user data is stored in MongoDB
-// It defines what information we keep about each user
+
 const userSchema = new mongoose.Schema(
   {
-    // Username field - must be unique so no two users can have the same username
     username: {
       type: String,
       required: true,
       unique: true,
     },
-    // Password field - will be encrypted before saving
     password: {
       type: String,
       required: true,
     },
-    // Role field - can only be 'admin' or 'user'
-    // If no role is specified when creating a user, they'll be a regular 'user'
+   
     role: {
       type: String,
       enum: ["admin", "buyer","seller"],
@@ -25,7 +21,6 @@ const userSchema = new mongoose.Schema(
       // default: "buyer",
     },
   },
-  // This option automatically adds createdAt and updatedAt timestamps
   { timestamps: true }
 );
 

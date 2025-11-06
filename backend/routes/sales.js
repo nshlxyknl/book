@@ -4,7 +4,7 @@ const auth = require("../middlewares/auth");
 const router = express.Router();
 
 router.post("/pending", auth, pending);
-router.put("/:id/status",  updateSalesStatus);
-router.get("/sales",  getsales);
+router.put("/:id/status",auth,  updateSalesStatus);
+router.get("/sales",auth,  getsales);
 
 module.exports = router;

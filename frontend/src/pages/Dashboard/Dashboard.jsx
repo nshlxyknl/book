@@ -19,8 +19,7 @@ const Dashboard = () => {
 
     if (status === "success") {
       toast.success("Payment successful");
-
-            const purchasedItems = JSON.parse(sessionStorage.getItem("purchasedItems") || "[]");
+       const purchasedItems = JSON.parse(sessionStorage.getItem("purchasedItems") || "[]");
 
       if (purchasedItems.length > 0) {
       fetch("http://localhost:4000/salestype/pending", {
@@ -29,8 +28,7 @@ const Dashboard = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        body: JSON.stringify({ items:purchasedItems,
-           buyerId: localStorage.getItem("userId") }),
+        body: JSON.stringify({ items:purchasedItems }),
       })
       .then(res => res.json())
       .then(data => {console.log("Sales saved:", data)

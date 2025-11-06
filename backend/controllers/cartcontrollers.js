@@ -33,7 +33,6 @@ exports.addcart = async (req, res) => {
         await cart.save();
         res.json(cart);
 
-        //   localStorage.setItem("cartItems", JSON.stringify(cart));
 
     } catch (error) {
         res.status(500).json({
@@ -83,7 +82,7 @@ exports.deletecart = async (req, res) => {
 
 exports.getcart = async (req, res) => {
     try {
-        const cart = await Cart.findOne({ userId: req.user.userId })
+        const cart = await Cart.findOne({ userId: req.user.userId }).populate("items.productId", "title price")
         // .populate("items.productId")
 
         res.json(cart ? cart.items.filter(items => items.productId != null) : []);
