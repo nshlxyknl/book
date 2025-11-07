@@ -52,11 +52,9 @@ exports.deletecart = async (req, res) => {
 
         // console.log("Deleting product:", productId);
         // console.log("Before:", cart.items.map(i => i.productId.toString()));
-
         //     cart.items = cart.items.filter(
         //   (item) => item.productId.toString() !== productId
         // );
-
         // console.log("After:", cart.items.map(i => i.productId.toString()));
 
         const existingItem = cart.items.find(item => item.productId.toString() === productId.toString());
