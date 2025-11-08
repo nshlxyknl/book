@@ -3,9 +3,19 @@ const Sale = require("../models/Sales");
 
 exports.pending = async (req, res) => {
     try {
-        const { items } = req.body;
- const buyerId= req.user.userId
- 
+        const { items, buyerId } = req.body;
+//  const buyerId= req.user.userId
+
+ if (!items || !items.length) {
+            return res.status(400).json({ message: "No items to mark pending" });
+        }
+
+ const invalidItem = items.find(item => !item.productId);
+        if (invalidItem) {
+            return res.status(400).json({
+                message: `productId missing for item: ${JSON.stringify(invalidItem)}`
+            });
+        }
  
  const sales = await Promise.all(
      items.map(async (item)=>{

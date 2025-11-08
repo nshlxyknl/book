@@ -22,8 +22,9 @@ export default function BuyerCard({ _id, title, price,productId, quantity, pdfUr
   }
 
   const buypay = async () => {
+
     try {
-      const cart = [{ title, price, quantity: r }]
+      const cart = [{ title, price, quantity: r, productId }]
       sessionStorage.setItem("purchasedItems", JSON.stringify(cart));
 
       const res = await fetch("http://localhost:4000/carttype/pay", {

@@ -135,12 +135,17 @@ exports.payc = async (req, res) => {
                     unit_amount: item.price * 100,
                 },
                 quantity: item.quantity,
+            //      metadata: {
+            //             productId: item.productId,
+
+            // }
             })),
             success_url: 'http://localhost:5173/dashboard?payment=success',
             cancel_url: 'http://localhost:5173/dashboard?payment=cancel',
             metadata: {
                 buyerId,
                 items: JSON.stringify(items),
+
             },
         });
         res.json({ url: session.url });

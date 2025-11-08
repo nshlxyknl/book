@@ -70,6 +70,7 @@ const {tab } =useSidebar();
             pdfUrl={upload.pdfUrl}
             previewUrl={upload.previewUrl}
             upload={upload}
+            productId={upload._id}
           />
         ))
       : "No any orders or products"}
