@@ -30,7 +30,7 @@ export const TotalSales = () => {
       console.log("hehe",data)
 
       if(res.ok){
-        setSales(data);
+        setSales(data.sales);
       }
       } catch (error) {
         toast.error("error in getting")

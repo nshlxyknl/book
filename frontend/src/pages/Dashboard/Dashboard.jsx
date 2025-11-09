@@ -20,6 +20,7 @@ const Dashboard = () => {
     if (status === "success") {
       toast.success("Payment successful");
        const purchasedItems = JSON.parse(sessionStorage.getItem("purchasedItems") || "[]");
+console.log("Items sent to pending:", purchasedItems);
 
       if (purchasedItems.length > 0) {
       fetch("http://localhost:4000/salestype/pending", {

@@ -79,12 +79,12 @@ exports.getsales = async (req, res) => {
   try {
     
 //     const allSales = await Sale.find();
-// console.log(allSales);
 
-    const sales = await Sale.find({ buyerId: req.user.userId })
-      .populate("productId", "title price pdfUrl") 
-      .populate("buyerId", "name email"); 
-           
+const sales = await Sale.find({ sellerId: req.user.userId })
+  .populate("productId", "title price pdfUrl") 
+  .populate("buyerId", "name email"); 
+
+console.log(req.user.userId);
 
     res.status(200).json({
       message: "Seller sales fetched successfully",
