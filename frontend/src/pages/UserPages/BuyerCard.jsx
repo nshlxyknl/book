@@ -12,7 +12,7 @@ import { toast } from "sonner";
 
 
 
-export default function BuyerCard({ _id, title, price,productId, quantity, pdfUrl, previewUrl, upload }) {
+export default function BuyerCard({ _id, title, price,productId, quantity, pdfUrl, previewUrl, upload, saleStatus }) {
 
   const { cartadd } = useCart()
   const [r, setr] = useState(1)
@@ -144,10 +144,10 @@ export default function BuyerCard({ _id, title, price,productId, quantity, pdfUr
 
         <div className="flex justify-between">
 
-          {upload.status === "approved" ? (
+          {saleStatus === "approved" ? (
             <Button>
               <a
-                href={upload.pdfUrl}
+                href={pdfUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-outline"
@@ -155,11 +155,19 @@ export default function BuyerCard({ _id, title, price,productId, quantity, pdfUr
                 View PDF
               </a>
             </Button>
-          ) : (
-            ""
+          ) :
+          saleStatus === "pending" ? (
+            <Button disabled variant="outline">
+              Pending
+            </Button>
+          ): (<>
+           <Button variant="default" onClick={buypay}>Buy</Button>
+          <Button variant="outline" onClick={addcart}> <ShoppingCartIcon /></Button>
+</>
           )}
 
 
+            {saleStatus !== "approved" && (
           <div className="flex items-center gap-2 mt-1">
             <Button disabled={r === 1} variant="outline" size="sm"
               onClick={() => {
@@ -178,9 +186,8 @@ export default function BuyerCard({ _id, title, price,productId, quantity, pdfUr
               }}
             >+</Button>
           </div>
-          <Button variant="default" onClick={buypay}>Buy</Button>
-          <Button variant="outline" onClick={addcart}> <ShoppingCartIcon /></Button>
-
+          )}
+         
           <div className="flex mx-4 ">
             <Dialog open={openPop} onOpenChange={setOpenPop} >
               <DialogTrigger asChild>
@@ -203,13 +210,10 @@ export default function BuyerCard({ _id, title, price,productId, quantity, pdfUr
                   </div>
                 </form>
 
-
                 <Reviews
                   avgRating={avgRating}
                   reviews={reviews}
                 />
-
-
 
               </DialogContent>
             </Dialog>

@@ -7,6 +7,7 @@ import { useSidebar } from "@/context/SidebarContext";
 export default function BuyerDashboard() {
   const { searchQuery } = useSearch();
   const [uploads, setUploads] = useState([]);
+  const [purchases, setPurchases] = useState([]);
 
 
   const fetchUploads = async () => {
@@ -24,24 +25,38 @@ export default function BuyerDashboard() {
     }
   };
 
+  const fetchPurchases = async () => {
+    try {
+      const res = await fetch("http://localhost:4000/salestype/orders", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+      const data = await res.json();
+      setPurchases(data.sales || []);
+    } catch (err) {
+      console.error("Failed to fetch purchases", err);
+    }
+  };
+
   useEffect(() => {
     fetchUploads();
+    fetchPurchases();
   }, []);
 
   // Filter search ra orders
 
 const {tab } =useSidebar();
-    const filterUploads = uploads.filter((upload) => {
-    const matchesSearch = searchQuery
+
+    const filterItems =  tab=== "orders" ?
+    purchases.filter(
+        (sale) =>
+          sale.status === "approved" || sale.status === "pending"
+      ):
+    uploads.filter((upload) => 
+   searchQuery
       ? upload.title.toLowerCase().includes(searchQuery.toLowerCase())
       : true
-
-    if (tab === "orders") {
-      return matchesSearch && upload.status === "approved"
-    }
-
-    return matchesSearch
-  })
+);
+  
 
   const {openSheet2} =useSidebar()
 
@@ -59,24 +74,30 @@ const {tab } =useSidebar();
       </header>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
-        { filterUploads.length>0 ?
-        filterUploads.map((upload) => (
-          
+        
+           {filterItems.length > 0 ? (
+            filterItems.map((item) => {
+              // For orders tab, item is a Sale object, need to get book info
+              const book = tab === "orders" ? item.productId : item;
+              return (
           <BuyerCard
-            key={upload._id}
-            _id={upload._id}
-            title={upload.title}
-            price={upload.price}
-            pdfUrl={upload.pdfUrl}
-            previewUrl={upload.previewUrl}
-            upload={upload}
-            productId={upload._id}
+            key={item._id}
+            _id={item._id}
+            title={book.title}
+            price={book.price}
+            pdfUrl={book.pdfUrl}
+            previewUrl={book.previewUrl}
+            upload={tab === "orders" ? item : book}
+            productId={book._id}
+            saleStatus={tab === "orders" ? item.status : undefined} 
           />
-        ))
-      : "No any orders or products"}
+              );
+})
+)
+      : ("No any orders or products")}
       </div>
     </div>
 </main>
   </>
-  )
+  );
 }

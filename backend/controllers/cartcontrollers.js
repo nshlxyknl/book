@@ -33,7 +33,6 @@ exports.addcart = async (req, res) => {
         await cart.save();
         res.json(cart);
 
-
     } catch (error) {
         res.status(500).json({
             message: "Could not add to cart",

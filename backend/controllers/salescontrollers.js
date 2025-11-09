@@ -3,8 +3,8 @@ const Sale = require("../models/Sales");
 
 exports.pending = async (req, res) => {
     try {
-        const { items, buyerId } = req.body;
-//  const buyerId= req.user.userId
+        const { items } = req.body;
+ const buyerId= req.user.userId
 
  if (!items || !items.length) {
             return res.status(400).json({ message: "No items to mark pending" });
@@ -84,7 +84,7 @@ const sales = await Sale.find({ sellerId: req.user.userId })
   .populate("productId", "title price pdfUrl") 
   .populate("buyerId", "name email"); 
 
-console.log(req.user.userId);
+// console.log(req.user.userId);
 
     res.status(200).json({
       message: "Seller sales fetched successfully",
@@ -99,3 +99,20 @@ console.log(req.user.userId);
 };
 
 
+exports.getBuyerOrders = async (req, res) => {
+  try {
+    const sales = await Sale.find({ buyerId: req.user.userId })
+      .populate("productId", "title price pdfUrl previewUrl")
+      .populate("sellerId", "name email");
+
+    res.status(200).json({
+      message: "Buyer orders fetched successfully",
+      sales,
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: "Could not fetch buyer orders",
+      details: err.message,
+    });
+  }
+};

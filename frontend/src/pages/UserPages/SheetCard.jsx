@@ -98,6 +98,27 @@ export const SheetCard = ({ productId, title, price, quantity,  refreshCart  }) 
   }
 
 
+  const updateCartQuantity = async (newQty) => {
+  try {
+    const res = await fetch("http://localhost:4000/carttype/updateQuantity", {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ productId, quantity: newQty })
+    });
+
+    const data = await res.json();
+    updateCart(data);
+    await refreshCart();
+  } catch (err) {
+    toast.error("Could not update cart");
+  }
+}
+
+
+
 
   return (
 

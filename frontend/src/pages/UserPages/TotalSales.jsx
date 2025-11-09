@@ -10,10 +10,12 @@ import {
 } from "@/components/ui/table"
 import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
 
 export const TotalSales = () => {
   const [sales,setSales]=useState([])
+  const [statu,setStatu]=useState("pending")
 
 
     const handlesales=async()=>{
@@ -85,8 +87,18 @@ const updateStatus = async (id, status) => {
                 <TableCell>
           {item.status === "pending" ? (
             <>
-              <Button onClick={() => updateStatus(item._id, "approved")}>Approve</Button>
-              <Button onClick={() => updateStatus(item._id, "rejected")}>Reject</Button>
+              {/* <Button onClick={() => updateStatus(item._id, "approved")}>Approve</Button>
+              <Button onClick={() => updateStatus(item._id, "rejected")}>Reject</Button> */}
+             <Select value={statu} onValueChange={(value)=> {setStatu(value); 
+                                                              updateStatus(item._id, value);}} >
+                                                         <SelectTrigger className="w-[140px] h-9 text-sm">
+                                                           <SelectValue placeholder="Pending" />
+                                                         </SelectTrigger>
+                                                    <SelectContent>
+                                                     <SelectItem value="approved" >Approve</SelectItem>
+                                                     <SelectItem value="rejected">Reject</SelectItem>
+                                                     </SelectContent>
+                                                       </Select>
             </>
           ) : (
             <span
