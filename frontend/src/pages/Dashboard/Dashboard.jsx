@@ -17,6 +17,7 @@ const Dashboard = () => {
     const query = new URLSearchParams(location.search);
     const status = query.get("payment");
 
+    
     if (status === "success") {
       toast.success("Payment successful");
        const purchasedItems = JSON.parse(sessionStorage.getItem("purchasedItems") || "[]");
