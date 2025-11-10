@@ -56,13 +56,13 @@ exports.deletecart = async (req, res) => {
         // );
         // console.log("After:", cart.items.map(i => i.productId.toString()));
 
-        const existingItem = cart.items.find(item => item.productId.toString() === productId.toString());
+        const existingItem = cart.items.find(item =>item.productId._id.toString() === productId.toString());
 
         if (existingItem) {
             existingItem.quantity -= 1;
         } else {
-            cart.items.filter(
-                (item) => item.productId.toString() !== productId
+            cart.items=cart.items.filter(
+                (item) => item.productId._id?.toString() !== productId.toString()
             );
         }
 
@@ -162,7 +162,7 @@ exports.plus = async (req, res) => {
         const { productId } = req.body;
         const userId = req.user.userId;
         let cart = await Cart.findOne({ userId });
-        const existingItem = cart.items.find(item => item.productId.toString() === productId.toString());
+        const existingItem = cart.items.find(item => item.productId?.toString() === productId.toString());
 
         if (existingItem) {
             existingItem.quantity += 1;
