@@ -39,8 +39,6 @@ const handleSubmit = async (e) => {
   };
 
     return (<>
-    
-
 
         <div className='flex justify-center items-center min-h-screen px-4'>
             <Card className={'w-full max-w-md p-6'}>
