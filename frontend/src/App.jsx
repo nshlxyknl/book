@@ -31,7 +31,6 @@ function App() {
 </Routes>
  <Footer/>
          <Toaster position="top-center" reverseOrder={false} />
-
 </Router>
  </>)
 }

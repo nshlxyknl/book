@@ -6,7 +6,7 @@ import { toast } from 'sonner'
 
 export const SheetCard = ({ productId, title, price, quantity,  refreshCart  }) => {
 
-  const {  updateCart } = useCart()
+  const { updateCart } = useCart()
   const [q, setq] = useState(quantity)
 
 
